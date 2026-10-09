@@ -22,9 +22,14 @@
         <NoWarn>$(NoWarn);NU5104</NoWarn>
     </PropertyGroup>
 
-    <!-- Keep local build paths out of the published assembly. -->
+    <!--
+        Keep local build paths out of the published assembly: source paths are mapped to /_/, and an
+        embedded PDB leaves only its file name in the PE (a separate PDB would record its obj path).
+        The embedded PDB also gives line numbers in users' error reports.
+    -->
     <PropertyGroup Condition="'$(Configuration)'=='Release'">
         <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+        <DebugType>embedded</DebugType>
     </PropertyGroup>
 
     <ItemGroup Condition="'$(Configuration)'=='Debug'">
