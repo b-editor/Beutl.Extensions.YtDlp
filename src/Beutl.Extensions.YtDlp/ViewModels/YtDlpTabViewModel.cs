@@ -289,11 +289,12 @@ public sealed class YtDlpTabViewModel : IToolContext
                 ExtraArguments: _settings.ExtraArguments);
 
             ClearLog();
-            if (preset is not (FormatPreset.Custom or FormatPreset.AudioOnly) && request.FFmpegLocation == null)
+            if (request.FFmpegLocation == null && preset != FormatPreset.Custom)
             {
-                // Without ffmpeg yt-dlp cannot merge separate video/audio streams and silently picks a
-                // lower-quality combined stream instead.
-                AppendLog("警告: FFmpeg が見つからないため、映像と音声の結合ができません。結合済みの形式が選ばれます。");
+                // YtDlpArguments then picks single-file formats, which can be lower quality.
+                AppendLog(preset == FormatPreset.AudioOnly
+                    ? "警告: FFmpeg が見つからないため、音声を m4a に変換できません。元の形式のまま保存します。"
+                    : "警告: FFmpeg が見つからないため、映像と音声を結合できません。結合済みの形式でダウンロードするため、画質が下がることがあります。");
             }
 
             ActiveItem.Value = item;

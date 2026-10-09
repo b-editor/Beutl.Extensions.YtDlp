@@ -24,7 +24,7 @@ UI は日本語のみです。
 ## 動作要件
 
 - Beutl 2.0.0-preview.8 以降
-- FFmpeg（映像と音声の結合に必要。Beutl が `~/.beutl/ffmpeg` または Homebrew の `ffmpeg@8` としてインストールしたものを自動検出します）
+- FFmpeg（映像と音声の結合と、音声の m4a への変換に使います。YouTube の動画は多くが映像と音声に分かれて提供されるため、実質的に必須です。Beutl がインストールしたもの（Windows・Linux は `~/.beutl/ffmpeg`、macOS は Homebrew の `ffmpeg@8`）と PATH 上のものから、実際に起動できるものを自動検出します）
 - yt-dlp は拡張機能からインストールできます。既に PATH 上にある場合はそれを使います。
 
 ## 利用上の注意

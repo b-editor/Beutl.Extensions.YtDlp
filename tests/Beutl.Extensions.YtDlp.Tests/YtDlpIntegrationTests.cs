@@ -104,6 +104,52 @@ public class YtDlpIntegrationTests
         Assert.That(results, Has.Some.Property(nameof(YtDlpSearchResult.ThumbnailUrl)).Not.Null);
     }
 
+    // With a usable ffmpeg the streams are merged; without one, single-file formats are picked. Either
+    // way exactly one playable file must exist at the reported path, with no .fNNN parts left behind.
+    // YouTube often serves no single-file format at all, so without ffmpeg the download may instead
+    // fail with the message that asks for FFmpeg.
+    [Test, Order(5)]
+    public async Task Download_Best_ProducesOneFileAtTheReportedPath()
+    {
+        YtDlpRunner runner = CreateRunner();
+        string outputDirectory = Path.Combine(Path.GetTempPath(), "Beutl.Extensions.YtDlp.Tests", Guid.NewGuid().ToString("N"));
+        string? ffmpeg = YtDlpLocator.ResolveFFmpegLocation(null);
+        var log = new List<string>();
+
+        try
+        {
+            var request = new YtDlpDownloadRequest(TestUrl, outputDirectory, FormatPreset.Best, null, ffmpeg, null);
+            using var cts = new CancellationTokenSource(TimeSpan.FromMinutes(5));
+
+            IReadOnlyList<string> files;
+            try
+            {
+                files = await runner.DownloadAsync(
+                    request, null, line => { lock (log) log.Add(line); }, cts.Token);
+            }
+            catch (YtDlpException ex) when (ffmpeg == null)
+            {
+                TestContext.Out.WriteLine(ex.Message);
+                Assert.That(ex.Message, Does.Contain("FFmpeg"));
+                Assert.That(Directory.Exists(outputDirectory) ? Directory.GetFiles(outputDirectory) : [], Is.Empty);
+                return;
+            }
+
+            TestContext.Out.WriteLine($"ffmpeg: {ffmpeg ?? "(none)"}");
+            TestContext.Out.WriteLine(string.Join(Environment.NewLine, log));
+            Assert.That(files, Has.Count.EqualTo(1));
+            Assert.That(File.Exists(files[0]), Is.True, files[0]);
+            Assert.That(Directory.GetFiles(outputDirectory), Is.EqualTo(new[] { files[0] }));
+        }
+        finally
+        {
+            if (Directory.Exists(outputDirectory))
+            {
+                Directory.Delete(outputDirectory, recursive: true);
+            }
+        }
+    }
+
     private static YtDlpRunner CreateRunner()
     {
         string? executable = YtDlpLocator.ResolveExecutable(null);

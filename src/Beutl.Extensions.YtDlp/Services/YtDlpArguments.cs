@@ -65,7 +65,7 @@ public static class YtDlpArguments
         var args = new List<string>
         {
             "--no-playlist",
-            "--no-warnings",
+            // Warnings stay on: "formats won't be merged" and the like belong in the log.
             "--newline",
             // --print implies --quiet; --progress keeps the progress lines flowing regardless.
             "--progress",
@@ -82,7 +82,7 @@ public static class YtDlpArguments
             "-o",
             OutputTemplate,
         };
-        args.AddRange(GetFormatArguments(request.Preset, request.CustomArguments));
+        args.AddRange(GetFormatArguments(request.Preset, request.CustomArguments, canMerge: request.FFmpegLocation != null));
         AppendCommon(args, request.FFmpegLocation, request.ExtraArguments);
         args.Add("--");
         args.Add(request.Url);
@@ -98,8 +98,23 @@ public static class YtDlpArguments
         return (FormatPreset.Custom, $"-f \"{itemFormat.ToFormatSelector()}\" --merge-output-format mp4");
     }
 
-    public static IReadOnlyList<string> GetFormatArguments(FormatPreset preset, string? customArguments)
+    // Without a usable ffmpeg, yt-dlp cannot merge or convert: "bv*+ba" would leave the video and audio
+    // as separate .fNNN files while still reporting the merged path, so pick single-file formats instead.
+    public static IReadOnlyList<string> GetFormatArguments(FormatPreset preset, string? customArguments, bool canMerge = true)
     {
+        if (!canMerge)
+        {
+            return preset switch
+            {
+                FormatPreset.Best => ["-f", "b", "-S", "res,codec:h264:aac,ext:mp4:m4a"],
+                FormatPreset.UpTo1080p => ["-f", "b", "-S", "res:1080,codec:h264:aac,ext:mp4:m4a"],
+                FormatPreset.UpTo720p => ["-f", "b", "-S", "res:720,codec:h264:aac,ext:mp4:m4a"],
+                FormatPreset.AudioOnly => ["-f", "ba[ext=m4a]/ba/b"],
+                FormatPreset.Custom => SplitArguments(customArguments),
+                _ => throw new ArgumentOutOfRangeException(nameof(preset), preset, null),
+            };
+        }
+
         return preset switch
         {
             FormatPreset.Best =>
@@ -133,6 +148,11 @@ public static class YtDlpArguments
 
     private static void AppendCommon(List<string> args, string? ffmpegLocation, string? extraArguments)
     {
+        // Output is read as UTF-8. Without this yt-dlp encodes stdout with the pipe's encoding (the ANSI
+        // code page on Windows) and silently drops what it cannot encode, corrupting printed file paths.
+        args.Add("--encoding");
+        args.Add("utf-8");
+
         if (!string.IsNullOrWhiteSpace(ffmpegLocation))
         {
             args.Add("--ffmpeg-location");

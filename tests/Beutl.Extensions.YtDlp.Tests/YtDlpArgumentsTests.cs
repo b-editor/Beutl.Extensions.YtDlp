@@ -50,6 +50,79 @@ public class YtDlpArgumentsTests
     }
 
     [Test]
+    public void EveryCommand_ForcesUtf8Output()
+    {
+        var request = new YtDlpDownloadRequest(
+            "https://example.com/v", "/tmp/out", FormatPreset.Best, null, null, null);
+        IReadOnlyList<string>[] commands =
+        [
+            YtDlpArguments.BuildInfoArguments("https://example.com/v", null, null),
+            YtDlpArguments.BuildSearchArguments(SearchProvider.YouTube, "beutl", 5, null, null),
+            YtDlpArguments.BuildDownloadArguments(request),
+        ];
+
+        foreach (IReadOnlyList<string> args in commands)
+        {
+            int index = args.ToList().IndexOf("--encoding");
+            Assert.That(index, Is.GreaterThanOrEqualTo(0));
+            Assert.That(args[index + 1], Is.EqualTo("utf-8"));
+        }
+    }
+
+    [Test]
+    public void BuildDownloadArguments_KeepsWarningsForTheLog()
+    {
+        var request = new YtDlpDownloadRequest(
+            "https://example.com/v", "/tmp/out", FormatPreset.Best, null, "/opt/ffmpeg", null);
+
+        Assert.That(YtDlpArguments.BuildDownloadArguments(request), Does.Not.Contain("--no-warnings"));
+    }
+
+    [Test]
+    public void BuildDownloadArguments_WithFFmpeg_MergesVideoAndAudio()
+    {
+        var request = new YtDlpDownloadRequest(
+            "https://example.com/v", "/tmp/out", FormatPreset.Best, null, "/opt/ffmpeg", null);
+
+        List<string> args = YtDlpArguments.BuildDownloadArguments(request).ToList();
+
+        Assert.That(args[args.IndexOf("-f") + 1], Is.EqualTo("bv*+ba/b"));
+        Assert.That(args[args.IndexOf("--merge-output-format") + 1], Is.EqualTo("mp4"));
+    }
+
+    [TestCase(FormatPreset.Best, "res,")]
+    [TestCase(FormatPreset.UpTo1080p, "res:1080,")]
+    [TestCase(FormatPreset.UpTo720p, "res:720,")]
+    public void BuildDownloadArguments_WithoutFFmpeg_PicksSingleFileFormats(FormatPreset preset, string sortPrefix)
+    {
+        var request = new YtDlpDownloadRequest("https://example.com/v", "/tmp/out", preset, null, null, null);
+
+        List<string> args = YtDlpArguments.BuildDownloadArguments(request).ToList();
+
+        Assert.That(args[args.IndexOf("-f") + 1], Is.EqualTo("b"));
+        Assert.That(args[args.IndexOf("-S") + 1], Does.StartWith(sortPrefix));
+        Assert.That(args, Does.Not.Contain("--merge-output-format"));
+    }
+
+    [Test]
+    public void GetFormatArguments_AudioOnlyWithoutFFmpeg_KeepsTheOriginalAudio()
+    {
+        IReadOnlyList<string> args = YtDlpArguments.GetFormatArguments(FormatPreset.AudioOnly, null, canMerge: false);
+
+        Assert.That(args, Is.EqualTo(new[] { "-f", "ba[ext=m4a]/ba/b" }));
+    }
+
+    [Test]
+    public void GetFormatArguments_CustomIsUnchangedWithoutFFmpeg()
+    {
+        const string custom = "-f \"bv*[height<=480]+ba/b\" --merge-output-format mkv";
+
+        Assert.That(
+            YtDlpArguments.GetFormatArguments(FormatPreset.Custom, custom, canMerge: false),
+            Is.EqualTo(YtDlpArguments.GetFormatArguments(FormatPreset.Custom, custom)));
+    }
+
+    [Test]
     public void GetFormatArguments_AudioOnlyExtractsM4a()
     {
         IReadOnlyList<string> args = YtDlpArguments.GetFormatArguments(FormatPreset.AudioOnly, null);

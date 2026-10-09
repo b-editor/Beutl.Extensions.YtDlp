@@ -15,7 +15,7 @@ public sealed class YtDlpRunner(string executablePath)
 
     public async Task<string> GetVersionAsync(CancellationToken ct = default)
     {
-        ProcessResult result = await RunAsync(YtDlpArguments.BuildVersionArguments(), null, null, ct);
+        ProcessResult result = await RunAsync(YtDlpArguments.BuildVersionArguments(), null, null, null, ct);
         result.EnsureSuccess();
         return result.StandardOutput.Trim();
     }
@@ -24,7 +24,7 @@ public sealed class YtDlpRunner(string executablePath)
         string url, string? ffmpegLocation, string? extraArguments, CancellationToken ct = default)
     {
         ProcessResult result = await RunAsync(
-            YtDlpArguments.BuildInfoArguments(url, ffmpegLocation, extraArguments), null, null, ct);
+            YtDlpArguments.BuildInfoArguments(url, ffmpegLocation, extraArguments), ffmpegLocation, null, null, ct);
         result.EnsureSuccess();
 
         string json = result.StandardOutput.Trim();
@@ -42,7 +42,7 @@ public sealed class YtDlpRunner(string executablePath)
     {
         ProcessResult result = await RunAsync(
             YtDlpArguments.BuildSearchArguments(provider, query, count, ffmpegLocation, extraArguments),
-            null, null, ct);
+            ffmpegLocation, null, null, ct);
         result.EnsureSuccess();
 
         string json = result.StandardOutput.Trim();
@@ -87,11 +87,25 @@ public sealed class YtDlpRunner(string executablePath)
         // screen output) to stderr while download progress and --print go to stdout. Parse both.
         ProcessResult result = await RunAsync(
             YtDlpArguments.BuildDownloadArguments(request),
+            request.FFmpegLocation,
             HandleLine,
             HandleLine,
             ct);
+        if (result.ExitCode != 0
+            && request.FFmpegLocation == null
+            && result.StandardError.Contains("Requested format is not available", StringComparison.Ordinal))
+        {
+            // Without ffmpeg only single-file formats are requested, and YouTube now mostly serves video
+            // and audio separately, so yt-dlp's own message would not tell the user what to do.
+            throw new YtDlpException(
+                "この動画は映像と音声が別々の形式でしか提供されていないため、結合に FFmpeg が必要です。FFmpeg をインストールするか、拡張機能の設定で FFmpeg の場所を指定してください。",
+                result.ExitCode,
+                result.StandardError);
+        }
+
         result.EnsureSuccess();
 
+        string[] reported;
         lock (files)
         {
             if (files.Count == 0)
@@ -100,12 +114,41 @@ public sealed class YtDlpRunner(string executablePath)
                     "yt-dlp が出力ファイルのパスを報告しませんでした。", result.ExitCode, result.StandardError);
             }
 
-            return files.ToArray();
+            reported = files.ToArray();
         }
+
+        if (FindMissingOutputError(reported) is { } error)
+        {
+            throw new YtDlpException(error, result.ExitCode, result.StandardError);
+        }
+
+        return reported;
+    }
+
+    // yt-dlp exits successfully and still prints the merged path when it could not merge (no usable
+    // ffmpeg), leaving only the "<name>.fNNN.<ext>" parts. Catch that here instead of reporting success.
+    internal static string? FindMissingOutputError(IReadOnlyList<string> files)
+    {
+        foreach (string file in files)
+        {
+            if (File.Exists(file)) continue;
+
+            string? directory = Path.GetDirectoryName(file);
+            bool hasParts = directory != null
+                            && Directory.Exists(directory)
+                            && Directory.EnumerateFiles(directory, Path.GetFileNameWithoutExtension(file) + ".f*").Any();
+
+            return hasParts
+                ? $"映像と音声を結合できませんでした。FFmpeg を利用できるか確認してください。分割されたファイルは保存先に残っています: {Path.GetFileName(file)}"
+                : $"yt-dlp が報告したファイルが見つかりません: {file}";
+        }
+
+        return null;
     }
 
     private async Task<ProcessResult> RunAsync(
         IReadOnlyList<string> arguments,
+        string? ffmpegLocation,
         Action<string>? onStandardOutputLine,
         Action<string>? onStandardErrorLine,
         CancellationToken ct)
@@ -124,9 +167,11 @@ public sealed class YtDlpRunner(string executablePath)
             startInfo.ArgumentList.Add(argument);
         }
 
-        // The standalone binaries embed Python; force UTF-8 on the pipes so titles survive on Windows.
+        // `--encoding utf-8` (added to every command line) is what fixes the pipe encoding; these only
+        // help a plain Python install, since the frozen release builds may ignore PYTHON* variables.
         startInfo.Environment["PYTHONIOENCODING"] = "utf-8";
         startInfo.Environment["PYTHONUTF8"] = "1";
+        YtDlpLocator.ApplyFFmpegEnvironment(startInfo, ffmpegLocation);
 
         _logger.LogInformation("Running yt-dlp: {Arguments}", string.Join(' ', arguments));
 

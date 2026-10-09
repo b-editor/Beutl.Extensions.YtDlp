@@ -44,7 +44,7 @@ yt-dlp で動画・音声を検索・ダウンロードしてタイムライン�
 ## 動作要件
 
 - Beutl 2.0.0-preview.8 以降
-- FFmpeg（映像と音声の結合に使います。Beutl がインストールしたものを自動で検出します）
+- FFmpeg（映像と音声の結合に使います。YouTube の動画をダウンロードするには必須です。Beutl がインストールしたものを自動で検出します）
 
 ## 利用上の注意
 
@@ -57,17 +57,23 @@ yt-dlp で動画・音声を検索・ダウンロードしてタイムライン�
 Downloads videos and audio with yt-dlp and adds them to the Beutl timeline. The UI is Japanese only.
 ```
 
-## リリース 1.0.0
+## リリース 1.0.1
 
 | 項目 | 値 |
 | --- | --- |
-| バージョン | 1.0.0 |
+| バージョン | 1.0.1 |
 | 対応バージョン（targetVersion） | `2.0.0-preview.8` |
-| ファイル | `src/Beutl.Extensions.YtDlp/bin/Release/Beutl.Extensions.YtDlp.1.0.0.nupkg` |
+| ファイル | `src/Beutl.Extensions.YtDlp/bin/Release/Beutl.Extensions.YtDlp.1.0.1.nupkg` |
 
 対応バージョンは NuGet のバージョン範囲として解釈され、`2.0.0-preview.8` は「2.0.0-preview.8 以上」を意味します。リリースを作成した直後は `1.0.0-preview.10` が入っているので、必ず書き換えてください。
 
 ### リリースの説明
+
+```text
+Windows と Linux で、ダウンロードしたファイルがタイムラインに追加されず「ファイルが見つかりません」と表示される問題を修正しました。Beutl がインストールした FFmpeg で映像と音声を結合できるようにし、日本語などを含むファイル名が化けないようにしています。
+```
+
+1.0.0 をまだ公開していない場合は、1.0.0 のリリースは作らずに 1.0.1 から公開してかまいません。そのときのリリースの説明は次のとおりです。
 
 ```text
 最初のリリースです。YouTube / SoundCloud の検索、URL からの取得、形式を選んだダウンロード、タイムラインへの自動追加、ダウンロード履歴、yt-dlp の自動インストールと更新に対応しています。
