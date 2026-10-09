@@ -1,0 +1,11 @@
+<Solution>
+  <Folder Name="/Root/">
+    <File Path="Directory.Build.props" />
+    <File Path="Directory.Build.targets" />
+    <File Path="nuget.config" />
+    <File Path="CHANGELOG.md" />
+    <File Path="README.md" />
+  </Folder>
+  <Project Path="src\Beutl.Extensions.YtDlp\Beutl.Extensions.YtDlp.csproj" Type="C#" />
+  <Project Path="tests\Beutl.Extensions.YtDlp.Tests\Beutl.Extensions.YtDlp.Tests.csproj" Type="C#" />
+</Solution>

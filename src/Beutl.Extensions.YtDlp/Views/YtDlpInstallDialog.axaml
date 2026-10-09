@@ -1,0 +1,21 @@
+<ui:FAContentDialog x:Class="Beutl.Extensions.YtDlp.Views.YtDlpInstallDialog"
+                  xmlns="https://github.com/avaloniaui"
+                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                  xmlns:ui="using:FluentAvalonia.UI.Controls"
+                  xmlns:viewModels="using:Beutl.Extensions.YtDlp.ViewModels"
+                  xmlns:views="using:Beutl.Extensions.YtDlp.Views"
+                  Title="yt-dlp のインストール"
+                  d:DesignHeight="450"
+                  d:DesignWidth="800"
+                  x:CompileBindings="True"
+                  x:DataType="viewModels:YtDlpInstallDialogViewModel"
+                  CloseButtonText="キャンセル"
+                  PrimaryButtonText="次へ"
+                  mc:Ignorable="d">
+    <ui:FAContentDialog.Resources>
+        <x:Double x:Key="ContentDialogMaxWidth">440</x:Double>
+    </ui:FAContentDialog.Resources>
+    <views:YtDlpInstallDialogContent Name="Root" />
+</ui:FAContentDialog>
