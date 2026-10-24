@@ -23,7 +23,7 @@ UI は日本語のみです。
 
 ## 動作要件
 
-- Beutl 2.0.0-preview.8 以降
+- Beutl 2.0.0-preview.9 以降
 - FFmpeg（映像と音声の結合と、音声の m4a への変換に使います。YouTube の動画は多くが映像と音声に分かれて提供されるため、実質的に必須です。Beutl がインストールしたもの（Windows・Linux は `~/.beutl/ffmpeg`、macOS は Homebrew の `ffmpeg@8`）と PATH 上のものから、実際に起動できるものを自動検出します）
 - yt-dlp は拡張機能からインストールできます。既に PATH 上にある場合はそれを使います。
 
@@ -47,7 +47,7 @@ UI は日本語のみです。
 
 ### Beutl パッケージについて
 
-公開されている `Beutl.Extensibility.Sdk` の `2.0.0-preview.8` を使用します。
+`Beutl.Extensibility.Sdk` の `2.0.0-preview.9` を使用します。
 SDK のバージョンは `.csproj` の `Project` 要素に直接指定しており、必要なパッケージは
 `nuget.config` に登録された NuGet フィードから復元されます。
 
@@ -77,7 +77,7 @@ dotnet build src/Beutl.Extensions.YtDlp -c Debug -p:DebugApplication=true
    dotnet pack src/Beutl.Extensions.YtDlp -c Release
    ```
 
-3. [Beutl のデベロッパーページ](https://beutl.beditor.net/ja/developer)でリリースを作成し、`.nupkg` をアップロードします。対応バージョン（targetVersion）には SDK と同じ `2.0.0-preview.8` を入れます（NuGet のバージョン範囲として「これ以上」の意味になります）。
+3. [Beutl のデベロッパーページ](https://beutl.beditor.net/ja/developer)でリリースを作成し、`.nupkg` をアップロードします。対応バージョン（targetVersion）には SDK と同じ `2.0.0-preview.9` を入れます（NuGet のバージョン範囲として「これ以上」の意味になります）。
 4. ストアの掲載情報は [docs/store-listing.md](docs/store-listing.md)、アイコンは [assets/icon.png](assets/icon.png) を使います。
 
 ## License

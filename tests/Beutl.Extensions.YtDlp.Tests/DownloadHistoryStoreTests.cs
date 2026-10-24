@@ -1,3 +1,4 @@
+using System.Text.Json.Nodes;
 using Beutl.Extensions.YtDlp.Services;
 using Beutl.Extensions.YtDlp.ViewModels;
 
@@ -25,6 +26,34 @@ public class DownloadHistoryStoreTests
         string path = Path.Combine(_root, name);
         File.WriteAllText(path, "x");
         return path;
+    }
+
+    [Test]
+    public void Preview8History_KeepsDurationTicksAndDownloadedFiles()
+    {
+        string historyPath = Path.Combine(_root, "history.json");
+        string file = CreateFile("動画.mp4");
+        var saved = new JsonArray(new JsonObject
+        {
+            ["Title"] = "動画",
+            ["FilePath"] = file,
+            ["DurationTicks"] = 123456789L,
+            ["Url"] = "https://example.com/video",
+            ["DownloadedAt"] = "2026-09-08T00:00:00+00:00",
+        });
+        File.WriteAllText(historyPath, saved.ToJsonString());
+        var store = new DownloadHistoryStore(historyPath);
+
+        store.EnsureLoaded();
+        Assert.That(store.Items.Single().Duration, Is.EqualTo(TimeSpan.FromTicks(123456789)));
+        store.Add(new DownloadHistoryItem("New", file, null));
+
+        JsonArray updated = JsonNode.Parse(File.ReadAllText(historyPath))!.AsArray();
+        Assert.Multiple(() =>
+        {
+            Assert.That(updated[1]!["DurationTicks"]!.GetValue<long>(), Is.EqualTo(123456789L));
+            Assert.That(File.Exists(file), Is.True);
+        });
     }
 
     [Test]

@@ -1,4 +1,4 @@
-<Project Sdk="Beutl.Extensibility.Sdk/2.0.0-preview.8">
+<Project Sdk="Beutl.Extensibility.Sdk/2.0.0-preview.9">
 
     <PropertyGroup>
         <PackageId>Beutl.Extensions.YtDlp</PackageId>
@@ -16,7 +16,6 @@
         <PackageProjectUrl>https://github.com/b-editor/Beutl.Extensions.YtDlp</PackageProjectUrl>
         <RepositoryUrl>https://github.com/b-editor/Beutl.Extensions.YtDlp</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
-        <BeutlAutoReferenceSourceGenerators>false</BeutlAutoReferenceSourceGenerators>
         <BeutlAutoReferenceNodeGraph>false</BeutlAutoReferenceNodeGraph>
         <!-- Beutl 2.0 is still in preview, so a stable release necessarily depends on preview packages. -->
         <NoWarn>$(NoWarn);NU5104</NoWarn>
