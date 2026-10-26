@@ -5,11 +5,11 @@
         <Title>yt-dlp Downloader</Title>
         <Description>yt-dlp で動画・音声を検索・ダウンロードしてタイムラインに追加します</Description>
         <!-- Beutl shows the release notes as the long description of an installed package. -->
-        <PackageReleaseNotes>YouTube / SoundCloud の検索、URL からの取得、形式を選んだダウンロード、タイムラインへの自動追加、ダウンロード履歴、yt-dlp の自動インストールと更新に対応しています。1.0.1 では、Windows と Linux でダウンロードしたファイルがタイムラインに追加されない問題を修正しました。UI は日本語のみです。</PackageReleaseNotes>
+        <PackageReleaseNotes>YouTube / SoundCloud の検索、URL からの取得、形式を選んだダウンロード、タイムラインへの自動追加、ダウンロード履歴、yt-dlp の自動インストールと更新に対応しています。1.0.2 では、Beutl 2.0.0-preview.9 に合わせて拡張機能の API を移行しました。UI は日本語のみです。</PackageReleaseNotes>
         <!-- Semicolon-separated: NuGet writes them space-separated, which is how Beutl splits tags. -->
         <PackageTags>video;audio;download;youtube;soundcloud;yt-dlp</PackageTags>
-        <Version>1.0.1</Version>
-        <AssemblyVersion>1.0.1.0</AssemblyVersion>
+        <Version>1.0.2</Version>
+        <AssemblyVersion>1.0.2.0</AssemblyVersion>
         <Authors>Yuto Terada</Authors>
         <Copyright>Copyright (c) 2026 Yuto Terada</Copyright>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
