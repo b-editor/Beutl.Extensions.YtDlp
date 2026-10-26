@@ -2,9 +2,9 @@ using Beutl.ProjectSystem;
 
 namespace Beutl.Extensions.YtDlp.Services;
 
-public readonly record struct OccupiedRange(int ZIndex, TimeSpan Start, TimeSpan Length)
+public readonly record struct OccupiedRange(int ZIndex, MediaTime Start, MediaTime Length)
 {
-    public TimeSpan End => Start + Length;
+    public MediaTime End => Start + Length;
 }
 
 // Picks the lowest layer where a new element (and, for video, its audio companion on the next
@@ -13,10 +13,10 @@ public static class LayerFinder
 {
     public const int MaxLayer = 10_000;
 
-    public static int FindFreeLayer(Scene scene, TimeSpan start, TimeSpan length, int requiredLayers = 1)
+    public static int FindFreeLayer(Scene scene, MediaTime start, MediaTime length, int requiredLayers = 1)
     {
         return FindFreeLayer(
-            scene.Children.Select(e => new OccupiedRange(e.ZIndex, e.Start, e.Length)),
+            scene.Children.Select(e => new OccupiedRange(e.ZIndex.Value, e.Start.Value, e.Length.Value)),
             scene.IsLayerLocked,
             start,
             length,
@@ -26,14 +26,14 @@ public static class LayerFinder
     public static int FindFreeLayer(
         IEnumerable<OccupiedRange> elements,
         Func<int, bool> isLayerLocked,
-        TimeSpan start,
-        TimeSpan length,
+        MediaTime start,
+        MediaTime length,
         int requiredLayers = 1)
     {
         ArgumentOutOfRangeException.ThrowIfLessThan(requiredLayers, 1);
-        if (length <= TimeSpan.Zero) length = TimeSpan.FromTicks(1);
+        if (length <= MediaTime.Zero) length = new MediaTime(1);
 
-        TimeSpan end = start + length;
+        MediaTime end = start + length;
         var occupied = new HashSet<int>(
             elements
                 .Where(e => e.Start < end && start < e.End)

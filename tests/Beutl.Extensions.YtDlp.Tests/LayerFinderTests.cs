@@ -1,12 +1,13 @@
 using Beutl.Extensions.YtDlp.Services;
+using Beutl.ProjectSystem;
 
 namespace Beutl.Extensions.YtDlp.Tests;
 
 public class LayerFinderTests
 {
-    private static readonly TimeSpan s_zero = TimeSpan.Zero;
+    private static readonly MediaTime s_zero = MediaTime.Zero;
 
-    private static TimeSpan Seconds(double s) => TimeSpan.FromSeconds(s);
+    private static MediaTime Seconds(double s) => MediaTime.FromSeconds(s);
 
     [Test]
     public void EmptyScene_UsesLayerZero()
@@ -75,5 +76,24 @@ public class LayerFinderTests
         int layer = LayerFinder.FindFreeLayer(elements, _ => false, Seconds(5), s_zero);
 
         Assert.That(layer, Is.EqualTo(1));
+    }
+
+    [Test]
+    public void SceneProperties_PreserveSubTickOverlapAndConsecutiveLayers()
+    {
+        var scene = new Scene();
+        scene.Children.Add(new Element
+        {
+            ZIndex = { Value = 1 },
+            Start = { Value = new MediaTime(1) },
+            Length = { Value = new MediaTime(1) },
+        });
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(LayerFinder.FindFreeLayer(scene, new MediaTime(1), new MediaTime(1), 2), Is.EqualTo(2));
+            Assert.That(LayerFinder.FindFreeLayer(scene, new MediaTime(2), new MediaTime(1), 2), Is.EqualTo(0));
+            Assert.That(LayerFinder.FindFreeLayer(scene, MediaTime.Zero, MediaTime.Zero, 2), Is.EqualTo(0));
+        });
     }
 }

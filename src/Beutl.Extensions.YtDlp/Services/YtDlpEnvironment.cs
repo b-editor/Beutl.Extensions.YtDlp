@@ -38,8 +38,8 @@ public sealed class YtDlpEnvironment(YtDlpSettings settings)
             IsRefreshing.Value = true;
             try
             {
-                string? executable = YtDlpLocator.ResolveExecutable(Settings.ExecutablePath);
-                string? ffmpeg = YtDlpLocator.ResolveFFmpegLocation(Settings.FFmpegPath);
+                string? executable = YtDlpLocator.ResolveExecutable(Settings.ExecutablePath.Value);
+                string? ffmpeg = YtDlpLocator.ResolveFFmpegLocation(Settings.FFmpegPath.Value);
                 string? version = null;
 
                 if (executable != null)

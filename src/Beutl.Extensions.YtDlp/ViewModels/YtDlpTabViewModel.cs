@@ -53,14 +53,14 @@ public sealed class YtDlpTabViewModel : IToolContext
         _clock = editorContext.GetRequiredService<IEditorClock>();
 
         Presets = Enum.GetValues<FormatPreset>().Select(FormatPresetItem.Create).ToArray();
-        SelectedPreset = new ReactiveProperty<FormatPresetItem>(FindPreset(_settings.DefaultPreset))
+        SelectedPreset = new ReactiveProperty<FormatPresetItem>(FindPreset(_settings.DefaultPreset.Value))
             .AddTo(_disposables);
         IsCustomPreset = SelectedPreset
             .Select(p => p?.Preset == FormatPreset.Custom)
             .ToReadOnlyReactivePropertySlim()
             .AddTo(_disposables);
 
-        OutputDirectory = new ReactiveProperty<string>(_settings.OutputDirectory ?? "").AddTo(_disposables);
+        OutputDirectory = new ReactiveProperty<string>(_settings.OutputDirectory.Value ?? "").AddTo(_disposables);
         DefaultOutputDirectory = GetProjectOutputDirectory();
         SessionHistoryHeader = OutputDirectory
             .Select(_ => $"保存先（{ResolveOutputDirectory()}）")
@@ -219,7 +219,7 @@ public sealed class YtDlpTabViewModel : IToolContext
             {
                 string url = UrlDetector.Normalize(query);
                 YtDlpVideoInfo info = await runner.FetchInfoAsync(
-                    url, _environment.FFmpegLocation.Value, _settings.ExtraArguments, _cts.Token);
+                    url, _environment.FFmpegLocation.Value, _settings.ExtraArguments.Value, _cts.Token);
 
                 if (info.IsPlaylist)
                 {
@@ -236,10 +236,10 @@ public sealed class YtDlpTabViewModel : IToolContext
             else
             {
                 int count = Math.Clamp(
-                    _settings.SearchResultCount, Models.SearchProviders.MinResultCount, Models.SearchProviders.MaxResultCount);
+                    _settings.SearchResultCount.Value, Models.SearchProviders.MinResultCount, Models.SearchProviders.MaxResultCount);
                 IReadOnlyList<YtDlpSearchResult> results = await runner.SearchAsync(
                     SelectedSearchProvider.Value.Provider, query, count,
-                    _environment.FFmpegLocation.Value, _settings.ExtraArguments, _cts.Token);
+                    _environment.FFmpegLocation.Value, _settings.ExtraArguments.Value, _cts.Token);
                 items = results.Select(r => new VideoItem(r, this)).ToArray();
             }
 
@@ -286,7 +286,7 @@ public sealed class YtDlpTabViewModel : IToolContext
                 Preset: preset,
                 CustomArguments: customArguments,
                 FFmpegLocation: _environment.FFmpegLocation.Value,
-                ExtraArguments: _settings.ExtraArguments);
+                ExtraArguments: _settings.ExtraArguments.Value);
 
             ClearLog();
             if (request.FFmpegLocation == null && preset != FormatPreset.Custom)
@@ -356,7 +356,7 @@ public sealed class YtDlpTabViewModel : IToolContext
             _cts = new CancellationTokenSource();
 
             YtDlpVideoInfo info = await runner.FetchInfoAsync(
-                item.Url, _environment.FFmpegLocation.Value, _settings.ExtraArguments, _cts.Token);
+                item.Url, _environment.FFmpegLocation.Value, _settings.ExtraArguments.Value, _cts.Token);
             item.SetFormats(info.Formats);
         }
         catch (OperationCanceledException)
@@ -478,8 +478,10 @@ public sealed class YtDlpTabViewModel : IToolContext
             }
 
             var adder = _editorContext.GetRequiredService<IElementAdder>();
-            TimeSpan start = _clock.CurrentTime.Value;
-            TimeSpan length = item.Duration is { } d && d > TimeSpan.Zero ? d : TimeSpan.FromSeconds(5);
+            MediaTime start = _clock.CurrentTime.Value;
+            MediaTime length = item.Duration is { } d && d > TimeSpan.Zero
+                ? MediaTime.FromTimeSpan(d)
+                : MediaTime.FromSeconds(5);
 
             // A video import also creates an audio companion on the next layer, so reserve two layers.
             bool isAudioOnly = s_audioExtensions.Contains(
@@ -500,7 +502,7 @@ public sealed class YtDlpTabViewModel : IToolContext
                 return;
             }
 
-            _logger.LogInformation("Added {File} to the timeline at {Start} on layer {Layer}", item.FilePath, start, layer);
+            _logger.LogInformation("Added {File} to the timeline at {Start} on layer {Layer}", item.FilePath, start.ToTimeSpan(), layer);
         }
         catch (OperationCanceledException)
         {
