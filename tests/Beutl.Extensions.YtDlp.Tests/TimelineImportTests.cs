@@ -106,6 +106,19 @@ public class TimelineImportTests
         Assert.That(JsonNode.DeepEquals(restored, saved), Is.True);
     }
 
+    [TestCase("Niconico", "ニコニコ動画")]
+    [TestCase("Bilibili", "Bilibili")]
+    public void SearchProvider_NewSitesCanBeSelectedAndRestored(string provider, string displayName)
+    {
+        var saved = new JsonObject { ["SelectedSearchProvider"] = provider };
+        _viewModel.ReadFromJson(saved);
+        var restored = new JsonObject();
+        _viewModel.WriteToJson(restored);
+
+        Assert.That(_viewModel.SelectedSearchProvider.Value.Name, Is.EqualTo(displayName));
+        Assert.That((string?)restored["SelectedSearchProvider"], Is.EqualTo(provider));
+    }
+
     [Test]
     public async Task AddToTimeline_CanceledImportCompletesWithoutAnError()
     {

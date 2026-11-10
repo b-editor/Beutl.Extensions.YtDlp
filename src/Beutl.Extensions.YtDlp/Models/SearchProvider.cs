@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Beutl.Extensions.YtDlp.Models;
 
-// Search extractors that yt-dlp exposes through "<prefix><count>:<query>" pseudo-URLs.
+// Keyword search sites. Niconico uses its snapshot API; the others use yt-dlp search extractors.
 public enum SearchProvider
 {
     [Display(Name = "YouTube")]
@@ -10,6 +10,12 @@ public enum SearchProvider
 
     [Display(Name = "SoundCloud")]
     SoundCloud,
+
+    [Display(Name = "ニコニコ動画")]
+    Niconico,
+
+    [Display(Name = "Bilibili")]
+    Bilibili,
 }
 
 public static class SearchProviders
@@ -24,6 +30,8 @@ public static class SearchProviders
         {
             SearchProvider.YouTube => "ytsearch",
             SearchProvider.SoundCloud => "scsearch",
+            SearchProvider.Niconico => "nicosearch",
+            SearchProvider.Bilibili => "bilisearch",
             _ => throw new ArgumentOutOfRangeException(nameof(provider), provider, null),
         };
     }

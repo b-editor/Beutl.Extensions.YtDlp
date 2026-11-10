@@ -8,7 +8,7 @@
 | --- | --- |
 | パッケージ ID | `Beutl.Extensions.YtDlp` |
 | 表示名 | yt-dlp ダウンローダー |
-| タグ | video, audio, download, youtube, soundcloud, yt-dlp |
+| タグ | video, audio, download, youtube, soundcloud, niconico, bilibili, yt-dlp |
 | 価格 | 無料 |
 | アイコン | [assets/icon.png](../assets/icon.png)（512×512） |
 
@@ -27,8 +27,8 @@ yt-dlp で動画・音声を検索・ダウンロードしてタイムライン�
 
 ## できること
 
-- キーワードで YouTube と SoundCloud を検索し、サムネイル・長さ・再生回数付きの一覧から選べます。
-- 動画の URL を貼り付けると、その動画を直接取得します。
+- キーワードで YouTube / SoundCloud / ニコニコ動画 / Bilibili を検索し、サムネイル・長さ・再生回数などの情報が付いた一覧から選べます。
+- 動画の URL を貼り付けると、検索先の選択に関係なく、yt-dlp の対応サイトから動画を直接取得します。
 - 最高画質、1080p まで、720p まで、音声のみなどの形式を選んでダウンロードできます。動画ごとに個別の形式も選べます。
 - ダウンロードが終わると、再生ヘッドの位置にタイムラインへ追加します。
 - ダウンロード履歴から、ファイルをタイムラインへ追加し直せます。
