@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using System.Text;
+using System.Text.Json;
 using Beutl.Extensions.YtDlp.Models;
 using Beutl.Logging;
 using Microsoft.Extensions.Logging;
@@ -43,15 +44,41 @@ public sealed class YtDlpRunner(string executablePath)
         ProcessResult result = await RunAsync(
             YtDlpArguments.BuildSearchArguments(provider, query, count, ffmpegLocation, extraArguments),
             ffmpegLocation, null, null, ct);
-        result.EnsureSuccess();
-
-        string json = result.StandardOutput.Trim();
-        if (json.Length == 0)
+        IReadOnlyList<YtDlpSearchResult> results = ParseSearchOutput(
+            result.ExitCode, result.StandardOutput, result.StandardError);
+        if (result.ExitCode != 0)
         {
-            throw new YtDlpException("yt-dlp から検索結果が返されませんでした。", result.ExitCode, result.StandardError);
+            _logger.LogWarning("yt-dlp returned partial search results: {StandardError}", result.StandardError.Trim());
         }
 
-        return YtDlpSearchResult.ParseList(json);
+        return results;
+    }
+
+    internal static IReadOnlyList<YtDlpSearchResult> ParseSearchOutput(int exitCode, string standardOutput, string standardError)
+    {
+        var result = new ProcessResult(exitCode, standardOutput, standardError);
+        string json = standardOutput.Trim();
+        if (json.Length == 0 || json == "null")
+        {
+            result.EnsureSuccess();
+            throw new YtDlpException("yt-dlp から検索結果が返されませんでした。", exitCode, standardError);
+        }
+
+        IReadOnlyList<YtDlpSearchResult> results;
+        try
+        {
+            results = YtDlpSearchResult.ParseList(json);
+        }
+        catch (JsonException) when (exitCode != 0)
+        {
+            result.EnsureSuccess();
+            throw;
+        }
+
+        // A failed entry leaves null in the playlist and a nonzero exit code, even when other
+        // entries succeeded. Keep those hits, but preserve the error if no usable videos remain.
+        if (results.Count == 0) result.EnsureSuccess();
+        return results;
     }
 
     // Returns the final paths of every file yt-dlp produced (one per video).

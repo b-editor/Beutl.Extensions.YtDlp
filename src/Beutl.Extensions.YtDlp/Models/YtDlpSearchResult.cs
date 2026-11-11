@@ -116,7 +116,10 @@ public sealed partial class YtDlpSearchResult
     {
         string? type = GetString(entry, "_type");
         if (type is "playlist" or "multi_video") return false;
-        if (entry.TryGetProperty("entries", out _) || GetInt32(entry, "playlist_count") != null) return false;
+        if (entry.TryGetProperty("entries", out _)) return false;
+        // Resolved videos inherit their parent playlist's count. yt-dlp also treats a missing
+        // _type as "video", and older releases omit it from fully extracted videos.
+        if (type is not (null or "video") && GetInt32(entry, "playlist_count") != null) return false;
 
         string? ieKey = GetString(entry, "ie_key");
         if (ieKey != null)
