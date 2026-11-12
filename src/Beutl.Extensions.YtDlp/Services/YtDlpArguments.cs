@@ -47,13 +47,17 @@ public static class YtDlpArguments
         var args = new List<string>
         {
             "--dump-single-json",
-            // Flat entries carry title/duration/thumbnail without extracting every video.
-            "--flat-playlist",
+            // Bilibili's flat entries contain only IDs and URLs. Extract its videos so the list
+            // also has titles/thumbnails; YouTube and SoundCloud already include them in flat mode.
+            provider == SearchProvider.Bilibili ? "--no-flat-playlist" : "--flat-playlist",
             "--no-warnings",
             // Search URLs (YouTube) have no count in them; "<prefix>N:" targets ignore this harmlessly.
             "--playlist-end",
             Math.Clamp(count, SearchProviders.MinResultCount, SearchProviders.MaxResultCount).ToString(CultureInfo.InvariantCulture),
         };
+        // A Bilibili hit may contain multiple parts. Match URL input/downloads by extracting just
+        // its first video; this does not suppress the search playlist itself.
+        if (provider == SearchProvider.Bilibili) args.Add("--no-playlist");
         AppendCommon(args, ffmpegLocation, extraArguments);
         args.Add("--");
         args.Add(SearchProviders.BuildQueryUrl(provider, query, count));

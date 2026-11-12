@@ -113,6 +113,28 @@ public class YtDlpSearchResultTests
     }
 
     [Test]
+    public void ParseList_ParentPlaylistCountDoesNotHideExtractedVideos()
+    {
+        const string json = """
+            {
+              "_type": "playlist", "playlist_count": 2,
+              "entries": [
+                { "_type": "video", "extractor_key": "BiliBili", "id": "BV1", "webpage_url": "https://www.bilibili.com/video/BV1", "playlist_count": 2 },
+                { "extractor_key": "BiliBili", "id": "BV2", "webpage_url": "https://www.bilibili.com/video/BV2", "playlist_count": 2 },
+                { "_type": "playlist", "url": "https://www.bilibili.com/list/1", "playlist_count": 2 },
+                { "_type": "multi_video", "url": "https://www.bilibili.com/video/BV3", "playlist_count": 2 },
+                { "_type": "url", "url": "https://www.bilibili.com/list/2", "playlist_count": 2 },
+                { "_type": "video", "url": "https://www.bilibili.com/video/BV4", "playlist_count": 2, "entries": [] },
+                { "_type": "video", "url": "https://www.youtube.com/@channel", "playlist_count": 2 },
+                { "_type": "video", "url": "https://soundcloud.com/user", "playlist_count": 2 }
+              ]
+            }
+            """;
+
+        Assert.That(YtDlpSearchResult.ParseList(json).Select(r => r.Id), Is.EqualTo(new[] { "BV1", "BV2" }));
+    }
+
+    [Test]
     public void ParseList_SingleVideoResultIsWrapped()
     {
         IReadOnlyList<YtDlpSearchResult> results = YtDlpSearchResult.ParseList(

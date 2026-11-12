@@ -237,9 +237,12 @@ public sealed class YtDlpTabViewModel : IToolContext
             {
                 int count = Math.Clamp(
                     _settings.SearchResultCount.Value, Models.SearchProviders.MinResultCount, Models.SearchProviders.MaxResultCount);
-                IReadOnlyList<YtDlpSearchResult> results = await runner.SearchAsync(
-                    SelectedSearchProvider.Value.Provider, query, count,
-                    _environment.FFmpegLocation.Value, _settings.ExtraArguments.Value, _cts.Token);
+                SearchProvider provider = SelectedSearchProvider.Value.Provider;
+                IReadOnlyList<YtDlpSearchResult> results = provider == SearchProvider.Niconico
+                    ? await NiconicoSearch.SearchAsync(query, count, _settings.ExtraArguments.Value, _cts.Token)
+                    : await runner.SearchAsync(
+                        provider, query, count,
+                        _environment.FFmpegLocation.Value, _settings.ExtraArguments.Value, _cts.Token);
                 items = results.Select(r => new VideoItem(r, this)).ToArray();
             }
 
