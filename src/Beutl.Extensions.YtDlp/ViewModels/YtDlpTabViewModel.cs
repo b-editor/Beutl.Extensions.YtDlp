@@ -239,7 +239,7 @@ public sealed class YtDlpTabViewModel : IToolContext
                     _settings.SearchResultCount.Value, Models.SearchProviders.MinResultCount, Models.SearchProviders.MaxResultCount);
                 SearchProvider provider = SelectedSearchProvider.Value.Provider;
                 IReadOnlyList<YtDlpSearchResult> results = provider == SearchProvider.Niconico
-                    ? await NiconicoSearch.SearchAsync(query, count, _cts.Token)
+                    ? await NiconicoSearch.SearchAsync(query, count, _settings.ExtraArguments.Value, _cts.Token)
                     : await runner.SearchAsync(
                         provider, query, count,
                         _environment.FFmpegLocation.Value, _settings.ExtraArguments.Value, _cts.Token);
