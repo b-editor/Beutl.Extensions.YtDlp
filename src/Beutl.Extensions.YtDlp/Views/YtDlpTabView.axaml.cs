@@ -7,6 +7,7 @@ using Avalonia.Interactivity;
 using Avalonia.Platform.Storage;
 using Avalonia.Threading;
 using Avalonia.VisualTree;
+using Beutl.Extensions.YtDlp.Resources;
 using Beutl.Extensions.YtDlp.ViewModels;
 
 namespace Beutl.Extensions.YtDlp.Views;
@@ -105,7 +106,7 @@ public partial class YtDlpTabView : UserControl
 
         var options = new FolderPickerOpenOptions
         {
-            Title = "保存先を選択",
+            Title = Strings.ChooseOutputFolder,
             AllowMultiple = false,
         };
 

@@ -1,0 +1,388 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms</value></resheader>
+  <data name="DownloaderName" xml:space="preserve">
+    <value>Descargador de yt-dlp</value>
+  </data>
+  <data name="AddToTimeline" xml:space="preserve">
+    <value>Añadir a la línea de tiempo</value>
+  </data>
+  <data name="AddAtPlayhead" xml:space="preserve">
+    <value>Añadir en la posición del cabezal de reproducción</value>
+  </data>
+  <data name="OpenOutputFolder" xml:space="preserve">
+    <value>Abrir la carpeta que contiene el archivo</value>
+  </data>
+  <data name="RemoveFromHistory" xml:space="preserve">
+    <value>Quitar del historial</value>
+  </data>
+  <data name="RemoveFromHistoryHint" xml:space="preserve">
+    <value>Quitar del historial y conservar el archivo</value>
+  </data>
+  <data name="CheckingYtDlp" xml:space="preserve">
+    <value>Buscando yt-dlp…</value>
+  </data>
+  <data name="DownloadSettings" xml:space="preserve">
+    <value>Ajustes de descarga</value>
+  </data>
+  <data name="DownloadSettingsHint" xml:space="preserve">
+    <value>Elegir el formato, la carpeta de destino y otras opciones</value>
+  </data>
+  <data name="SharedFormat" xml:space="preserve">
+    <value>Formato para todos los vídeos</value>
+  </data>
+  <data name="SharedFormatHint" xml:space="preserve">
+    <value>Para cambiar el formato de un vídeo, selecciona el formato en su fila.</value>
+  </data>
+  <data name="CustomArguments" xml:space="preserve">
+    <value>Argumentos personalizados</value>
+  </data>
+  <data name="OutputFolder" xml:space="preserve">
+    <value>Carpeta de destino</value>
+  </data>
+  <data name="ChooseFolder" xml:space="preserve">
+    <value>Elegir carpeta</value>
+  </data>
+  <data name="ChooseOutputFolder" xml:space="preserve">
+    <value>Elegir carpeta de destino</value>
+  </data>
+  <data name="AddAfterDownload" xml:space="preserve">
+    <value>Añadir a la línea de tiempo tras la descarga</value>
+  </data>
+  <data name="MoreActions" xml:space="preserve">
+    <value>Más acciones</value>
+  </data>
+  <data name="UpdateYtDlp" xml:space="preserve">
+    <value>Actualizar yt-dlp</value>
+  </data>
+  <data name="ShowLog" xml:space="preserve">
+    <value>Ver registro</value>
+  </data>
+  <data name="YtDlpNotFound" xml:space="preserve">
+    <value>No se encuentra yt-dlp</value>
+  </data>
+  <data name="InstallOrSetPath" xml:space="preserve">
+    <value>Instala yt-dlp o indica la ruta del ejecutable en los ajustes.</value>
+  </data>
+  <data name="YtDlpMissingMessage" xml:space="preserve">
+    <value>No se encuentra yt-dlp. Instálalo o indica la ruta del ejecutable en los ajustes.</value>
+  </data>
+  <data name="FasterStartup" xml:space="preserve">
+    <value>Actualiza yt-dlp para que se inicie más rápido</value>
+  </data>
+  <data name="FasterStartupHint" xml:space="preserve">
+    <value>Esta versión de yt-dlp se descomprime cada vez que se inicia. La versión ya descomprimida ahorra unos segundos al buscar o cargar formatos.</value>
+  </data>
+  <data name="SearchSite" xml:space="preserve">
+    <value>Sitio de búsqueda</value>
+  </data>
+  <data name="SearchPlaceholder" xml:space="preserve">
+    <value>Palabra clave o URL</value>
+  </data>
+  <data name="VideoFormat" xml:space="preserve">
+    <value>Formato de este vídeo</value>
+  </data>
+  <data name="LoadingFormats" xml:space="preserve">
+    <value>Cargando formatos…</value>
+  </data>
+  <data name="UsePreset" xml:space="preserve">
+    <value>Usar preajuste</value>
+  </data>
+  <data name="ResetToPreset" xml:space="preserve">
+    <value>Restablecer el preajuste</value>
+  </data>
+  <data name="OpenVideoPage" xml:space="preserve">
+    <value>Abrir página del vídeo</value>
+  </data>
+  <data name="OpenVideoInBrowser" xml:space="preserve">
+    <value>Abrir la página del vídeo en el navegador</value>
+  </data>
+  <data name="DownloadToMaterials" xml:space="preserve">
+    <value>Descargar en la carpeta de materiales</value>
+  </data>
+  <data name="DownloadToMaterialsHint" xml:space="preserve">
+    <value>Descargar en la carpeta de materiales (~/.beutl/materials/yt-dlp)</value>
+  </data>
+  <data name="DownloadToOutput" xml:space="preserve">
+    <value>Descargar en la carpeta de destino</value>
+  </data>
+  <data name="NoDownloads" xml:space="preserve">
+    <value>Aún no hay descargas</value>
+  </data>
+  <data name="NoDownloadsHint" xml:space="preserve">
+    <value>Aquí aparecerán los vídeos que descargues.</value>
+  </data>
+  <data name="MaterialsFolder" xml:space="preserve">
+    <value>Carpeta de materiales</value>
+  </data>
+  <data name="InstallTitle" xml:space="preserve">
+    <value>Instalar yt-dlp</value>
+  </data>
+  <data name="InstallDescription" xml:space="preserve">
+    <value>Se descargará la última versión de yt-dlp desde GitHub y se instalará en esta carpeta.</value>
+  </data>
+  <data name="InstallNotice" xml:space="preserve">
+    <value>Es tu responsabilidad consultar las condiciones de uso y los derechos de autor del contenido que descargues.</value>
+  </data>
+  <data name="ExecutablePath" xml:space="preserve">
+    <value>Ejecutable de yt-dlp</value>
+  </data>
+  <data name="ExecutablePathDescription" xml:space="preserve">
+    <value>Deja el campo vacío para buscar en ~/.beutl/yt-dlp y en PATH.</value>
+  </data>
+  <data name="FFmpegLocation" xml:space="preserve">
+    <value>Ubicación de FFmpeg</value>
+  </data>
+  <data name="FFmpegLocationDescription" xml:space="preserve">
+    <value>Se usa para combinar vídeo y audio. Deja el campo vacío para buscar en ~/.beutl/ffmpeg, Homebrew y PATH.</value>
+  </data>
+  <data name="DefaultOutputFolder" xml:space="preserve">
+    <value>Carpeta de destino predeterminada</value>
+  </data>
+  <data name="DefaultOutputFolderDescription" xml:space="preserve">
+    <value>Deja el campo vacío para guardar en la carpeta resources/yt-dlp del proyecto.</value>
+  </data>
+  <data name="DefaultFormat" xml:space="preserve">
+    <value>Formato predeterminado</value>
+  </data>
+  <data name="ExtraArguments" xml:space="preserve">
+    <value>Argumentos adicionales</value>
+  </data>
+  <data name="ExtraArgumentsDescription" xml:space="preserve">
+    <value>Se añaden a cada comando de yt-dlp (por ejemplo, --cookies-from-browser chrome).</value>
+  </data>
+  <data name="SearchResultCount" xml:space="preserve">
+    <value>Límite de resultados</value>
+  </data>
+  <data name="SearchResultCountDescription" xml:space="preserve">
+    <value>Número de vídeos que se obtienen por búsqueda (1–100).</value>
+  </data>
+  <data name="BestQualityPreset" xml:space="preserve">
+    <value>Máxima calidad (prioriza H.264/MP4)</value>
+  </data>
+  <data name="BestQuality" xml:space="preserve">
+    <value>Máxima calidad</value>
+  </data>
+  <data name="UpTo1080p" xml:space="preserve">
+    <value>Hasta 1080p</value>
+  </data>
+  <data name="UpTo720p" xml:space="preserve">
+    <value>Hasta 720p</value>
+  </data>
+  <data name="AudioOnlyPreset" xml:space="preserve">
+    <value>Solo audio (M4A)</value>
+  </data>
+  <data name="AudioOnly" xml:space="preserve">
+    <value>Solo audio</value>
+  </data>
+  <data name="Custom" xml:space="preserve">
+    <value>Personalizado</value>
+  </data>
+  <data name="Niconico" xml:space="preserve">
+    <value>Niconico</value>
+  </data>
+  <data name="Resolution1080p" xml:space="preserve">
+    <value>1080p</value>
+  </data>
+  <data name="Resolution720p" xml:space="preserve">
+    <value>720p</value>
+  </data>
+  <data name="Bilibili" xml:space="preserve">
+    <value>Bilibili</value>
+  </data>
+  <data name="SearchHint" xml:space="preserve">
+    <value>Escribe una palabra clave o una URL y pulsa Intro</value>
+  </data>
+  <data name="OutputFolderHeader" xml:space="preserve">
+    <value>Carpeta de destino ({0})</value>
+  </data>
+  <data name="LoadingVideoInfo" xml:space="preserve">
+    <value>Cargando información del vídeo…</value>
+  </data>
+  <data name="Searching" xml:space="preserve">
+    <value>Buscando…</value>
+  </data>
+  <data name="EnterQuery" xml:space="preserve">
+    <value>Introduce una palabra clave o una URL.</value>
+  </data>
+  <data name="PlaylistUnsupported" xml:space="preserve">
+    <value>No se admiten enlaces a listas de reproducción. Introduce la URL de un solo vídeo.</value>
+  </data>
+  <data name="PlaylistUnsupportedWithCount" xml:space="preserve">
+    <value>Esta URL lleva a una lista de reproducción (número de vídeos: {0}). Introduce la URL de un solo vídeo.</value>
+  </data>
+  <data name="NoResults" xml:space="preserve">
+    <value>No se encontraron resultados</value>
+  </data>
+  <data name="VideoInfoFailed" xml:space="preserve">
+    <value>No se pudo cargar la información del vídeo.</value>
+  </data>
+  <data name="SearchFailed" xml:space="preserve">
+    <value>La búsqueda ha fallado.</value>
+  </data>
+  <data name="EnterCustomArguments" xml:space="preserve">
+    <value>Introduce los argumentos personalizados o elige otro formato.</value>
+  </data>
+  <data name="NoFFmpegForAudio" xml:space="preserve">
+    <value>No se encuentra FFmpeg para convertir el audio a M4A. Se guardará en su formato original.</value>
+  </data>
+  <data name="NoFFmpegForVideo" xml:space="preserve">
+    <value>No se encuentra FFmpeg para combinar el vídeo y el audio. Se descargará un formato que ya incluya audio y la calidad podría ser menor.</value>
+  </data>
+  <data name="SavedFile" xml:space="preserve">
+    <value>Se ha guardado {1} ({0})</value>
+  </data>
+  <data name="DownloadFailed" xml:space="preserve">
+    <value>La descarga ha fallado.</value>
+  </data>
+  <data name="LoadFormatsFailed" xml:space="preserve">
+    <value>No se pudieron cargar los formatos: {0}</value>
+  </data>
+  <data name="FileNotFound" xml:space="preserve">
+    <value>No se encuentra el archivo: {0}</value>
+  </data>
+  <data name="AddToTimelineFailed" xml:space="preserve">
+    <value>No se pudo añadir el archivo a la línea de tiempo.</value>
+  </data>
+  <data name="PostProcessing" xml:space="preserve">
+    <value>Posprocesando: {0}</value>
+  </data>
+  <data name="PostProcessingComplete" xml:space="preserve">
+    <value>Posprocesamiento completado: {0}</value>
+  </data>
+  <data name="OutputFile" xml:space="preserve">
+    <value>Salida: {0}</value>
+  </data>
+  <data name="WaitingForPostProcessing" xml:space="preserve">
+    <value>Descarga completada. Esperando el posprocesamiento…</value>
+  </data>
+  <data name="Downloading" xml:space="preserve">
+    <value>Descargando</value>
+  </data>
+  <data name="TimeRemaining" xml:space="preserve">
+    <value>Tiempo restante: {0}</value>
+  </data>
+  <data name="VideoFormatChip" xml:space="preserve">
+    <value>Este vídeo: {0}</value>
+  </data>
+  <data name="PresetFormatChip" xml:space="preserve">
+    <value>Formato: {0}</value>
+  </data>
+  <data name="VideoFormatHint" xml:space="preserve">
+    <value>Este vídeo se descargará en el formato «{0}». Haz clic para cambiarlo.</value>
+  </data>
+  <data name="PresetFormatHint" xml:space="preserve">
+    <value>Se usa el preajuste «{0}». Haz clic para elegir otro formato para este vídeo.</value>
+  </data>
+  <data name="NoFormats" xml:space="preserve">
+    <value>No hay formatos disponibles.</value>
+  </data>
+  <data name="StartingDownload" xml:space="preserve">
+    <value>Iniciando descarga…</value>
+  </data>
+  <data name="FailedWithReason" xml:space="preserve">
+    <value>Error: {0}</value>
+  </data>
+  <data name="LiveStream" xml:space="preserve">
+    <value>En directo</value>
+  </data>
+  <data name="AutoMergeAudio" xml:space="preserve">
+    <value>Combinación automática con el audio</value>
+  </data>
+  <data name="AudioOnlyWithExtension" xml:space="preserve">
+    <value>Solo audio ({0})</value>
+  </data>
+  <data name="ViewCountOne" xml:space="preserve">
+    <value>1 visualización</value>
+  </data>
+  <data name="ViewCount" xml:space="preserve">
+    <value>{0:N0} visualizaciones</value>
+  </data>
+  <data name="ViewCountSmall" xml:space="preserve">
+    <value>{0:0.#} mil visualizaciones</value>
+  </data>
+  <data name="ViewCountLarge" xml:space="preserve">
+    <value>{0:0.#} M de visualizaciones</value>
+  </data>
+  <data name="ViewCountLargest" xml:space="preserve">
+    <value>{0:0.#} mil millones de visualizaciones</value>
+  </data>
+  <data name="Preparing" xml:space="preserve">
+    <value>Preparando</value>
+  </data>
+  <data name="UnsupportedPlatform" xml:space="preserve">
+    <value>No hay una versión de yt-dlp para este sistema operativo y procesador. Instálalo manualmente e indica la ruta del ejecutable en los ajustes.</value>
+  </data>
+  <data name="FetchingChecksums" xml:space="preserve">
+    <value>Obteniendo sumas de verificación (1/5)</value>
+  </data>
+  <data name="DownloadingAsset" xml:space="preserve">
+    <value>Descargando {0} (2/5)</value>
+  </data>
+  <data name="VerifyingDownload" xml:space="preserve">
+    <value>Verificando la descarga (3/5)</value>
+  </data>
+  <data name="ChecksumMismatch" xml:space="preserve">
+    <value>La suma de verificación del archivo descargado no coincide.</value>
+  </data>
+  <data name="Extracting" xml:space="preserve">
+    <value>Extrayendo archivos (4/5)</value>
+  </data>
+  <data name="CheckingInstallation" xml:space="preserve">
+    <value>Comprobando la instalación (5/5)</value>
+  </data>
+  <data name="InstalledVersion" xml:space="preserve">
+    <value>Se ha instalado yt-dlp {0}</value>
+  </data>
+  <data name="InstallFailed" xml:space="preserve">
+    <value>Error de instalación</value>
+  </data>
+  <data name="RestoredInstallation" xml:space="preserve">
+    <value>{0}&#10;Se ha restaurado la instalación anterior.</value>
+  </data>
+  <data name="MissingExecutableInArchive" xml:space="preserve">
+    <value>El archivo descomprimido no contiene el ejecutable de yt-dlp.</value>
+  </data>
+  <data name="NiconicoSearchTimeout" xml:space="preserve">
+    <value>Se agotó el tiempo de espera de la búsqueda en Niconico.</value>
+  </data>
+  <data name="NiconicoSearchError" xml:space="preserve">
+    <value>No se pudieron obtener los resultados de Niconico.</value>
+  </data>
+  <data name="MissingProxyValue" xml:space="preserve">
+    <value>Indica un valor para --proxy.</value>
+  </data>
+  <data name="UnclosedQuote" xml:space="preserve">
+    <value>Faltan las comillas de cierre de un argumento.</value>
+  </data>
+  <data name="NoVideoInfoReturned" xml:space="preserve">
+    <value>yt-dlp no ha devuelto información del vídeo.</value>
+  </data>
+  <data name="NoSearchResultsReturned" xml:space="preserve">
+    <value>yt-dlp no ha devuelto resultados de búsqueda.</value>
+  </data>
+  <data name="FFmpegRequired" xml:space="preserve">
+    <value>Este vídeo solo está disponible en pistas de vídeo y audio separadas. Instala FFmpeg para combinarlas o indica su ubicación en los ajustes de la extensión.</value>
+  </data>
+  <data name="NoOutputPath" xml:space="preserve">
+    <value>yt-dlp no ha indicado la ruta del archivo de salida.</value>
+  </data>
+  <data name="MergeFailed" xml:space="preserve">
+    <value>No se pudieron combinar el vídeo y el audio. Comprueba que FFmpeg esté disponible. Los archivos separados siguen en la carpeta de destino: {0}</value>
+  </data>
+  <data name="ReportedFileMissing" xml:space="preserve">
+    <value>No se encuentra el archivo indicado por yt-dlp: {0}</value>
+  </data>
+  <data name="CannotStartYtDlp" xml:space="preserve">
+    <value>No se pudo iniciar yt-dlp: {0}</value>
+  </data>
+  <data name="YtDlpExitCode" xml:space="preserve">
+    <value>yt-dlp ha terminado con el código de error {0}</value>
+  </data>
+  <data name="YtDlpExitError" xml:space="preserve">
+    <value>yt-dlp ha terminado con el código de error {0}: {1}</value>
+  </data>
+</root>

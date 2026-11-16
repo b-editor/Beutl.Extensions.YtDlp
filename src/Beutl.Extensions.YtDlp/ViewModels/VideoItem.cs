@@ -2,6 +2,7 @@ using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using Avalonia.Media.Imaging;
 using Beutl.Extensions.YtDlp.Models;
+using Beutl.Extensions.YtDlp.Resources;
 using Beutl.Extensions.YtDlp.Services;
 using Reactive.Bindings;
 using Reactive.Bindings.Extensions;
@@ -24,14 +25,16 @@ public sealed class VideoItem : IDisposable
         // The chip always states what this row will download with: the shared preset or an override.
         FormatChipText = SelectedFormat
             .CombineLatest(Owner.SelectedPreset, (format, preset) =>
-                format != null ? $"この動画: {format.ShortName}" : $"形式: {preset?.ShortName ?? ""}")
+                format != null
+                    ? string.Format(Strings.VideoFormatChip, format.ShortName)
+                    : string.Format(Strings.PresetFormatChip, preset?.ShortName))
             .ToReadOnlyReactivePropertySlim("")
             .AddTo(_disposables);
         FormatChipToolTip = SelectedFormat
             .CombineLatest(Owner.SelectedPreset, (format, preset) =>
                 format != null
-                    ? $"この動画だけ「{format.DisplayName}」でダウンロードします。クリックで変更"
-                    : $"共通の形式「{preset?.Name ?? ""}」でダウンロードします。クリックでこの動画だけ変更")
+                    ? string.Format(Strings.VideoFormatHint, format.DisplayName)
+                    : string.Format(Strings.PresetFormatHint, preset?.Name))
             .ToReadOnlyReactivePropertySlim("")
             .AddTo(_disposables);
         HasFormatsMessage = FormatsMessage.Select(m => !string.IsNullOrEmpty(m)).ToReadOnlyReactivePropertySlim().AddTo(_disposables);
@@ -117,7 +120,7 @@ public sealed class VideoItem : IDisposable
     {
         Formats.Value = FormatCatalog.Summarize(formats).ToArray();
         FormatsLoaded = true;
-        FormatsMessage.Value = Formats.Value.Length == 0 ? "利用可能なフォーマットがありません。" : "";
+        FormatsMessage.Value = Formats.Value.Length == 0 ? Strings.NoFormats : "";
     }
 
     internal void BeginDownload()
@@ -126,17 +129,17 @@ public sealed class VideoItem : IDisposable
         IsFailed.Value = false;
         IsIndeterminate.Value = true;
         Progress.Value = 0;
-        StatusText.Value = "ダウンロードを開始しています...";
+        StatusText.Value = Strings.StartingDownload;
         IsActive.Value = true;
     }
 
-    internal void CompleteDownload(string filePath, DownloadDestination destination)
+    internal void CompleteDownload(string message)
     {
         IsActive.Value = false;
         IsIndeterminate.Value = false;
         Progress.Value = 100;
         IsCompleted.Value = true;
-        StatusText.Value = $"{DownloadDestinations.GetLabel(destination)}に保存: {Path.GetFileName(filePath)}";
+        StatusText.Value = message;
     }
 
     internal void FailDownload(string message, bool canceled)
@@ -144,7 +147,7 @@ public sealed class VideoItem : IDisposable
         IsActive.Value = false;
         IsIndeterminate.Value = false;
         IsFailed.Value = !canceled;
-        StatusText.Value = canceled ? "キャンセルしました" : $"失敗: {message}";
+        StatusText.Value = canceled ? Language.MessageStrings.Canceled : string.Format(Strings.FailedWithReason, message);
     }
 
     public void Dispose()

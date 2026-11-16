@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:res="using:Beutl.Extensions.YtDlp.Resources"
              xmlns:viewModels="using:Beutl.Extensions.YtDlp.ViewModels"
              d:DesignHeight="450"
              d:DesignWidth="800"
@@ -11,9 +12,9 @@
              mc:Ignorable="d">
     <Carousel Name="Root">
         <StackPanel Spacing="8">
-            <TextBlock Text="GitHub の yt-dlp リリースから最新の実行ファイルをダウンロードし、次のフォルダーに保存します。" TextWrapping="WrapWithOverflow" />
+            <TextBlock Text="{x:Static res:Strings.InstallDescription}" TextWrapping="WrapWithOverflow" />
             <TextBox IsReadOnly="True" Text="{Binding InstallDirectory}" />
-            <TextBlock Text="ダウンロードするコンテンツの利用規約と著作権は、ご自身の責任でご確認ください。" TextWrapping="WrapWithOverflow" />
+            <TextBlock Text="{x:Static res:Strings.InstallNotice}" TextWrapping="WrapWithOverflow" />
             <HyperlinkButton Content="yt-dlp (GitHub)" NavigateUri="https://github.com/yt-dlp/yt-dlp" />
         </StackPanel>
         <StackPanel Spacing="4">

@@ -1,0 +1,388 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms</value></resheader>
+  <data name="DownloaderName" xml:space="preserve">
+    <value>yt-dlp 다운로더</value>
+  </data>
+  <data name="AddToTimeline" xml:space="preserve">
+    <value>타임라인에 추가</value>
+  </data>
+  <data name="AddAtPlayhead" xml:space="preserve">
+    <value>재생 헤드 위치에 추가</value>
+  </data>
+  <data name="OpenOutputFolder" xml:space="preserve">
+    <value>저장된 폴더 열기</value>
+  </data>
+  <data name="RemoveFromHistory" xml:space="preserve">
+    <value>기록에서 삭제</value>
+  </data>
+  <data name="RemoveFromHistoryHint" xml:space="preserve">
+    <value>기록에서만 삭제하고 파일은 유지합니다</value>
+  </data>
+  <data name="CheckingYtDlp" xml:space="preserve">
+    <value>yt-dlp 확인 중…</value>
+  </data>
+  <data name="DownloadSettings" xml:space="preserve">
+    <value>다운로드 설정</value>
+  </data>
+  <data name="DownloadSettingsHint" xml:space="preserve">
+    <value>형식, 저장 폴더 등 다운로드 옵션 설정</value>
+  </data>
+  <data name="SharedFormat" xml:space="preserve">
+    <value>모든 동영상에 사용할 형식</value>
+  </data>
+  <data name="SharedFormatHint" xml:space="preserve">
+    <value>동영상 하나의 형식을 바꾸려면 해당 행에서 형식을 선택하세요.</value>
+  </data>
+  <data name="CustomArguments" xml:space="preserve">
+    <value>사용자 지정 인수</value>
+  </data>
+  <data name="OutputFolder" xml:space="preserve">
+    <value>저장 폴더</value>
+  </data>
+  <data name="ChooseFolder" xml:space="preserve">
+    <value>폴더 선택</value>
+  </data>
+  <data name="ChooseOutputFolder" xml:space="preserve">
+    <value>저장 폴더 선택</value>
+  </data>
+  <data name="AddAfterDownload" xml:space="preserve">
+    <value>다운로드 후 타임라인에 추가</value>
+  </data>
+  <data name="MoreActions" xml:space="preserve">
+    <value>기타 작업</value>
+  </data>
+  <data name="UpdateYtDlp" xml:space="preserve">
+    <value>yt-dlp 업데이트</value>
+  </data>
+  <data name="ShowLog" xml:space="preserve">
+    <value>로그 보기</value>
+  </data>
+  <data name="YtDlpNotFound" xml:space="preserve">
+    <value>yt-dlp를 찾을 수 없습니다</value>
+  </data>
+  <data name="InstallOrSetPath" xml:space="preserve">
+    <value>yt-dlp를 설치하거나 설정에서 실행 파일 경로를 지정하세요.</value>
+  </data>
+  <data name="YtDlpMissingMessage" xml:space="preserve">
+    <value>yt-dlp를 찾을 수 없습니다. 설치하거나 설정에서 실행 파일 경로를 지정하세요.</value>
+  </data>
+  <data name="FasterStartup" xml:space="preserve">
+    <value>yt-dlp를 업데이트하면 시작 속도가 빨라집니다</value>
+  </data>
+  <data name="FasterStartupHint" xml:space="preserve">
+    <value>현재 버전은 시작할 때마다 압축을 풉니다. 미리 압축을 푼 버전으로 업데이트하면 검색하거나 형식을 불러올 때 몇 초를 절약할 수 있습니다.</value>
+  </data>
+  <data name="SearchSite" xml:space="preserve">
+    <value>검색할 사이트</value>
+  </data>
+  <data name="SearchPlaceholder" xml:space="preserve">
+    <value>검색어 또는 URL</value>
+  </data>
+  <data name="VideoFormat" xml:space="preserve">
+    <value>이 동영상의 형식</value>
+  </data>
+  <data name="LoadingFormats" xml:space="preserve">
+    <value>형식 불러오는 중…</value>
+  </data>
+  <data name="UsePreset" xml:space="preserve">
+    <value>프리셋 사용</value>
+  </data>
+  <data name="ResetToPreset" xml:space="preserve">
+    <value>프리셋으로 되돌리기</value>
+  </data>
+  <data name="OpenVideoPage" xml:space="preserve">
+    <value>동영상 페이지 열기</value>
+  </data>
+  <data name="OpenVideoInBrowser" xml:space="preserve">
+    <value>브라우저에서 동영상 페이지 열기</value>
+  </data>
+  <data name="DownloadToMaterials" xml:space="preserve">
+    <value>소재 폴더에 다운로드</value>
+  </data>
+  <data name="DownloadToMaterialsHint" xml:space="preserve">
+    <value>소재 폴더에 다운로드 (~/.beutl/materials/yt-dlp)</value>
+  </data>
+  <data name="DownloadToOutput" xml:space="preserve">
+    <value>저장 폴더에 다운로드</value>
+  </data>
+  <data name="NoDownloads" xml:space="preserve">
+    <value>아직 다운로드한 항목이 없습니다</value>
+  </data>
+  <data name="NoDownloadsHint" xml:space="preserve">
+    <value>다운로드한 동영상이 여기에 표시됩니다.</value>
+  </data>
+  <data name="MaterialsFolder" xml:space="preserve">
+    <value>소재 폴더</value>
+  </data>
+  <data name="InstallTitle" xml:space="preserve">
+    <value>yt-dlp 설치</value>
+  </data>
+  <data name="InstallDescription" xml:space="preserve">
+    <value>GitHub에서 최신 yt-dlp를 다운로드해 다음 폴더에 설치합니다.</value>
+  </data>
+  <data name="InstallNotice" xml:space="preserve">
+    <value>다운로드할 콘텐츠의 이용 약관과 저작권을 직접 확인하세요.</value>
+  </data>
+  <data name="ExecutablePath" xml:space="preserve">
+    <value>yt-dlp 실행 파일</value>
+  </data>
+  <data name="ExecutablePathDescription" xml:space="preserve">
+    <value>비워 두면 ~/.beutl/yt-dlp와 PATH에서 찾습니다.</value>
+  </data>
+  <data name="FFmpegLocation" xml:space="preserve">
+    <value>FFmpeg 위치</value>
+  </data>
+  <data name="FFmpegLocationDescription" xml:space="preserve">
+    <value>영상과 오디오를 합칠 때 사용합니다. 비워 두면 ~/.beutl/ffmpeg, Homebrew, PATH에서 찾습니다.</value>
+  </data>
+  <data name="DefaultOutputFolder" xml:space="preserve">
+    <value>기본 저장 폴더</value>
+  </data>
+  <data name="DefaultOutputFolderDescription" xml:space="preserve">
+    <value>비워 두면 프로젝트의 resources/yt-dlp 폴더에 저장합니다.</value>
+  </data>
+  <data name="DefaultFormat" xml:space="preserve">
+    <value>기본 형식</value>
+  </data>
+  <data name="ExtraArguments" xml:space="preserve">
+    <value>추가 인수</value>
+  </data>
+  <data name="ExtraArgumentsDescription" xml:space="preserve">
+    <value>모든 yt-dlp 명령에 추가합니다(예: --cookies-from-browser chrome).</value>
+  </data>
+  <data name="SearchResultCount" xml:space="preserve">
+    <value>검색 결과 수</value>
+  </data>
+  <data name="SearchResultCountDescription" xml:space="preserve">
+    <value>한 번에 가져올 동영상 수(1~100개).</value>
+  </data>
+  <data name="BestQualityPreset" xml:space="preserve">
+    <value>최고 화질(H.264 / MP4 우선)</value>
+  </data>
+  <data name="BestQuality" xml:space="preserve">
+    <value>최고 화질</value>
+  </data>
+  <data name="UpTo1080p" xml:space="preserve">
+    <value>최대 1080p</value>
+  </data>
+  <data name="UpTo720p" xml:space="preserve">
+    <value>최대 720p</value>
+  </data>
+  <data name="AudioOnlyPreset" xml:space="preserve">
+    <value>오디오만(M4A)</value>
+  </data>
+  <data name="AudioOnly" xml:space="preserve">
+    <value>오디오만</value>
+  </data>
+  <data name="Custom" xml:space="preserve">
+    <value>사용자 지정</value>
+  </data>
+  <data name="Niconico" xml:space="preserve">
+    <value>니코니코 동화</value>
+  </data>
+  <data name="Resolution1080p" xml:space="preserve">
+    <value>1080p</value>
+  </data>
+  <data name="Resolution720p" xml:space="preserve">
+    <value>720p</value>
+  </data>
+  <data name="Bilibili" xml:space="preserve">
+    <value>빌리빌리</value>
+  </data>
+  <data name="SearchHint" xml:space="preserve">
+    <value>검색어나 URL을 입력하고 Enter 키를 누르세요</value>
+  </data>
+  <data name="OutputFolderHeader" xml:space="preserve">
+    <value>저장 폴더 ({0})</value>
+  </data>
+  <data name="LoadingVideoInfo" xml:space="preserve">
+    <value>동영상 정보 불러오는 중…</value>
+  </data>
+  <data name="Searching" xml:space="preserve">
+    <value>검색 중…</value>
+  </data>
+  <data name="EnterQuery" xml:space="preserve">
+    <value>검색어나 URL을 입력하세요.</value>
+  </data>
+  <data name="PlaylistUnsupported" xml:space="preserve">
+    <value>재생목록 URL은 지원하지 않습니다. 개별 동영상의 URL을 입력하세요.</value>
+  </data>
+  <data name="PlaylistUnsupportedWithCount" xml:space="preserve">
+    <value>재생목록 URL입니다(항목 {0}개). 개별 동영상의 URL을 입력하세요.</value>
+  </data>
+  <data name="NoResults" xml:space="preserve">
+    <value>검색 결과가 없습니다</value>
+  </data>
+  <data name="VideoInfoFailed" xml:space="preserve">
+    <value>동영상 정보를 불러오지 못했습니다.</value>
+  </data>
+  <data name="SearchFailed" xml:space="preserve">
+    <value>검색하지 못했습니다.</value>
+  </data>
+  <data name="EnterCustomArguments" xml:space="preserve">
+    <value>사용자 지정 인수를 입력하거나 다른 형식을 선택하세요.</value>
+  </data>
+  <data name="NoFFmpegForAudio" xml:space="preserve">
+    <value>FFmpeg를 찾을 수 없어 오디오를 M4A로 변환할 수 없습니다. 원래 형식으로 저장합니다.</value>
+  </data>
+  <data name="NoFFmpegForVideo" xml:space="preserve">
+    <value>FFmpeg를 찾을 수 없어 영상과 오디오를 합칠 수 없습니다. 오디오가 포함된 형식으로 다운로드하므로 화질이 낮아질 수 있습니다.</value>
+  </data>
+  <data name="SavedFile" xml:space="preserve">
+    <value>{1} 저장 완료 ({0})</value>
+  </data>
+  <data name="DownloadFailed" xml:space="preserve">
+    <value>다운로드하지 못했습니다.</value>
+  </data>
+  <data name="LoadFormatsFailed" xml:space="preserve">
+    <value>형식을 불러오지 못했습니다: {0}</value>
+  </data>
+  <data name="FileNotFound" xml:space="preserve">
+    <value>파일을 찾을 수 없습니다: {0}</value>
+  </data>
+  <data name="AddToTimelineFailed" xml:space="preserve">
+    <value>파일을 타임라인에 추가하지 못했습니다.</value>
+  </data>
+  <data name="PostProcessing" xml:space="preserve">
+    <value>후처리 중: {0}</value>
+  </data>
+  <data name="PostProcessingComplete" xml:space="preserve">
+    <value>후처리 완료: {0}</value>
+  </data>
+  <data name="OutputFile" xml:space="preserve">
+    <value>출력: {0}</value>
+  </data>
+  <data name="WaitingForPostProcessing" xml:space="preserve">
+    <value>다운로드 완료. 후처리를 기다리는 중…</value>
+  </data>
+  <data name="Downloading" xml:space="preserve">
+    <value>다운로드 중</value>
+  </data>
+  <data name="TimeRemaining" xml:space="preserve">
+    <value>남은 시간 {0}</value>
+  </data>
+  <data name="VideoFormatChip" xml:space="preserve">
+    <value>이 동영상: {0}</value>
+  </data>
+  <data name="PresetFormatChip" xml:space="preserve">
+    <value>형식: {0}</value>
+  </data>
+  <data name="VideoFormatHint" xml:space="preserve">
+    <value>이 동영상은 ‘{0}’ 형식으로 다운로드합니다. 클릭하여 변경하세요.</value>
+  </data>
+  <data name="PresetFormatHint" xml:space="preserve">
+    <value>공통 프리셋 ‘{0}’을 사용합니다. 이 동영상의 형식을 바꾸려면 클릭하세요.</value>
+  </data>
+  <data name="NoFormats" xml:space="preserve">
+    <value>사용 가능한 형식이 없습니다.</value>
+  </data>
+  <data name="StartingDownload" xml:space="preserve">
+    <value>다운로드 시작 중…</value>
+  </data>
+  <data name="FailedWithReason" xml:space="preserve">
+    <value>실패: {0}</value>
+  </data>
+  <data name="LiveStream" xml:space="preserve">
+    <value>실시간 방송</value>
+  </data>
+  <data name="AutoMergeAudio" xml:space="preserve">
+    <value>오디오 자동 병합</value>
+  </data>
+  <data name="AudioOnlyWithExtension" xml:space="preserve">
+    <value>오디오만 ({0})</value>
+  </data>
+  <data name="ViewCountOne" xml:space="preserve">
+    <value>조회수 1회</value>
+  </data>
+  <data name="ViewCount" xml:space="preserve">
+    <value>조회수 {0:N0}회</value>
+  </data>
+  <data name="ViewCountSmall" xml:space="preserve">
+    <value>조회수 {0:0.#}만 회</value>
+  </data>
+  <data name="ViewCountLarge" xml:space="preserve">
+    <value>조회수 {0:0.#}억 회</value>
+  </data>
+  <data name="ViewCountLargest" xml:space="preserve">
+    <value>조회수 {0:0.#}조 회</value>
+  </data>
+  <data name="Preparing" xml:space="preserve">
+    <value>준비 중</value>
+  </data>
+  <data name="UnsupportedPlatform" xml:space="preserve">
+    <value>이 운영 체제와 프로세서용 yt-dlp 빌드가 없습니다. 직접 설치한 후 설정에서 실행 파일 경로를 지정하세요.</value>
+  </data>
+  <data name="FetchingChecksums" xml:space="preserve">
+    <value>체크섬 가져오는 중 (1/5)</value>
+  </data>
+  <data name="DownloadingAsset" xml:space="preserve">
+    <value>{0} 다운로드 중 (2/5)</value>
+  </data>
+  <data name="VerifyingDownload" xml:space="preserve">
+    <value>다운로드 파일 확인 중 (3/5)</value>
+  </data>
+  <data name="ChecksumMismatch" xml:space="preserve">
+    <value>다운로드한 파일의 체크섬이 일치하지 않습니다.</value>
+  </data>
+  <data name="Extracting" xml:space="preserve">
+    <value>압축 푸는 중 (4/5)</value>
+  </data>
+  <data name="CheckingInstallation" xml:space="preserve">
+    <value>설치 확인 중 (5/5)</value>
+  </data>
+  <data name="InstalledVersion" xml:space="preserve">
+    <value>yt-dlp {0} 설치 완료</value>
+  </data>
+  <data name="InstallFailed" xml:space="preserve">
+    <value>설치 실패</value>
+  </data>
+  <data name="RestoredInstallation" xml:space="preserve">
+    <value>{0}&#10;이전에 설치한 버전으로 복원했습니다.</value>
+  </data>
+  <data name="MissingExecutableInArchive" xml:space="preserve">
+    <value>압축을 푼 파일에서 yt-dlp 실행 파일을 찾을 수 없습니다.</value>
+  </data>
+  <data name="NiconicoSearchTimeout" xml:space="preserve">
+    <value>니코니코 동화 검색 시간이 초과되었습니다.</value>
+  </data>
+  <data name="NiconicoSearchError" xml:space="preserve">
+    <value>니코니코 동화 검색 결과를 가져오지 못했습니다.</value>
+  </data>
+  <data name="MissingProxyValue" xml:space="preserve">
+    <value>--proxy 값을 지정하세요.</value>
+  </data>
+  <data name="UnclosedQuote" xml:space="preserve">
+    <value>인수에 닫는 따옴표가 없습니다.</value>
+  </data>
+  <data name="NoVideoInfoReturned" xml:space="preserve">
+    <value>yt-dlp가 동영상 정보를 반환하지 않았습니다.</value>
+  </data>
+  <data name="NoSearchResultsReturned" xml:space="preserve">
+    <value>yt-dlp가 검색 결과를 반환하지 않았습니다.</value>
+  </data>
+  <data name="FFmpegRequired" xml:space="preserve">
+    <value>이 동영상은 영상과 오디오가 따로 제공되어 합치려면 FFmpeg가 필요합니다. FFmpeg를 설치하거나 확장 설정에서 위치를 지정하세요.</value>
+  </data>
+  <data name="NoOutputPath" xml:space="preserve">
+    <value>yt-dlp가 출력 파일 경로를 알려 주지 않았습니다.</value>
+  </data>
+  <data name="MergeFailed" xml:space="preserve">
+    <value>영상과 오디오를 합치지 못했습니다. FFmpeg를 사용할 수 있는지 확인하세요. 분리된 파일은 저장 폴더에 남아 있습니다: {0}</value>
+  </data>
+  <data name="ReportedFileMissing" xml:space="preserve">
+    <value>yt-dlp가 알려 준 파일을 찾을 수 없습니다: {0}</value>
+  </data>
+  <data name="CannotStartYtDlp" xml:space="preserve">
+    <value>yt-dlp를 시작하지 못했습니다: {0}</value>
+  </data>
+  <data name="YtDlpExitCode" xml:space="preserve">
+    <value>yt-dlp가 종료되었습니다(오류 코드: {0})</value>
+  </data>
+  <data name="YtDlpExitError" xml:space="preserve">
+    <value>yt-dlp가 종료되었습니다(오류 코드: {0}): {1}</value>
+  </data>
+</root>

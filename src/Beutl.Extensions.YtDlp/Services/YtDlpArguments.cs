@@ -1,6 +1,7 @@
 using System.Globalization;
 using System.Text;
 using Beutl.Extensions.YtDlp.Models;
+using Beutl.Extensions.YtDlp.Resources;
 
 namespace Beutl.Extensions.YtDlp.Services;
 
@@ -228,7 +229,7 @@ public static class YtDlpArguments
 
         if (quote != '\0')
         {
-            throw new FormatException("引用符が閉じられていません。");
+            throw new FormatException(Strings.UnclosedQuote);
         }
 
         if (inToken)

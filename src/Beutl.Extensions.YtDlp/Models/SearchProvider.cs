@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using Beutl.Extensions.YtDlp.Resources;
 
 namespace Beutl.Extensions.YtDlp.Models;
 
@@ -11,10 +12,10 @@ public enum SearchProvider
     [Display(Name = "SoundCloud")]
     SoundCloud,
 
-    [Display(Name = "ニコニコ動画")]
+    [Display(Name = nameof(Strings.Niconico), ResourceType = typeof(Strings))]
     Niconico,
 
-    [Display(Name = "Bilibili")]
+    [Display(Name = nameof(Strings.Bilibili), ResourceType = typeof(Strings))]
     Bilibili,
 }
 

@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using Avalonia.Controls;
 using Beutl.Extensibility;
+using Beutl.Extensions.YtDlp.Resources;
 using Beutl.Extensions.YtDlp.Services;
 using Beutl.Extensions.YtDlp.Settings;
 using Beutl.Extensions.YtDlp.ViewModels;
@@ -17,7 +18,7 @@ public sealed class YtDlpTabExtension : ToolTabExtension
 
     public override string Name => "yt-dlp Downloader Tab";
 
-    public override string DisplayName => "yt-dlp ダウンローダー";
+    public override string DisplayName => Strings.DownloaderName;
 
     public override string Header => "yt-dlp";
 

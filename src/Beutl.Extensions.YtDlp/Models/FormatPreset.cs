@@ -1,21 +1,22 @@
 using System.ComponentModel.DataAnnotations;
+using Beutl.Extensions.YtDlp.Resources;
 
 namespace Beutl.Extensions.YtDlp.Models;
 
 public enum FormatPreset
 {
-    [Display(Name = "最高画質（H.264 / MP4 優先）", ShortName = "最高画質")]
+    [Display(Name = nameof(Strings.BestQualityPreset), ShortName = nameof(Strings.BestQuality), ResourceType = typeof(Strings))]
     Best,
 
-    [Display(Name = "1080p まで", ShortName = "1080p")]
+    [Display(Name = nameof(Strings.UpTo1080p), ShortName = nameof(Strings.Resolution1080p), ResourceType = typeof(Strings))]
     UpTo1080p,
 
-    [Display(Name = "720p まで", ShortName = "720p")]
+    [Display(Name = nameof(Strings.UpTo720p), ShortName = nameof(Strings.Resolution720p), ResourceType = typeof(Strings))]
     UpTo720p,
 
-    [Display(Name = "音声のみ（M4A）", ShortName = "音声のみ")]
+    [Display(Name = nameof(Strings.AudioOnlyPreset), ShortName = nameof(Strings.AudioOnly), ResourceType = typeof(Strings))]
     AudioOnly,
 
-    [Display(Name = "カスタム引数", ShortName = "カスタム")]
+    [Display(Name = nameof(Strings.CustomArguments), ShortName = nameof(Strings.Custom), ResourceType = typeof(Strings))]
     Custom,
 }

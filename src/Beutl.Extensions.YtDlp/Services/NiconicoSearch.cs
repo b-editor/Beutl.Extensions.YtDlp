@@ -2,6 +2,7 @@ using System.Globalization;
 using System.Net;
 using System.Text.Json;
 using Beutl.Extensions.YtDlp.Models;
+using Beutl.Extensions.YtDlp.Resources;
 using static Beutl.Extensions.YtDlp.Models.JsonElementHelpers;
 
 namespace Beutl.Extensions.YtDlp.Services;
@@ -30,7 +31,7 @@ public static class NiconicoSearch
         }
         catch (OperationCanceledException ex) when (!ct.IsCancellationRequested)
         {
-            throw new TimeoutException("ニコニコ動画の検索がタイムアウトしました。", ex);
+            throw new TimeoutException(Strings.NiconicoSearchTimeout, ex);
         }
 
         return ParseList(json);
@@ -53,7 +54,7 @@ public static class NiconicoSearch
         JsonElement root = document.RootElement;
         if (!root.TryGetProperty("meta", out JsonElement meta) || GetInt32(meta, "status") != 200)
         {
-            throw new JsonException("ニコニコ動画の検索結果を取得できませんでした。");
+            throw new JsonException(Strings.NiconicoSearchError);
         }
 
         JsonElement entries = root.GetProperty("data");
@@ -88,7 +89,7 @@ public static class NiconicoSearch
             if (args[i] == "--") break;
             if (args[i] == "--proxy")
             {
-                if (++i == args.Count) throw new FormatException("--proxy の値を指定してください。");
+                if (++i == args.Count) throw new FormatException(Strings.MissingProxyValue);
                 proxy = args[i];
             }
             else if (args[i].StartsWith("--proxy=", StringComparison.Ordinal))

@@ -1,6 +1,7 @@
 using System.ComponentModel;
 using Avalonia.Threading;
 using Beutl.Extensibility;
+using Beutl.Extensions.YtDlp.Resources;
 using Beutl.Extensions.YtDlp.Services;
 using Beutl.Extensions.YtDlp.Settings;
 using Beutl.Extensions.YtDlp.ViewModels;
@@ -27,7 +28,7 @@ public sealed class YtDlpExtension : Extension
 
     public override string Name => "yt-dlp";
 
-    public override string DisplayName => "yt-dlp ダウンローダー";
+    public override string DisplayName => Strings.DownloaderName;
 
     public override YtDlpSettings Settings { get; } = new();
 
@@ -51,8 +52,8 @@ public sealed class YtDlpExtension : Extension
                 Dispatcher.UIThread.Post(() =>
                     NotificationService.ShowWarning(
                         title: "yt-dlp",
-                        message: "yt-dlp が見つかりません。インストールするか、設定で実行ファイルのパスを指定してください。",
-                        actions: [new NotificationAction("インストール", () => _ = ShowInstallDialogAsync())]));
+                        message: Strings.YtDlpMissingMessage,
+                        actions: [new NotificationAction(Language.ExtensionsStrings.Install, () => _ = ShowInstallDialogAsync())]));
             }
         }, CancellationToken.None, TaskContinuationOptions.None, TaskScheduler.Default);
     }

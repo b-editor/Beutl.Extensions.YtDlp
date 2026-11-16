@@ -1,0 +1,388 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms</value></resheader>
+  <data name="DownloaderName" xml:space="preserve">
+    <value>yt-dlp ダウンローダー</value>
+  </data>
+  <data name="AddToTimeline" xml:space="preserve">
+    <value>タイムラインへ追加</value>
+  </data>
+  <data name="AddAtPlayhead" xml:space="preserve">
+    <value>現在の時刻にタイムラインへ追加</value>
+  </data>
+  <data name="OpenOutputFolder" xml:space="preserve">
+    <value>保存先フォルダーを開く</value>
+  </data>
+  <data name="RemoveFromHistory" xml:space="preserve">
+    <value>履歴から削除</value>
+  </data>
+  <data name="RemoveFromHistoryHint" xml:space="preserve">
+    <value>履歴から削除（ファイルは残ります）</value>
+  </data>
+  <data name="CheckingYtDlp" xml:space="preserve">
+    <value>yt-dlp を確認中...</value>
+  </data>
+  <data name="DownloadSettings" xml:space="preserve">
+    <value>ダウンロード設定</value>
+  </data>
+  <data name="DownloadSettingsHint" xml:space="preserve">
+    <value>ダウンロード設定（形式・保存先など）</value>
+  </data>
+  <data name="SharedFormat" xml:space="preserve">
+    <value>形式（すべての動画の共通設定）</value>
+  </data>
+  <data name="SharedFormatHint" xml:space="preserve">
+    <value>動画ごとに変えるには、行の形式をクリックします。</value>
+  </data>
+  <data name="CustomArguments" xml:space="preserve">
+    <value>カスタム引数</value>
+  </data>
+  <data name="OutputFolder" xml:space="preserve">
+    <value>保存先</value>
+  </data>
+  <data name="ChooseFolder" xml:space="preserve">
+    <value>フォルダーを選択</value>
+  </data>
+  <data name="ChooseOutputFolder" xml:space="preserve">
+    <value>保存先を選択</value>
+  </data>
+  <data name="AddAfterDownload" xml:space="preserve">
+    <value>ダウンロード後にタイムラインへ追加</value>
+  </data>
+  <data name="MoreActions" xml:space="preserve">
+    <value>その他の操作</value>
+  </data>
+  <data name="UpdateYtDlp" xml:space="preserve">
+    <value>yt-dlp を更新</value>
+  </data>
+  <data name="ShowLog" xml:space="preserve">
+    <value>ログを表示</value>
+  </data>
+  <data name="YtDlpNotFound" xml:space="preserve">
+    <value>yt-dlp が見つかりません</value>
+  </data>
+  <data name="InstallOrSetPath" xml:space="preserve">
+    <value>インストールするか、設定で実行ファイルのパスを指定してください。</value>
+  </data>
+  <data name="YtDlpMissingMessage" xml:space="preserve">
+    <value>yt-dlp が見つかりません。インストールするか、設定で実行ファイルのパスを指定してください。</value>
+  </data>
+  <data name="FasterStartup" xml:space="preserve">
+    <value>yt-dlp を更新すると起動が速くなります</value>
+  </data>
+  <data name="FasterStartupHint" xml:space="preserve">
+    <value>現在の yt-dlp は起動のたびに自身を展開する形式です。展開済みの形式に更新すると検索や形式の取得が数秒速くなります。</value>
+  </data>
+  <data name="SearchSite" xml:space="preserve">
+    <value>検索するサイト</value>
+  </data>
+  <data name="SearchPlaceholder" xml:space="preserve">
+    <value>キーワードまたは URL</value>
+  </data>
+  <data name="VideoFormat" xml:space="preserve">
+    <value>この動画の形式</value>
+  </data>
+  <data name="LoadingFormats" xml:space="preserve">
+    <value>フォーマットを取得中...</value>
+  </data>
+  <data name="UsePreset" xml:space="preserve">
+    <value>プリセットを使用</value>
+  </data>
+  <data name="ResetToPreset" xml:space="preserve">
+    <value>プリセットに戻す</value>
+  </data>
+  <data name="OpenVideoPage" xml:space="preserve">
+    <value>動画ページを開く</value>
+  </data>
+  <data name="OpenVideoInBrowser" xml:space="preserve">
+    <value>動画ページをブラウザーで開く</value>
+  </data>
+  <data name="DownloadToMaterials" xml:space="preserve">
+    <value>素材フォルダーにダウンロード</value>
+  </data>
+  <data name="DownloadToMaterialsHint" xml:space="preserve">
+    <value>素材フォルダーにダウンロード（~/.beutl/materials/yt-dlp）</value>
+  </data>
+  <data name="DownloadToOutput" xml:space="preserve">
+    <value>保存先にダウンロード</value>
+  </data>
+  <data name="NoDownloads" xml:space="preserve">
+    <value>まだダウンロードはありません</value>
+  </data>
+  <data name="NoDownloadsHint" xml:space="preserve">
+    <value>ダウンロードした動画がここに表示されます。</value>
+  </data>
+  <data name="MaterialsFolder" xml:space="preserve">
+    <value>素材フォルダー</value>
+  </data>
+  <data name="InstallTitle" xml:space="preserve">
+    <value>yt-dlp のインストール</value>
+  </data>
+  <data name="InstallDescription" xml:space="preserve">
+    <value>GitHub の yt-dlp リリースから最新の実行ファイルをダウンロードし、次のフォルダーに保存します。</value>
+  </data>
+  <data name="InstallNotice" xml:space="preserve">
+    <value>ダウンロードするコンテンツの利用規約と著作権は、ご自身の責任でご確認ください。</value>
+  </data>
+  <data name="ExecutablePath" xml:space="preserve">
+    <value>yt-dlp の実行ファイル</value>
+  </data>
+  <data name="ExecutablePathDescription" xml:space="preserve">
+    <value>空の場合は ~/.beutl/yt-dlp と PATH から検索します</value>
+  </data>
+  <data name="FFmpegLocation" xml:space="preserve">
+    <value>FFmpeg の場所</value>
+  </data>
+  <data name="FFmpegLocationDescription" xml:space="preserve">
+    <value>映像と音声の結合に使います。空の場合は ~/.beutl/ffmpeg、Homebrew、PATH から検索します</value>
+  </data>
+  <data name="DefaultOutputFolder" xml:space="preserve">
+    <value>既定の保存先</value>
+  </data>
+  <data name="DefaultOutputFolderDescription" xml:space="preserve">
+    <value>空の場合はプロジェクトの resources/yt-dlp に保存します</value>
+  </data>
+  <data name="DefaultFormat" xml:space="preserve">
+    <value>既定の形式</value>
+  </data>
+  <data name="ExtraArguments" xml:space="preserve">
+    <value>追加の引数</value>
+  </data>
+  <data name="ExtraArgumentsDescription" xml:space="preserve">
+    <value>すべての yt-dlp 呼び出しに付加されます（例: --cookies-from-browser chrome）</value>
+  </data>
+  <data name="SearchResultCount" xml:space="preserve">
+    <value>検索結果の件数</value>
+  </data>
+  <data name="SearchResultCountDescription" xml:space="preserve">
+    <value>動画検索で取得する件数（1〜100）</value>
+  </data>
+  <data name="BestQualityPreset" xml:space="preserve">
+    <value>最高画質（H.264 / MP4 優先）</value>
+  </data>
+  <data name="BestQuality" xml:space="preserve">
+    <value>最高画質</value>
+  </data>
+  <data name="UpTo1080p" xml:space="preserve">
+    <value>1080p まで</value>
+  </data>
+  <data name="UpTo720p" xml:space="preserve">
+    <value>720p まで</value>
+  </data>
+  <data name="AudioOnlyPreset" xml:space="preserve">
+    <value>音声のみ（M4A）</value>
+  </data>
+  <data name="AudioOnly" xml:space="preserve">
+    <value>音声のみ</value>
+  </data>
+  <data name="Custom" xml:space="preserve">
+    <value>カスタム</value>
+  </data>
+  <data name="Niconico" xml:space="preserve">
+    <value>ニコニコ動画</value>
+  </data>
+  <data name="Resolution1080p" xml:space="preserve">
+    <value>1080p</value>
+  </data>
+  <data name="Resolution720p" xml:space="preserve">
+    <value>720p</value>
+  </data>
+  <data name="Bilibili" xml:space="preserve">
+    <value>Bilibili</value>
+  </data>
+  <data name="SearchHint" xml:space="preserve">
+    <value>キーワードまたは URL を入力して Enter キーを押します</value>
+  </data>
+  <data name="OutputFolderHeader" xml:space="preserve">
+    <value>保存先（{0}）</value>
+  </data>
+  <data name="LoadingVideoInfo" xml:space="preserve">
+    <value>動画情報を取得中...</value>
+  </data>
+  <data name="Searching" xml:space="preserve">
+    <value>検索中...</value>
+  </data>
+  <data name="EnterQuery" xml:space="preserve">
+    <value>キーワードまたは URL を入力してください。</value>
+  </data>
+  <data name="PlaylistUnsupported" xml:space="preserve">
+    <value>プレイリスト URL は未対応です。動画の URL を指定してください。</value>
+  </data>
+  <data name="PlaylistUnsupportedWithCount" xml:space="preserve">
+    <value>プレイリスト URL は未対応です（{0} 件）。動画の URL を指定してください。</value>
+  </data>
+  <data name="NoResults" xml:space="preserve">
+    <value>見つかりませんでした</value>
+  </data>
+  <data name="VideoInfoFailed" xml:space="preserve">
+    <value>動画情報の取得に失敗しました。</value>
+  </data>
+  <data name="SearchFailed" xml:space="preserve">
+    <value>検索に失敗しました。</value>
+  </data>
+  <data name="EnterCustomArguments" xml:space="preserve">
+    <value>カスタム引数を入力するか、別の形式を選択してください。</value>
+  </data>
+  <data name="NoFFmpegForAudio" xml:space="preserve">
+    <value>警告: FFmpeg が見つからないため、音声を m4a に変換できません。元の形式のまま保存します。</value>
+  </data>
+  <data name="NoFFmpegForVideo" xml:space="preserve">
+    <value>警告: FFmpeg が見つからないため、映像と音声を結合できません。結合済みの形式でダウンロードするため、画質が下がることがあります。</value>
+  </data>
+  <data name="SavedFile" xml:space="preserve">
+    <value>{0}に保存しました: {1}</value>
+  </data>
+  <data name="DownloadFailed" xml:space="preserve">
+    <value>ダウンロードに失敗しました。</value>
+  </data>
+  <data name="LoadFormatsFailed" xml:space="preserve">
+    <value>取得に失敗しました: {0}</value>
+  </data>
+  <data name="FileNotFound" xml:space="preserve">
+    <value>ファイルが見つかりません: {0}</value>
+  </data>
+  <data name="AddToTimelineFailed" xml:space="preserve">
+    <value>タイムラインへの追加に失敗しました。</value>
+  </data>
+  <data name="PostProcessing" xml:space="preserve">
+    <value>後処理中: {0}</value>
+  </data>
+  <data name="PostProcessingComplete" xml:space="preserve">
+    <value>後処理完了: {0}</value>
+  </data>
+  <data name="OutputFile" xml:space="preserve">
+    <value>出力: {0}</value>
+  </data>
+  <data name="WaitingForPostProcessing" xml:space="preserve">
+    <value>ダウンロード完了。後処理を待っています...</value>
+  </data>
+  <data name="Downloading" xml:space="preserve">
+    <value>ダウンロード中</value>
+  </data>
+  <data name="TimeRemaining" xml:space="preserve">
+    <value>残り {0}</value>
+  </data>
+  <data name="VideoFormatChip" xml:space="preserve">
+    <value>この動画: {0}</value>
+  </data>
+  <data name="PresetFormatChip" xml:space="preserve">
+    <value>形式: {0}</value>
+  </data>
+  <data name="VideoFormatHint" xml:space="preserve">
+    <value>この動画だけ「{0}」でダウンロードします。クリックで変更</value>
+  </data>
+  <data name="PresetFormatHint" xml:space="preserve">
+    <value>共通の形式「{0}」でダウンロードします。クリックでこの動画だけ変更</value>
+  </data>
+  <data name="NoFormats" xml:space="preserve">
+    <value>利用可能なフォーマットがありません。</value>
+  </data>
+  <data name="StartingDownload" xml:space="preserve">
+    <value>ダウンロードを開始しています...</value>
+  </data>
+  <data name="FailedWithReason" xml:space="preserve">
+    <value>失敗: {0}</value>
+  </data>
+  <data name="LiveStream" xml:space="preserve">
+    <value>ライブ配信</value>
+  </data>
+  <data name="AutoMergeAudio" xml:space="preserve">
+    <value>音声を自動結合</value>
+  </data>
+  <data name="AudioOnlyWithExtension" xml:space="preserve">
+    <value>音声のみ {0}</value>
+  </data>
+  <data name="ViewCountOne" xml:space="preserve">
+    <value>1回</value>
+  </data>
+  <data name="ViewCount" xml:space="preserve">
+    <value>{0:N0}回</value>
+  </data>
+  <data name="ViewCountSmall" xml:space="preserve">
+    <value>{0:0.#}万回</value>
+  </data>
+  <data name="ViewCountLarge" xml:space="preserve">
+    <value>{0:0.#}億回</value>
+  </data>
+  <data name="ViewCountLargest" xml:space="preserve">
+    <value>{0:0.#}兆回</value>
+  </data>
+  <data name="Preparing" xml:space="preserve">
+    <value>準備中</value>
+  </data>
+  <data name="UnsupportedPlatform" xml:space="preserve">
+    <value>この OS / CPU 向けの yt-dlp は配布されていません。手動でインストールし、設定で実行ファイルのパスを指定してください。</value>
+  </data>
+  <data name="FetchingChecksums" xml:space="preserve">
+    <value>チェックサムを取得中 (1/5)</value>
+  </data>
+  <data name="DownloadingAsset" xml:space="preserve">
+    <value>ダウンロード中 (2/5): {0}</value>
+  </data>
+  <data name="VerifyingDownload" xml:space="preserve">
+    <value>検証中 (3/5)</value>
+  </data>
+  <data name="ChecksumMismatch" xml:space="preserve">
+    <value>ダウンロードしたファイルのチェックサムが一致しません。</value>
+  </data>
+  <data name="Extracting" xml:space="preserve">
+    <value>展開中 (4/5)</value>
+  </data>
+  <data name="CheckingInstallation" xml:space="preserve">
+    <value>動作確認中 (5/5)</value>
+  </data>
+  <data name="InstalledVersion" xml:space="preserve">
+    <value>完了 (yt-dlp {0})</value>
+  </data>
+  <data name="InstallFailed" xml:space="preserve">
+    <value>失敗</value>
+  </data>
+  <data name="RestoredInstallation" xml:space="preserve">
+    <value>{0}&#10;以前のインストールに戻しました。</value>
+  </data>
+  <data name="MissingExecutableInArchive" xml:space="preserve">
+    <value>展開したアーカイブに yt-dlp の実行ファイルが見つかりません。</value>
+  </data>
+  <data name="NiconicoSearchTimeout" xml:space="preserve">
+    <value>ニコニコ動画の検索がタイムアウトしました。</value>
+  </data>
+  <data name="NiconicoSearchError" xml:space="preserve">
+    <value>ニコニコ動画の検索結果を取得できませんでした。</value>
+  </data>
+  <data name="MissingProxyValue" xml:space="preserve">
+    <value>--proxy の値を指定してください。</value>
+  </data>
+  <data name="UnclosedQuote" xml:space="preserve">
+    <value>引用符が閉じられていません。</value>
+  </data>
+  <data name="NoVideoInfoReturned" xml:space="preserve">
+    <value>yt-dlp から動画情報が返されませんでした。</value>
+  </data>
+  <data name="NoSearchResultsReturned" xml:space="preserve">
+    <value>yt-dlp から検索結果が返されませんでした。</value>
+  </data>
+  <data name="FFmpegRequired" xml:space="preserve">
+    <value>この動画は映像と音声が別々の形式でしか提供されていないため、結合に FFmpeg が必要です。FFmpeg をインストールするか、拡張機能の設定で FFmpeg の場所を指定してください。</value>
+  </data>
+  <data name="NoOutputPath" xml:space="preserve">
+    <value>yt-dlp が出力ファイルのパスを報告しませんでした。</value>
+  </data>
+  <data name="MergeFailed" xml:space="preserve">
+    <value>映像と音声を結合できませんでした。FFmpeg を利用できるか確認してください。分割されたファイルは保存先に残っています: {0}</value>
+  </data>
+  <data name="ReportedFileMissing" xml:space="preserve">
+    <value>yt-dlp が報告したファイルが見つかりません: {0}</value>
+  </data>
+  <data name="CannotStartYtDlp" xml:space="preserve">
+    <value>yt-dlp を起動できませんでした: {0}</value>
+  </data>
+  <data name="YtDlpExitCode" xml:space="preserve">
+    <value>yt-dlp がエラーで終了しました (コード {0})</value>
+  </data>
+  <data name="YtDlpExitError" xml:space="preserve">
+    <value>yt-dlp がエラーで終了しました (コード {0}): {1}</value>
+  </data>
+</root>

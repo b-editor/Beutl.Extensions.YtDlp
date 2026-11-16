@@ -2,6 +2,7 @@ using System.Diagnostics;
 using System.Text;
 using System.Text.Json;
 using Beutl.Extensions.YtDlp.Models;
+using Beutl.Extensions.YtDlp.Resources;
 using Beutl.Logging;
 using Microsoft.Extensions.Logging;
 
@@ -31,7 +32,7 @@ public sealed class YtDlpRunner(string executablePath)
         string json = result.StandardOutput.Trim();
         if (json.Length == 0)
         {
-            throw new YtDlpException("yt-dlp から動画情報が返されませんでした。", result.ExitCode, result.StandardError);
+            throw new YtDlpException(Strings.NoVideoInfoReturned, result.ExitCode, result.StandardError);
         }
 
         return YtDlpVideoInfo.Parse(json);
@@ -61,7 +62,7 @@ public sealed class YtDlpRunner(string executablePath)
         if (json.Length == 0 || json == "null")
         {
             result.EnsureSuccess();
-            throw new YtDlpException("yt-dlp から検索結果が返されませんでした。", exitCode, standardError);
+            throw new YtDlpException(Strings.NoSearchResultsReturned, exitCode, standardError);
         }
 
         IReadOnlyList<YtDlpSearchResult> results;
@@ -125,7 +126,7 @@ public sealed class YtDlpRunner(string executablePath)
             // Without ffmpeg only single-file formats are requested, and YouTube now mostly serves video
             // and audio separately, so yt-dlp's own message would not tell the user what to do.
             throw new YtDlpException(
-                "この動画は映像と音声が別々の形式でしか提供されていないため、結合に FFmpeg が必要です。FFmpeg をインストールするか、拡張機能の設定で FFmpeg の場所を指定してください。",
+                Strings.FFmpegRequired,
                 result.ExitCode,
                 result.StandardError);
         }
@@ -138,7 +139,7 @@ public sealed class YtDlpRunner(string executablePath)
             if (files.Count == 0)
             {
                 throw new YtDlpException(
-                    "yt-dlp が出力ファイルのパスを報告しませんでした。", result.ExitCode, result.StandardError);
+                    Strings.NoOutputPath, result.ExitCode, result.StandardError);
             }
 
             reported = files.ToArray();
@@ -166,8 +167,8 @@ public sealed class YtDlpRunner(string executablePath)
                             && Directory.EnumerateFiles(directory, Path.GetFileNameWithoutExtension(file) + ".f*").Any();
 
             return hasParts
-                ? $"映像と音声を結合できませんでした。FFmpeg を利用できるか確認してください。分割されたファイルは保存先に残っています: {Path.GetFileName(file)}"
-                : $"yt-dlp が報告したファイルが見つかりません: {file}";
+                ? string.Format(Strings.MergeFailed, Path.GetFileName(file))
+                : string.Format(Strings.ReportedFileMissing, file);
         }
 
         return null;
@@ -205,7 +206,7 @@ public sealed class YtDlpRunner(string executablePath)
         using var process = new Process { StartInfo = startInfo };
         if (!process.Start())
         {
-            throw new InvalidOperationException($"yt-dlp を起動できませんでした: {ExecutablePath}");
+            throw new InvalidOperationException(string.Format(Strings.CannotStartYtDlp, ExecutablePath));
         }
 
         var standardOutput = new StringBuilder();
@@ -286,8 +287,8 @@ public sealed class YtDlpRunner(string executablePath)
             string? error = lines.LastOrDefault(l => l.StartsWith("ERROR:", StringComparison.Ordinal))
                             ?? lines.LastOrDefault();
             return error != null
-                ? $"yt-dlp がエラーで終了しました (コード {ExitCode}): {error}"
-                : $"yt-dlp がエラーで終了しました (コード {ExitCode})";
+                ? string.Format(Strings.YtDlpExitError, ExitCode, error)
+                : string.Format(Strings.YtDlpExitCode, ExitCode);
         }
     }
 }
