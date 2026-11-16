@@ -68,12 +68,15 @@ public sealed partial class YtDlpSearchResult
 
     // Builds a list row from a fully extracted video (the URL-input path).
     public static YtDlpSearchResult FromVideoInfo(YtDlpVideoInfo info, string fallbackUrl)
+        => FromVideoInfoAtUrl(info, string.IsNullOrEmpty(info.WebpageUrl) ? fallbackUrl : info.WebpageUrl);
+
+    internal static YtDlpSearchResult FromVideoInfoAtUrl(YtDlpVideoInfo info, string url, string? fallbackTitle = null)
     {
         return new YtDlpSearchResult
         {
             Id = info.Id,
-            Title = info.Title,
-            Url = string.IsNullOrEmpty(info.WebpageUrl) ? fallbackUrl : info.WebpageUrl,
+            Title = info.Title ?? fallbackTitle,
+            Url = url,
             Uploader = info.Uploader,
             Duration = info.Duration,
             ViewCount = null,

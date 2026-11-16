@@ -208,6 +208,9 @@
   <data name="EnterQuery" xml:space="preserve">
     <value>请输入关键词或网址。</value>
   </data>
+  <data name="DownloaderBusy" xml:space="preserve">
+    <value>请等待当前操作完成后再重试下载。</value>
+  </data>
   <data name="PlaylistUnsupported" xml:space="preserve">
     <value>不支持播放列表网址。请输入单个视频的网址。</value>
   </data>

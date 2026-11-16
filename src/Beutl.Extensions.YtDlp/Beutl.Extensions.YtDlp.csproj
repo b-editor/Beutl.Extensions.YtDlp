@@ -18,6 +18,7 @@
         <RepositoryUrl>https://github.com/b-editor/Beutl.Extensions.YtDlp</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <BeutlAutoReferenceNodeGraph>false</BeutlAutoReferenceNodeGraph>
+        <BeutlPackagesVersion>2.0.0-preview.13.browser-download.1</BeutlPackagesVersion>
         <!-- Beutl 2.0 is still in preview, so a stable release necessarily depends on preview packages. -->
         <NoWarn>$(NoWarn);NU5104</NoWarn>
     </PropertyGroup>

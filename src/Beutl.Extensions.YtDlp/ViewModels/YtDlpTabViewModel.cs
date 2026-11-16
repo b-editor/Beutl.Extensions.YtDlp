@@ -267,7 +267,28 @@ public sealed class YtDlpTabViewModel : IToolContext
         }
     }
 
-    public async Task DownloadItem(VideoItem item, DownloadDestination destination)
+    internal Task DownloadPageAsync(Uri page, string? pageTitle, YtDlpVideoInfo info, CancellationToken cancellationToken)
+    {
+        cancellationToken.ThrowIfCancellationRequested();
+        if (IsBusy.Value)
+        {
+            ShowWarning(Strings.DownloaderBusy);
+            return Task.CompletedTask;
+        }
+
+        var item = new VideoItem(YtDlpSearchResult.FromVideoInfoAtUrl(info, page.AbsoluteUri, pageTitle), this);
+        item.SetFormats(info.Formats);
+        SelectedTabIndex.Value = 0;
+        SearchQuery.Value = page.AbsoluteUri;
+        SearchMessage.Value = "";
+        ReplaceSearchResults([item]);
+        return DownloadItem(item, DownloadDestination.OutputDirectory, cancellationToken);
+    }
+
+    public Task DownloadItem(VideoItem item, DownloadDestination destination)
+        => DownloadItem(item, destination, CancellationToken.None);
+
+    private async Task DownloadItem(VideoItem item, DownloadDestination destination, CancellationToken cancellationToken)
     {
         if (!TryBegin()) return;
 
@@ -302,7 +323,7 @@ public sealed class YtDlpTabViewModel : IToolContext
 
             ActiveItem.Value = item;
             item.BeginDownload();
-            _cts = new CancellationTokenSource();
+            _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
 
             IReadOnlyList<string> files = await runner.DownloadAsync(
                 request, ev => OnOutputEvent(item, ev), AppendLog, _cts.Token);
