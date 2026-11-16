@@ -1,0 +1,67 @@
+<ui:FAContentDialog x:Class="Beutl.Extensions.YtDlp.Views.BrowserDownloadDialog"
+                    xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:lang="using:Beutl.Language"
+                    xmlns:models="using:Beutl.Extensions.YtDlp.Models"
+                    xmlns:res="using:Beutl.Extensions.YtDlp.Resources"
+                    xmlns:ui="using:FluentAvalonia.UI.Controls"
+                    xmlns:vm="using:Beutl.Extensions.YtDlp.ViewModels"
+                    x:ClassModifier="internal"
+                    x:CompileBindings="True"
+                    Title="{x:Static res:Strings.DownloadSettings}"
+                    CloseButtonText="{x:Static lang:Strings.Cancel}"
+                    DefaultButton="Primary"
+                    PrimaryButtonText="{x:Static lang:Strings.BrowserDownloadStart}">
+    <ui:FAContentDialog.Resources>
+        <x:Double x:Key="ContentDialogMaxWidth">480</x:Double>
+    </ui:FAContentDialog.Resources>
+    <StackPanel Spacing="16">
+        <TextBlock x:Name="VideoTitle"
+                   MaxLines="2"
+                   TextTrimming="CharacterEllipsis"
+                   TextWrapping="Wrap" />
+        <StackPanel Spacing="6">
+            <TextBlock FontWeight="SemiBold" Text="{x:Static res:Strings.VideoFormat}" />
+            <ComboBox x:Name="FormatBox"
+                      HorizontalAlignment="Stretch"
+                      AutomationProperties.Name="{x:Static res:Strings.VideoFormat}">
+                <ComboBox.DataTemplates>
+                    <DataTemplate DataType="{x:Type vm:FormatPresetItem}">
+                        <TextBlock Text="{Binding Name}" TextWrapping="Wrap" />
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type models:YtDlpFormat}">
+                        <StackPanel>
+                            <TextBlock Text="{Binding ShortName}" />
+                            <TextBlock FontSize="12" Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                       Text="{Binding Details}" TextTrimming="CharacterEllipsis" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ComboBox.DataTemplates>
+            </ComboBox>
+            <TextBox x:Name="CustomArgumentsBox"
+                     AutomationProperties.Name="{x:Static res:Strings.CustomArguments}"
+                     IsVisible="False"
+                     PlaceholderText="{x:Static res:Strings.CustomArguments}" />
+        </StackPanel>
+        <StackPanel Spacing="6">
+            <TextBlock FontWeight="SemiBold" Text="{x:Static lang:Strings.BrowserDownloadDestination}" />
+            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="6">
+                <ComboBox x:Name="DestinationBox"
+                          HorizontalAlignment="Stretch"
+                          AutomationProperties.Name="{x:Static lang:Strings.BrowserDownloadDestination}">
+                    <ComboBoxItem x:Name="OutputFolderOption" Content="{x:Static res:Strings.DefaultOutputFolder}" />
+                    <ComboBoxItem Content="{x:Static res:Strings.MaterialsFolder}" />
+                </ComboBox>
+                <Button Grid.Column="1"
+                        Click="BrowseFolder"
+                        Content="{x:Static lang:Strings.Browse}" />
+            </Grid>
+            <TextBlock x:Name="FolderPath" FontSize="12"
+                       Foreground="{DynamicResource TextFillColorSecondaryBrush}" MaxLines="2"
+                       TextTrimming="CharacterEllipsis" TextWrapping="Wrap" />
+        </StackPanel>
+        <CheckBox x:Name="AddToTimelineBox" AutomationProperties.Name="{x:Static res:Strings.AddAfterDownload}">
+            <TextBlock Text="{x:Static res:Strings.AddAfterDownload}" TextWrapping="Wrap" />
+        </CheckBox>
+    </StackPanel>
+</ui:FAContentDialog>

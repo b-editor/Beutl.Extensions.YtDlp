@@ -13,6 +13,7 @@ using Beutl.Extensions.YtDlp.Models;
 using Beutl.Extensions.YtDlp.Resources;
 using Beutl.Extensions.YtDlp.Services;
 using Beutl.Extensions.YtDlp.Settings;
+using Beutl.Extensions.YtDlp.Views;
 using Beutl.Logging;
 using Beutl.ProjectSystem;
 using Beutl.Services;
@@ -267,6 +268,9 @@ public sealed class YtDlpTabViewModel : IToolContext
         }
     }
 
+    internal Func<VideoItem, DownloadOptions, CancellationToken, Task<DownloadOptions?>> ChoosePageDownloadOptions { get; set; }
+        = BrowserDownloadDialog.ChooseAsync;
+
     internal Task DownloadPageAsync(Uri page, string? pageTitle, YtDlpVideoInfo info, CancellationToken cancellationToken)
     {
         cancellationToken.ThrowIfCancellationRequested();
@@ -282,13 +286,13 @@ public sealed class YtDlpTabViewModel : IToolContext
         SearchQuery.Value = page.AbsoluteUri;
         SearchMessage.Value = "";
         ReplaceSearchResults([item]);
-        return DownloadItem(item, DownloadDestination.OutputDirectory, cancellationToken);
+        return DownloadItem(item, DownloadDestination.OutputDirectory, cancellationToken, fromBrowser: true);
     }
 
     public Task DownloadItem(VideoItem item, DownloadDestination destination)
         => DownloadItem(item, destination, CancellationToken.None);
 
-    private async Task DownloadItem(VideoItem item, DownloadDestination destination, CancellationToken cancellationToken)
+    private async Task DownloadItem(VideoItem item, DownloadDestination destination, CancellationToken cancellationToken, bool fromBrowser = false)
     {
         if (!TryBegin()) return;
 
@@ -296,8 +300,18 @@ public sealed class YtDlpTabViewModel : IToolContext
         {
             if (!TryGetRunner(out YtDlpRunner? runner)) return;
 
+            _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+            var options = new DownloadOptions(SelectedPreset.Value.Preset, CustomFormatArguments.Value,
+                item.SelectedFormat.Value, destination, ResolveOutputDirectory(destination), AddToTimelineAfterDownload.Value);
+            if (fromBrowser)
+            {
+                if (await ChoosePageDownloadOptions(item, options, _cts.Token) is not { } selected) return;
+                _cts.Token.ThrowIfCancellationRequested();
+                options = selected;
+            }
+
             (FormatPreset preset, string? customArguments) = YtDlpArguments.ResolveFormat(
-                SelectedPreset.Value.Preset, CustomFormatArguments.Value, item.SelectedFormat.Value);
+                options.Preset, options.CustomArguments, options.Format);
             if (preset == FormatPreset.Custom && string.IsNullOrWhiteSpace(customArguments))
             {
                 ShowWarning(Strings.EnterCustomArguments);
@@ -306,7 +320,7 @@ public sealed class YtDlpTabViewModel : IToolContext
 
             var request = new YtDlpDownloadRequest(
                 Url: item.Url,
-                OutputDirectory: ResolveOutputDirectory(destination),
+                OutputDirectory: options.OutputDirectory,
                 Preset: preset,
                 CustomArguments: customArguments,
                 FFmpegLocation: _environment.FFmpegLocation.Value,
@@ -323,20 +337,19 @@ public sealed class YtDlpTabViewModel : IToolContext
 
             ActiveItem.Value = item;
             item.BeginDownload();
-            _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
 
             IReadOnlyList<string> files = await runner.DownloadAsync(
                 request, ev => OnOutputEvent(item, ev), AppendLog, _cts.Token);
 
             string savedMessage = string.Format(
-                Strings.SavedFile, DownloadDestinations.GetLabel(destination), Path.GetFileName(files[^1]));
+                Strings.SavedFile, DownloadDestinations.GetLabel(options.Destination), Path.GetFileName(files[^1]));
             item.CompleteDownload(savedMessage);
             foreach (string file in files)
             {
                 var historyItem = new DownloadHistoryItem(item.Title, file, item.Result.Duration, item.Url, DateTimeOffset.Now);
-                (destination == DownloadDestination.Materials ? _materialsHistoryStore : _sceneHistoryStore).Add(historyItem);
+                (options.Destination == DownloadDestination.Materials ? _materialsHistoryStore : _sceneHistoryStore).Add(historyItem);
 
-                if (AddToTimelineAfterDownload.Value)
+                if (fromBrowser ? options.AddToTimeline : AddToTimelineAfterDownload.Value)
                 {
                     await AddToTimelineCoreAsync(historyItem, _cts.Token);
                 }
