@@ -23,7 +23,7 @@ yt-dlp で動画・音声を検索・ダウンロードしてタイムライン�
 ### 説明
 
 ```markdown
-[yt-dlp](https://github.com/yt-dlp/yt-dlp) を使って動画や音声を検索・ダウンロードし、そのまま Beutl のタイムラインに追加できる拡張機能です。UI は日本語のみです。
+[yt-dlp](https://github.com/yt-dlp/yt-dlp) を使って動画や音声を検索・ダウンロードし、そのまま Beutl のタイムラインに追加できる拡張機能です。UI は Beutl の表示言語に合わせて、日本語、英語、簡体字中国語、韓国語、スペイン語で表示されます。
 
 ## できること
 
@@ -54,7 +54,7 @@ yt-dlp で動画・音声を検索・ダウンロードしてタイムライン�
 
 ---
 
-Downloads videos and audio with yt-dlp and adds them to the Beutl timeline. The UI is Japanese only.
+Downloads videos and audio with yt-dlp and adds them to the Beutl timeline. The UI follows Beutl’s display language and supports English, Japanese, Simplified Chinese, Korean, and Spanish.
 ```
 
 ## リリース 1.0.6

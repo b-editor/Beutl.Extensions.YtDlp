@@ -33,7 +33,7 @@ public partial class YtDlpInstallDialog : FAContentDialog
         if (Root.Root.SelectedIndex == 0)
         {
             Root.Root.SelectedIndex = 1;
-            PrimaryButtonText = "インストール";
+            PrimaryButtonText = Language.ExtensionsStrings.Install;
         }
         // Download page (not started yet)
         else if (Root.Root.SelectedIndex == 1)
@@ -42,7 +42,7 @@ public partial class YtDlpInstallDialog : FAContentDialog
             {
                 IsPrimaryButtonEnabled = false;
                 await viewModel.Install();
-                CloseButtonText = "閉じる";
+                CloseButtonText = Language.Strings.Close;
             }
         }
     }

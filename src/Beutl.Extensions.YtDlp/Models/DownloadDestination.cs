@@ -1,3 +1,5 @@
+using Beutl.Extensions.YtDlp.Resources;
+
 namespace Beutl.Extensions.YtDlp.Models;
 
 public enum DownloadDestination
@@ -20,7 +22,7 @@ public static class DownloadDestinations
 
     public static string GetLabel(DownloadDestination destination) => destination switch
     {
-        DownloadDestination.Materials => "素材フォルダー",
-        _ => "保存先",
+        DownloadDestination.Materials => Strings.MaterialsFolder,
+        _ => Strings.OutputFolder,
     };
 }

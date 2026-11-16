@@ -5,11 +5,12 @@
         <Title>yt-dlp Downloader</Title>
         <Description>yt-dlp で動画・音声を検索・ダウンロードしてタイムラインに追加します</Description>
         <!-- Beutl shows the release notes as the long description of an installed package. -->
-        <PackageReleaseNotes>YouTube / SoundCloud / ニコニコ動画 / Bilibili の検索、URL からの取得、形式を選んだダウンロード、タイムラインへの自動追加、ダウンロード履歴、yt-dlp の自動インストールと更新に対応しています。1.0.6 では、ニコニコ動画と Bilibili の検索を追加し、Beutl 2.0.0-preview.13 に対応しました。UI は日本語のみです。</PackageReleaseNotes>
+        <PackageReleaseNotes>YouTube / SoundCloud / ニコニコ動画 / Bilibili の検索、URL からの取得、形式を選んだダウンロード、タイムラインへの自動追加、ダウンロード履歴、yt-dlp の自動インストールと更新に対応しています。1.0.6 では、ニコニコ動画と Bilibili の検索を追加し、Beutl 2.0.0-preview.13 に対応しました。UI は Beutl の表示言語に合わせて、日本語、英語、簡体字中国語、韓国語、スペイン語で表示されます。</PackageReleaseNotes>
         <!-- Semicolon-separated: NuGet writes them space-separated, which is how Beutl splits tags. -->
         <PackageTags>video;audio;download;youtube;soundcloud;niconico;bilibili;yt-dlp</PackageTags>
         <Version>1.0.6</Version>
         <AssemblyVersion>1.0.6.0</AssemblyVersion>
+        <NeutralLanguage>en</NeutralLanguage>
         <Authors>Yuto Terada</Authors>
         <Copyright>Copyright (c) 2026 Yuto Terada</Copyright>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
@@ -36,6 +37,11 @@
     </ItemGroup>
 
     <ItemGroup>
+        <EmbeddedResource Update="Resources/Strings.resx"
+                          StronglyTypedLanguage="C#"
+                          StronglyTypedNamespace="$(RootNamespace).Resources"
+                          StronglyTypedClassName="Strings"
+                          PublicClass="true" />
         <InternalsVisibleTo Include="Beutl.Extensions.YtDlp.Tests" />
     </ItemGroup>
 

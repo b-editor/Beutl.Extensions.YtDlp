@@ -1,3 +1,5 @@
+using System.Globalization;
+
 namespace Beutl.Extensions.YtDlp.ViewModels;
 
 public sealed class DownloadHistoryItem(
@@ -21,5 +23,5 @@ public sealed class DownloadHistoryItem(
 
     public string Directory => Path.GetDirectoryName(FilePath) ?? "";
 
-    public string Subtitle => $"{DownloadedAt.LocalDateTime:yyyy/MM/dd HH:mm} · {FileName}";
+    public string Subtitle => string.Create(CultureInfo.CurrentUICulture, $"{DownloadedAt.LocalDateTime:g} · {FileName}");
 }

@@ -1,0 +1,388 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms</value></resheader>
+  <data name="DownloaderName" xml:space="preserve">
+    <value>yt-dlp 下载器</value>
+  </data>
+  <data name="AddToTimeline" xml:space="preserve">
+    <value>添加到时间线</value>
+  </data>
+  <data name="AddAtPlayhead" xml:space="preserve">
+    <value>添加到时间线的播放头位置</value>
+  </data>
+  <data name="OpenOutputFolder" xml:space="preserve">
+    <value>打开所在文件夹</value>
+  </data>
+  <data name="RemoveFromHistory" xml:space="preserve">
+    <value>从历史记录中移除</value>
+  </data>
+  <data name="RemoveFromHistoryHint" xml:space="preserve">
+    <value>从历史记录中移除，保留文件</value>
+  </data>
+  <data name="CheckingYtDlp" xml:space="preserve">
+    <value>正在检查 yt-dlp…</value>
+  </data>
+  <data name="DownloadSettings" xml:space="preserve">
+    <value>下载设置</value>
+  </data>
+  <data name="DownloadSettingsHint" xml:space="preserve">
+    <value>设置格式、保存位置等下载选项</value>
+  </data>
+  <data name="SharedFormat" xml:space="preserve">
+    <value>所有视频的默认格式</value>
+  </data>
+  <data name="SharedFormatHint" xml:space="preserve">
+    <value>要单独更改某个视频的格式，请选择该行的格式。</value>
+  </data>
+  <data name="CustomArguments" xml:space="preserve">
+    <value>自定义参数</value>
+  </data>
+  <data name="OutputFolder" xml:space="preserve">
+    <value>保存位置</value>
+  </data>
+  <data name="ChooseFolder" xml:space="preserve">
+    <value>选择文件夹</value>
+  </data>
+  <data name="ChooseOutputFolder" xml:space="preserve">
+    <value>选择保存位置</value>
+  </data>
+  <data name="AddAfterDownload" xml:space="preserve">
+    <value>下载后添加到时间线</value>
+  </data>
+  <data name="MoreActions" xml:space="preserve">
+    <value>更多操作</value>
+  </data>
+  <data name="UpdateYtDlp" xml:space="preserve">
+    <value>更新 yt-dlp</value>
+  </data>
+  <data name="ShowLog" xml:space="preserve">
+    <value>显示日志</value>
+  </data>
+  <data name="YtDlpNotFound" xml:space="preserve">
+    <value>未找到 yt-dlp</value>
+  </data>
+  <data name="InstallOrSetPath" xml:space="preserve">
+    <value>请安装 yt-dlp，或在设置中指定可执行文件的路径。</value>
+  </data>
+  <data name="YtDlpMissingMessage" xml:space="preserve">
+    <value>未找到 yt-dlp。请安装 yt-dlp，或在设置中指定可执行文件的路径。</value>
+  </data>
+  <data name="FasterStartup" xml:space="preserve">
+    <value>更新 yt-dlp 可加快启动速度</value>
+  </data>
+  <data name="FasterStartupHint" xml:space="preserve">
+    <value>当前版本的 yt-dlp 每次启动时都会自行解压。更新为已解压的版本后，搜索和获取格式都能快几秒。</value>
+  </data>
+  <data name="SearchSite" xml:space="preserve">
+    <value>搜索网站</value>
+  </data>
+  <data name="SearchPlaceholder" xml:space="preserve">
+    <value>关键词或网址</value>
+  </data>
+  <data name="VideoFormat" xml:space="preserve">
+    <value>此视频的格式</value>
+  </data>
+  <data name="LoadingFormats" xml:space="preserve">
+    <value>正在获取格式…</value>
+  </data>
+  <data name="UsePreset" xml:space="preserve">
+    <value>使用预设</value>
+  </data>
+  <data name="ResetToPreset" xml:space="preserve">
+    <value>恢复为预设</value>
+  </data>
+  <data name="OpenVideoPage" xml:space="preserve">
+    <value>打开视频页面</value>
+  </data>
+  <data name="OpenVideoInBrowser" xml:space="preserve">
+    <value>在浏览器中打开视频页面</value>
+  </data>
+  <data name="DownloadToMaterials" xml:space="preserve">
+    <value>下载到素材文件夹</value>
+  </data>
+  <data name="DownloadToMaterialsHint" xml:space="preserve">
+    <value>下载到素材文件夹（~/.beutl/materials/yt-dlp）</value>
+  </data>
+  <data name="DownloadToOutput" xml:space="preserve">
+    <value>下载到保存位置</value>
+  </data>
+  <data name="NoDownloads" xml:space="preserve">
+    <value>暂无下载记录</value>
+  </data>
+  <data name="NoDownloadsHint" xml:space="preserve">
+    <value>下载的视频将显示在这里。</value>
+  </data>
+  <data name="MaterialsFolder" xml:space="preserve">
+    <value>素材文件夹</value>
+  </data>
+  <data name="InstallTitle" xml:space="preserve">
+    <value>安装 yt-dlp</value>
+  </data>
+  <data name="InstallDescription" xml:space="preserve">
+    <value>将从 GitHub 下载最新版本的 yt-dlp 并安装到以下文件夹。</value>
+  </data>
+  <data name="InstallNotice" xml:space="preserve">
+    <value>下载内容前，请自行确认其使用条款和版权要求。</value>
+  </data>
+  <data name="ExecutablePath" xml:space="preserve">
+    <value>yt-dlp 可执行文件</value>
+  </data>
+  <data name="ExecutablePathDescription" xml:space="preserve">
+    <value>留空时将在 ~/.beutl/yt-dlp 和 PATH 中查找。</value>
+  </data>
+  <data name="FFmpegLocation" xml:space="preserve">
+    <value>FFmpeg 位置</value>
+  </data>
+  <data name="FFmpegLocationDescription" xml:space="preserve">
+    <value>用于合并视频和音频。留空时将在 ~/.beutl/ffmpeg、Homebrew 和 PATH 中查找。</value>
+  </data>
+  <data name="DefaultOutputFolder" xml:space="preserve">
+    <value>默认保存位置</value>
+  </data>
+  <data name="DefaultOutputFolderDescription" xml:space="preserve">
+    <value>留空时将保存到项目的 resources/yt-dlp 文件夹。</value>
+  </data>
+  <data name="DefaultFormat" xml:space="preserve">
+    <value>默认格式</value>
+  </data>
+  <data name="ExtraArguments" xml:space="preserve">
+    <value>附加参数</value>
+  </data>
+  <data name="ExtraArgumentsDescription" xml:space="preserve">
+    <value>附加到每次执行的 yt-dlp 命令（例如 --cookies-from-browser chrome）。</value>
+  </data>
+  <data name="SearchResultCount" xml:space="preserve">
+    <value>搜索结果数量</value>
+  </data>
+  <data name="SearchResultCountDescription" xml:space="preserve">
+    <value>每次搜索获取的视频数量（1–100）。</value>
+  </data>
+  <data name="BestQualityPreset" xml:space="preserve">
+    <value>最佳画质（优先 H.264 / MP4）</value>
+  </data>
+  <data name="BestQuality" xml:space="preserve">
+    <value>最佳画质</value>
+  </data>
+  <data name="UpTo1080p" xml:space="preserve">
+    <value>最高 1080p</value>
+  </data>
+  <data name="UpTo720p" xml:space="preserve">
+    <value>最高 720p</value>
+  </data>
+  <data name="AudioOnlyPreset" xml:space="preserve">
+    <value>仅音频（M4A）</value>
+  </data>
+  <data name="AudioOnly" xml:space="preserve">
+    <value>仅音频</value>
+  </data>
+  <data name="Custom" xml:space="preserve">
+    <value>自定义</value>
+  </data>
+  <data name="Niconico" xml:space="preserve">
+    <value>Niconico 动画</value>
+  </data>
+  <data name="Resolution1080p" xml:space="preserve">
+    <value>1080p</value>
+  </data>
+  <data name="Resolution720p" xml:space="preserve">
+    <value>720p</value>
+  </data>
+  <data name="Bilibili" xml:space="preserve">
+    <value>哔哩哔哩</value>
+  </data>
+  <data name="SearchHint" xml:space="preserve">
+    <value>输入关键词或网址，然后按回车键</value>
+  </data>
+  <data name="OutputFolderHeader" xml:space="preserve">
+    <value>保存位置（{0}）</value>
+  </data>
+  <data name="LoadingVideoInfo" xml:space="preserve">
+    <value>正在获取视频信息…</value>
+  </data>
+  <data name="Searching" xml:space="preserve">
+    <value>正在搜索…</value>
+  </data>
+  <data name="EnterQuery" xml:space="preserve">
+    <value>请输入关键词或网址。</value>
+  </data>
+  <data name="PlaylistUnsupported" xml:space="preserve">
+    <value>不支持播放列表网址。请输入单个视频的网址。</value>
+  </data>
+  <data name="PlaylistUnsupportedWithCount" xml:space="preserve">
+    <value>此网址指向播放列表（共 {0} 项）。请输入单个视频的网址。</value>
+  </data>
+  <data name="NoResults" xml:space="preserve">
+    <value>未找到结果</value>
+  </data>
+  <data name="VideoInfoFailed" xml:space="preserve">
+    <value>无法获取视频信息。</value>
+  </data>
+  <data name="SearchFailed" xml:space="preserve">
+    <value>搜索失败。</value>
+  </data>
+  <data name="EnterCustomArguments" xml:space="preserve">
+    <value>请输入自定义参数或选择其他格式。</value>
+  </data>
+  <data name="NoFFmpegForAudio" xml:space="preserve">
+    <value>未找到 FFmpeg，无法将音频转换为 M4A。将以原格式保存。</value>
+  </data>
+  <data name="NoFFmpegForVideo" xml:space="preserve">
+    <value>未找到 FFmpeg，无法合并视频和音频。将下载带音频的格式，画质可能较低。</value>
+  </data>
+  <data name="SavedFile" xml:space="preserve">
+    <value>已保存 {1}（{0}）</value>
+  </data>
+  <data name="DownloadFailed" xml:space="preserve">
+    <value>下载失败。</value>
+  </data>
+  <data name="LoadFormatsFailed" xml:space="preserve">
+    <value>无法获取格式：{0}</value>
+  </data>
+  <data name="FileNotFound" xml:space="preserve">
+    <value>找不到文件：{0}</value>
+  </data>
+  <data name="AddToTimelineFailed" xml:space="preserve">
+    <value>无法将文件添加到时间线。</value>
+  </data>
+  <data name="PostProcessing" xml:space="preserve">
+    <value>正在进行后处理：{0}</value>
+  </data>
+  <data name="PostProcessingComplete" xml:space="preserve">
+    <value>后处理已完成：{0}</value>
+  </data>
+  <data name="OutputFile" xml:space="preserve">
+    <value>输出：{0}</value>
+  </data>
+  <data name="WaitingForPostProcessing" xml:space="preserve">
+    <value>下载完成，正在等待后处理…</value>
+  </data>
+  <data name="Downloading" xml:space="preserve">
+    <value>正在下载</value>
+  </data>
+  <data name="TimeRemaining" xml:space="preserve">
+    <value>剩余 {0}</value>
+  </data>
+  <data name="VideoFormatChip" xml:space="preserve">
+    <value>此视频：{0}</value>
+  </data>
+  <data name="PresetFormatChip" xml:space="preserve">
+    <value>格式：{0}</value>
+  </data>
+  <data name="VideoFormatHint" xml:space="preserve">
+    <value>此视频将以“{0}”格式下载。点击可更改。</value>
+  </data>
+  <data name="PresetFormatHint" xml:space="preserve">
+    <value>当前使用预设“{0}”。点击可单独更改此视频的格式。</value>
+  </data>
+  <data name="NoFormats" xml:space="preserve">
+    <value>没有可用格式。</value>
+  </data>
+  <data name="StartingDownload" xml:space="preserve">
+    <value>正在开始下载…</value>
+  </data>
+  <data name="FailedWithReason" xml:space="preserve">
+    <value>失败：{0}</value>
+  </data>
+  <data name="LiveStream" xml:space="preserve">
+    <value>直播</value>
+  </data>
+  <data name="AutoMergeAudio" xml:space="preserve">
+    <value>自动合并音频</value>
+  </data>
+  <data name="AudioOnlyWithExtension" xml:space="preserve">
+    <value>仅音频（{0}）</value>
+  </data>
+  <data name="ViewCountOne" xml:space="preserve">
+    <value>1 次观看</value>
+  </data>
+  <data name="ViewCount" xml:space="preserve">
+    <value>{0:N0} 次观看</value>
+  </data>
+  <data name="ViewCountSmall" xml:space="preserve">
+    <value>{0:0.#} 万次观看</value>
+  </data>
+  <data name="ViewCountLarge" xml:space="preserve">
+    <value>{0:0.#} 亿次观看</value>
+  </data>
+  <data name="ViewCountLargest" xml:space="preserve">
+    <value>{0:0.#} 万亿次观看</value>
+  </data>
+  <data name="Preparing" xml:space="preserve">
+    <value>正在准备</value>
+  </data>
+  <data name="UnsupportedPlatform" xml:space="preserve">
+    <value>没有适用于此操作系统和处理器的 yt-dlp 版本。请手动安装并在设置中指定可执行文件的路径。</value>
+  </data>
+  <data name="FetchingChecksums" xml:space="preserve">
+    <value>正在获取校验和 (1/5)</value>
+  </data>
+  <data name="DownloadingAsset" xml:space="preserve">
+    <value>正在下载 {0} (2/5)</value>
+  </data>
+  <data name="VerifyingDownload" xml:space="preserve">
+    <value>正在验证下载文件 (3/5)</value>
+  </data>
+  <data name="ChecksumMismatch" xml:space="preserve">
+    <value>下载文件的校验和不匹配。</value>
+  </data>
+  <data name="Extracting" xml:space="preserve">
+    <value>正在解压文件 (4/5)</value>
+  </data>
+  <data name="CheckingInstallation" xml:space="preserve">
+    <value>正在检查安装 (5/5)</value>
+  </data>
+  <data name="InstalledVersion" xml:space="preserve">
+    <value>已安装 yt-dlp {0}</value>
+  </data>
+  <data name="InstallFailed" xml:space="preserve">
+    <value>安装失败</value>
+  </data>
+  <data name="RestoredInstallation" xml:space="preserve">
+    <value>{0}&#10;已恢复之前安装的版本。</value>
+  </data>
+  <data name="MissingExecutableInArchive" xml:space="preserve">
+    <value>解压后的文件中没有 yt-dlp 可执行文件。</value>
+  </data>
+  <data name="NiconicoSearchTimeout" xml:space="preserve">
+    <value>Niconico 动画搜索超时。</value>
+  </data>
+  <data name="NiconicoSearchError" xml:space="preserve">
+    <value>无法获取 Niconico 动画搜索结果。</value>
+  </data>
+  <data name="MissingProxyValue" xml:space="preserve">
+    <value>请为 --proxy 指定一个值。</value>
+  </data>
+  <data name="UnclosedQuote" xml:space="preserve">
+    <value>参数中的引号未闭合。</value>
+  </data>
+  <data name="NoVideoInfoReturned" xml:space="preserve">
+    <value>yt-dlp 未返回视频信息。</value>
+  </data>
+  <data name="NoSearchResultsReturned" xml:space="preserve">
+    <value>yt-dlp 未返回搜索结果。</value>
+  </data>
+  <data name="FFmpegRequired" xml:space="preserve">
+    <value>此视频仅提供分开的视频流和音频流，需要 FFmpeg 才能合并。请安装 FFmpeg，或在扩展设置中指定其位置。</value>
+  </data>
+  <data name="NoOutputPath" xml:space="preserve">
+    <value>yt-dlp 未返回输出文件路径。</value>
+  </data>
+  <data name="MergeFailed" xml:space="preserve">
+    <value>无法合并视频和音频。请检查 FFmpeg 是否可用。分开的视频和音频文件仍在保存位置：{0}</value>
+  </data>
+  <data name="ReportedFileMissing" xml:space="preserve">
+    <value>找不到 yt-dlp 返回的文件：{0}</value>
+  </data>
+  <data name="CannotStartYtDlp" xml:space="preserve">
+    <value>无法启动 yt-dlp：{0}</value>
+  </data>
+  <data name="YtDlpExitCode" xml:space="preserve">
+    <value>yt-dlp 已退出，错误代码为 {0}</value>
+  </data>
+  <data name="YtDlpExitError" xml:space="preserve">
+    <value>yt-dlp 已退出，错误代码为 {0}：{1}</value>
+  </data>
+</root>

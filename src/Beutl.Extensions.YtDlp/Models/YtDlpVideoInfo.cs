@@ -1,4 +1,5 @@
 using System.Text.Json;
+using Beutl.Extensions.YtDlp.Resources;
 using static Beutl.Extensions.YtDlp.Models.JsonElementHelpers;
 
 namespace Beutl.Extensions.YtDlp.Models;
@@ -27,7 +28,7 @@ public sealed class YtDlpVideoInfo
 
     public IReadOnlyList<YtDlpFormat> Formats { get; init; } = [];
 
-    public string DurationText => Duration is { } d ? FormatDuration(d) : (IsLive ? "ライブ配信" : "");
+    public string DurationText => Duration is { } d ? FormatDuration(d) : (IsLive ? Strings.LiveStream : "");
 
     public static string FormatDuration(TimeSpan duration)
     {

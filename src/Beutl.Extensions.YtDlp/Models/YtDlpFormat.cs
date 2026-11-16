@@ -1,4 +1,5 @@
 using System.Globalization;
+using Beutl.Extensions.YtDlp.Resources;
 
 namespace Beutl.Extensions.YtDlp.Models;
 
@@ -41,16 +42,16 @@ public sealed class YtDlpFormat
 
             if (HasVideo)
             {
-                parts.Add(Width is { } w && Height is { } h ? $"{w}x{h}" : Resolution ?? "video");
-                if (Fps is { } fps) parts.Add($"{fps.ToString("0.##", CultureInfo.InvariantCulture)}fps");
+                parts.Add(Width is { } w && Height is { } h ? $"{w}x{h}" : Resolution ?? Language.Strings.Video);
+                if (Fps is { } fps) parts.Add($"{fps.ToString("0.##", CultureInfo.CurrentUICulture)}fps");
                 parts.Add(VCodec!);
-                parts.Add(HasAudio ? ACodec! : "音声を自動結合");
+                parts.Add(HasAudio ? ACodec! : Strings.AutoMergeAudio);
             }
             else if (HasAudio)
             {
-                parts.Add("音声のみ");
+                parts.Add(Strings.AudioOnly);
                 parts.Add(ACodec!);
-                if (Tbr is { } tbr) parts.Add($"{tbr.ToString("0", CultureInfo.InvariantCulture)}kbps");
+                if (Tbr is { } tbr) parts.Add($"{tbr.ToString("0", CultureInfo.CurrentUICulture)}kbps");
             }
 
             if (!string.IsNullOrEmpty(FormatNote)) parts.Add(FormatNote);
@@ -67,15 +68,15 @@ public sealed class YtDlpFormat
         {
             if (HasVideo)
             {
-                string resolution = Height is { } h ? $"{h}p" : Resolution ?? "映像";
+                string resolution = Height is { } h ? $"{h}p" : Resolution ?? Language.Strings.Video;
                 return FormatCatalog.IsHighFrameRate(Fps) && Fps is { } fps
-                    ? $"{resolution}{Math.Round(fps).ToString("0", CultureInfo.InvariantCulture)}"
+                    ? $"{resolution}{Math.Round(fps).ToString("0", CultureInfo.CurrentUICulture)}"
                     : resolution;
             }
 
             if (HasAudio)
             {
-                return string.IsNullOrEmpty(Ext) ? "音声のみ" : $"音声のみ {Ext}";
+                return string.IsNullOrEmpty(Ext) ? Strings.AudioOnly : string.Format(Strings.AudioOnlyWithExtension, Ext);
             }
 
             return FormatId;
@@ -98,7 +99,7 @@ public sealed class YtDlpFormat
             {
                 string codec = FormatCatalog.CodecFamily(ACodec);
                 if (codec.Length > 0) parts.Add(codec);
-                if (Tbr is { } tbr) parts.Add($"{Math.Round(tbr).ToString("0", CultureInfo.InvariantCulture)}kbps");
+                if (Tbr is { } tbr) parts.Add($"{Math.Round(tbr).ToString("0", CultureInfo.CurrentUICulture)}kbps");
             }
 
             if (FileSize is { } size) parts.Add(FormatBytes(size));
@@ -122,6 +123,6 @@ public sealed class YtDlpFormat
             unit++;
         }
 
-        return $"{bytes.ToString(unit == 0 ? "0" : "0.0", CultureInfo.InvariantCulture)} {units[unit]}";
+        return $"{bytes.ToString(unit == 0 ? "0" : "0.0", CultureInfo.CurrentUICulture)} {units[unit]}";
     }
 }

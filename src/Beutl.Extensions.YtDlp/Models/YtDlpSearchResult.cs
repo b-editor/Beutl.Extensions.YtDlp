@@ -1,6 +1,7 @@
 using System.Globalization;
 using System.Text.Json;
 using System.Text.RegularExpressions;
+using Beutl.Extensions.YtDlp.Resources;
 using static Beutl.Extensions.YtDlp.Models.JsonElementHelpers;
 
 namespace Beutl.Extensions.YtDlp.Models;
@@ -34,7 +35,7 @@ public sealed partial class YtDlpSearchResult
         {
             var parts = new List<string>();
             if (!string.IsNullOrWhiteSpace(Uploader)) parts.Add(Uploader);
-            if (IsLive) parts.Add("ライブ配信");
+            if (IsLive) parts.Add(Strings.LiveStream);
             else if (Duration is { } d) parts.Add(YtDlpVideoInfo.FormatDuration(d));
             if (ViewCount is { } views) parts.Add(FormatViewCount(views));
             return string.Join(" · ", parts);
@@ -43,17 +44,26 @@ public sealed partial class YtDlpSearchResult
 
     public static string FormatViewCount(long views)
     {
-        if (views >= 100_000_000)
+        CultureInfo culture = CultureInfo.CurrentUICulture;
+        // Japanese, Chinese and Korean group large counts in powers of ten thousand.
+        long unit = culture.TwoLetterISOLanguageName is "ja" or "zh" or "ko" ? 10_000 : 1_000;
+        long largeUnit = unit * unit;
+        if (views >= largeUnit * unit)
         {
-            return $"{(views / 100_000_000.0).ToString("0.#", CultureInfo.InvariantCulture)}億回";
+            return string.Format(culture, Strings.ViewCountLargest, (double)views / (largeUnit * unit));
         }
 
-        if (views >= 10_000)
+        if (views >= largeUnit)
         {
-            return $"{(views / 10_000.0).ToString("0.#", CultureInfo.InvariantCulture)}万回";
+            return string.Format(culture, Strings.ViewCountLarge, (double)views / largeUnit);
         }
 
-        return $"{views.ToString("N0", CultureInfo.InvariantCulture)}回";
+        if (views >= unit)
+        {
+            return string.Format(culture, Strings.ViewCountSmall, (double)views / unit);
+        }
+
+        return views == 1 ? Strings.ViewCountOne : string.Format(culture, Strings.ViewCount, views);
     }
 
     // Builds a list row from a fully extracted video (the URL-input path).

@@ -10,6 +10,7 @@ using Beutl.Editor.Models;
 using Beutl.Editor.Services;
 using Beutl.Extensibility;
 using Beutl.Extensions.YtDlp.Models;
+using Beutl.Extensions.YtDlp.Resources;
 using Beutl.Extensions.YtDlp.Services;
 using Beutl.Extensions.YtDlp.Settings;
 using Beutl.Logging;
@@ -25,7 +26,6 @@ namespace Beutl.Extensions.YtDlp.ViewModels;
 public sealed class YtDlpTabViewModel : IToolContext
 {
     private const int MaxLogLines = 200;
-    private const string SearchHint = "キーワードまたは URL を入力して Enter キーを押します";
     private static readonly string[] s_audioExtensions =
         [".m4a", ".mp3", ".aac", ".opus", ".ogg", ".oga", ".wav", ".flac", ".wma"];
 
@@ -63,7 +63,7 @@ public sealed class YtDlpTabViewModel : IToolContext
         OutputDirectory = new ReactiveProperty<string>(_settings.OutputDirectory.Value ?? "").AddTo(_disposables);
         DefaultOutputDirectory = GetProjectOutputDirectory();
         SessionHistoryHeader = OutputDirectory
-            .Select(_ => $"保存先（{ResolveOutputDirectory()}）")
+            .Select(_ => string.Format(Strings.OutputFolderHeader, ResolveOutputDirectory()))
             .ToReadOnlyReactivePropertySlim("")
             .AddTo(_disposables);
 
@@ -79,8 +79,8 @@ public sealed class YtDlpTabViewModel : IToolContext
         HasSearchResults = SearchResults.Select(r => r.Length > 0).ToReadOnlyReactivePropertySlim().AddTo(_disposables);
         IsUrlInput = SearchQuery.Select(UrlDetector.IsUrl).ToReadOnlyReactivePropertySlim().AddTo(_disposables);
         BusyMessage = IsUrlInput
-            .Select(u => u ? "動画情報を取得中..." : "検索中...")
-            .ToReadOnlyReactivePropertySlim("検索中...")
+            .Select(u => u ? Strings.LoadingVideoInfo : Strings.Searching)
+            .ToReadOnlyReactivePropertySlim(Strings.Searching)
             .AddTo(_disposables);
         IsSearchListVisible = HasSearchResults
             .CombineLatest(IsSearching, (has, searching) => has && !searching)
@@ -145,7 +145,7 @@ public sealed class YtDlpTabViewModel : IToolContext
 
     public ReadOnlyReactivePropertySlim<string> BusyMessage { get; }
 
-    public ReactiveProperty<string> SearchMessage { get; } = new(SearchHint);
+    public ReactiveProperty<string> SearchMessage { get; } = new(Strings.SearchHint);
 
     public ReactiveProperty<VideoItem[]> SearchResults { get; } = new([]);
 
@@ -203,7 +203,7 @@ public sealed class YtDlpTabViewModel : IToolContext
             string query = SearchQuery.Value?.Trim() ?? "";
             if (query.Length == 0)
             {
-                ShowWarning("キーワードまたは URL を入力してください。");
+                ShowWarning(Strings.EnterQuery);
                 return;
             }
 
@@ -224,8 +224,8 @@ public sealed class YtDlpTabViewModel : IToolContext
                 if (info.IsPlaylist)
                 {
                     ReplaceSearchResults([]);
-                    SearchMessage.Value = "プレイリスト URL は未対応です。動画の URL を指定してください。";
-                    ShowWarning($"プレイリスト URL は未対応です（{info.PlaylistCount ?? 0} 件）。動画の URL を指定してください。");
+                    SearchMessage.Value = Strings.PlaylistUnsupported;
+                    ShowWarning(string.Format(Strings.PlaylistUnsupportedWithCount, info.PlaylistCount ?? 0));
                     return;
                 }
 
@@ -247,15 +247,15 @@ public sealed class YtDlpTabViewModel : IToolContext
             }
 
             ReplaceSearchResults(items);
-            SearchMessage.Value = items.Length == 0 ? "見つかりませんでした" : "";
+            SearchMessage.Value = items.Length == 0 ? Strings.NoResults : "";
         }
         catch (OperationCanceledException)
         {
-            SearchMessage.Value = SearchHint;
+            SearchMessage.Value = Strings.SearchHint;
         }
         catch (Exception ex)
         {
-            string title = isUrl ? "動画情報の取得に失敗しました。" : "検索に失敗しました。";
+            string title = isUrl ? Strings.VideoInfoFailed : Strings.SearchFailed;
             _logger.LogError(ex, "{Operation} failed", isUrl ? "Fetch" : "Search");
             SearchMessage.Value = title;
             ShowError(title, ex.Message);
@@ -279,7 +279,7 @@ public sealed class YtDlpTabViewModel : IToolContext
                 SelectedPreset.Value.Preset, CustomFormatArguments.Value, item.SelectedFormat.Value);
             if (preset == FormatPreset.Custom && string.IsNullOrWhiteSpace(customArguments))
             {
-                ShowWarning("カスタム引数を入力するか、別の形式を選択してください。");
+                ShowWarning(Strings.EnterCustomArguments);
                 return;
             }
 
@@ -296,8 +296,8 @@ public sealed class YtDlpTabViewModel : IToolContext
             {
                 // YtDlpArguments then picks single-file formats, which can be lower quality.
                 AppendLog(preset == FormatPreset.AudioOnly
-                    ? "警告: FFmpeg が見つからないため、音声を m4a に変換できません。元の形式のまま保存します。"
-                    : "警告: FFmpeg が見つからないため、映像と音声を結合できません。結合済みの形式でダウンロードするため、画質が下がることがあります。");
+                    ? Strings.NoFFmpegForAudio
+                    : Strings.NoFFmpegForVideo);
             }
 
             ActiveItem.Value = item;
@@ -307,7 +307,9 @@ public sealed class YtDlpTabViewModel : IToolContext
             IReadOnlyList<string> files = await runner.DownloadAsync(
                 request, ev => OnOutputEvent(item, ev), AppendLog, _cts.Token);
 
-            item.CompleteDownload(files[^1], destination);
+            string savedMessage = string.Format(
+                Strings.SavedFile, DownloadDestinations.GetLabel(destination), Path.GetFileName(files[^1]));
+            item.CompleteDownload(savedMessage);
             foreach (string file in files)
             {
                 var historyItem = new DownloadHistoryItem(item.Title, file, item.Result.Duration, item.Url, DateTimeOffset.Now);
@@ -319,8 +321,7 @@ public sealed class YtDlpTabViewModel : IToolContext
                 }
             }
 
-            NotificationService.ShowSuccess(
-                "yt-dlp", $"{DownloadDestinations.GetLabel(destination)}に保存しました: {Path.GetFileName(files[^1])}");
+            NotificationService.ShowSuccess("yt-dlp", savedMessage);
         }
         catch (OperationCanceledException)
         {
@@ -335,7 +336,7 @@ public sealed class YtDlpTabViewModel : IToolContext
                 AppendLog(ytDlpException.StandardError.TrimEnd());
             }
 
-            ShowError("ダウンロードに失敗しました。", ex.Message);
+            ShowError(Strings.DownloadFailed, ex.Message);
         }
         finally
         {
@@ -364,12 +365,12 @@ public sealed class YtDlpTabViewModel : IToolContext
         }
         catch (OperationCanceledException)
         {
-            item.FormatsMessage.Value = "キャンセルしました";
+            item.FormatsMessage.Value = Language.MessageStrings.Canceled;
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Failed to load formats for {Url}", item.Url);
-            item.FormatsMessage.Value = $"取得に失敗しました: {ex.Message}";
+            item.FormatsMessage.Value = string.Format(Strings.LoadFormatsFailed, ex.Message);
         }
         finally
         {
@@ -386,7 +387,7 @@ public sealed class YtDlpTabViewModel : IToolContext
     public void ClearSearchResults()
     {
         ReplaceSearchResults([]);
-        SearchMessage.Value = SearchHint;
+        SearchMessage.Value = Strings.SearchHint;
     }
 
     public Task AddToTimeline(DownloadHistoryItem item)
@@ -476,7 +477,7 @@ public sealed class YtDlpTabViewModel : IToolContext
         {
             if (!File.Exists(item.FilePath))
             {
-                ShowWarning($"ファイルが見つかりません: {item.FilePath}");
+                ShowWarning(string.Format(Strings.FileNotFound, item.FilePath));
                 return;
             }
 
@@ -499,7 +500,7 @@ public sealed class YtDlpTabViewModel : IToolContext
                 if (result.Failure is { } failure)
                 {
                     _logger.LogError(failure.Exception, "Failed to add the downloaded file to the timeline: {Message}", failure.Message);
-                    ShowError("タイムラインへの追加に失敗しました。", failure.Message);
+                    ShowError(Strings.AddToTimelineFailed, failure.Message);
                 }
 
                 return;
@@ -513,7 +514,7 @@ public sealed class YtDlpTabViewModel : IToolContext
         catch (Exception ex)
         {
             _logger.LogError(ex, "Failed to add the downloaded file to the timeline");
-            ShowError("タイムラインへの追加に失敗しました。", ex.Message);
+            ShowError(Strings.AddToTimelineFailed, ex.Message);
         }
     }
 
@@ -538,7 +539,7 @@ public sealed class YtDlpTabViewModel : IToolContext
         runner = _environment.CreateRunner();
         if (runner != null) return true;
 
-        ShowWarning("yt-dlp が見つかりません。インストールするか、設定で実行ファイルのパスを指定してください。");
+        ShowWarning(Strings.YtDlpMissingMessage);
         return false;
     }
 
@@ -588,16 +589,16 @@ public sealed class YtDlpTabViewModel : IToolContext
 
                 case PostProcessEvent { IsStarted: true } post:
                     item.IsIndeterminate.Value = true;
-                    item.StatusText.Value = $"後処理中: {post.Postprocessor}";
+                    item.StatusText.Value = string.Format(Strings.PostProcessing, post.Postprocessor);
                     break;
 
                 case PostProcessEvent { IsFinished: true } post:
                     item.IsIndeterminate.Value = false;
-                    AppendLogCore($"後処理完了: {post.Postprocessor}");
+                    AppendLogCore(string.Format(Strings.PostProcessingComplete, post.Postprocessor));
                     break;
 
                 case OutputFileEvent file:
-                    AppendLogCore($"出力: {file.FilePath}");
+                    AppendLogCore(string.Format(Strings.OutputFile, file.FilePath));
                     break;
             }
         });
@@ -605,12 +606,12 @@ public sealed class YtDlpTabViewModel : IToolContext
 
     private static string FormatDownloadStatus(DownloadProgressEvent progress)
     {
-        if (progress.IsFinished) return "ダウンロード完了。後処理を待っています...";
+        if (progress.IsFinished) return Strings.WaitingForPostProcessing;
 
-        var text = new StringBuilder("ダウンロード中");
+        var text = new StringBuilder(Strings.Downloading);
         if (progress.Fraction is { } fraction)
         {
-            text.Append(CultureInfo.InvariantCulture, $" {fraction * 100:0.0}%");
+            text.Append(CultureInfo.CurrentUICulture, $" {fraction:P1}");
         }
 
         if (progress.DownloadedBytes is { } downloaded)
@@ -629,7 +630,7 @@ public sealed class YtDlpTabViewModel : IToolContext
 
         if (progress.Eta is { } eta)
         {
-            text.Append("  残り ").Append(YtDlpVideoInfo.FormatDuration(TimeSpan.FromSeconds(eta)));
+            text.Append("  ").AppendFormat(Strings.TimeRemaining, YtDlpVideoInfo.FormatDuration(TimeSpan.FromSeconds(eta)));
         }
 
         return text.ToString();

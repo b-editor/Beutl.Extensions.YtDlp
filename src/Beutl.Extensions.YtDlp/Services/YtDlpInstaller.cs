@@ -1,5 +1,6 @@
 using System.IO.Compression;
 using System.Security.Cryptography;
+using Beutl.Extensions.YtDlp.Resources;
 using Beutl.Logging;
 using Microsoft.Extensions.Logging;
 using Reactive.Bindings;
@@ -18,7 +19,7 @@ public sealed class YtDlpInstaller
 
     public ReactiveProperty<bool> IsIndeterminate { get; } = new();
 
-    public ReactiveProperty<string> Status { get; } = new("準備中");
+    public ReactiveProperty<string> Status { get; } = new(Strings.Preparing);
 
     public ReactiveProperty<string> Error { get; } = new("");
 
@@ -41,14 +42,14 @@ public sealed class YtDlpInstaller
             {
                 string assetName = YtDlpReleaseAssets.GetAssetName()
                     ?? throw new PlatformNotSupportedException(
-                        "この OS / CPU 向けの yt-dlp は配布されていません。手動でインストールし、設定で実行ファイルのパスを指定してください。");
+                        Strings.UnsupportedPlatform);
 
                 Directory.CreateDirectory(home);
 
                 using var client = new HttpClient { Timeout = s_httpTimeout };
                 client.DefaultRequestHeaders.UserAgent.ParseAdd("Beutl.Extensions.YtDlp");
 
-                Status.Value = "チェックサムを取得中 (1/5)";
+                Status.Value = Strings.FetchingChecksums;
                 IsIndeterminate.Value = true;
                 string? expectedHash = null;
                 try
@@ -63,17 +64,17 @@ public sealed class YtDlpInstaller
                     _logger.LogWarning(ex, "Failed to fetch yt-dlp checksums");
                 }
 
-                Status.Value = $"ダウンロード中 (2/5): {assetName}";
+                Status.Value = string.Format(Strings.DownloadingAsset, assetName);
                 await DownloadFileAsync(client, YtDlpReleaseAssets.GetDownloadUri(assetName), tempZip, ct);
 
-                Status.Value = "検証中 (3/5)";
+                Status.Value = Strings.VerifyingDownload;
                 IsIndeterminate.Value = true;
                 if (expectedHash != null)
                 {
                     string actualHash = await ComputeSha256Async(tempZip, ct);
                     if (!string.Equals(actualHash, expectedHash, StringComparison.OrdinalIgnoreCase))
                     {
-                        throw new InvalidOperationException("ダウンロードしたファイルのチェックサムが一致しません。");
+                        throw new InvalidOperationException(Strings.ChecksumMismatch);
                     }
                 }
                 else
@@ -81,7 +82,7 @@ public sealed class YtDlpInstaller
                     _logger.LogWarning("Installing yt-dlp without checksum verification");
                 }
 
-                Status.Value = "展開中 (4/5)";
+                Status.Value = Strings.Extracting;
                 await Task.Run(() => ZipFile.ExtractToDirectory(tempZip, tempDirectory), ct);
                 TryDeleteFile(tempZip);
                 PreparePayload(tempDirectory);
@@ -98,7 +99,7 @@ public sealed class YtDlpInstaller
                 swapped = true;
 
                 // The first launch of freshly written binaries can take a while (the OS inspects them once).
-                Status.Value = "動作確認中 (5/5)";
+                Status.Value = Strings.CheckingInstallation;
                 string version = await new YtDlpRunner(YtDlpLocator.ManagedExecutablePath).GetVersionAsync(ct);
                 InstalledVersion.Value = version;
 
@@ -110,22 +111,22 @@ public sealed class YtDlpInstaller
 
                 IsIndeterminate.Value = false;
                 Progress.Value = ProgressMax.Value;
-                Status.Value = $"完了 (yt-dlp {version})";
+                Status.Value = string.Format(Strings.InstalledVersion, version);
                 _logger.LogInformation("Installed yt-dlp {Version} to {Path}", version, installDirectory);
             }
             catch (OperationCanceledException)
             {
                 RestoreBackup(installDirectory, backupDirectory, swapped);
                 IsIndeterminate.Value = false;
-                Status.Value = "キャンセルしました";
+                Status.Value = Language.MessageStrings.Canceled;
                 _logger.LogInformation("yt-dlp installation canceled");
             }
             catch (Exception ex)
             {
                 bool restored = RestoreBackup(installDirectory, backupDirectory, swapped);
                 IsIndeterminate.Value = false;
-                Status.Value = "失敗";
-                Error.Value = restored ? $"{ex.Message}\n以前のインストールに戻しました。" : ex.Message;
+                Status.Value = Strings.InstallFailed;
+                Error.Value = restored ? string.Format(Strings.RestoredInstallation, ex.Message) : ex.Message;
                 _logger.LogError(ex, "Failed to install yt-dlp");
             }
             finally
@@ -142,7 +143,7 @@ public sealed class YtDlpInstaller
     {
         string payloadRoot = LocatePayloadRoot(directory);
         string executable = LocateExecutable(payloadRoot)
-            ?? throw new InvalidOperationException("展開したアーカイブに yt-dlp の実行ファイルが見つかりません。");
+            ?? throw new InvalidOperationException(Strings.MissingExecutableInArchive);
 
         string destination = Path.Combine(directory, YtDlpLocator.ExecutableFileName);
         if (!string.Equals(payloadRoot, directory, StringComparison.Ordinal))

@@ -2,8 +2,10 @@
              xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:lang="using:Beutl.Language"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:models="using:Beutl.Extensions.YtDlp.Models"
+             xmlns:res="using:Beutl.Extensions.YtDlp.Resources"
              xmlns:ui="using:FluentAvalonia.UI.Controls"
              xmlns:viewModels="using:Beutl.Extensions.YtDlp.ViewModels"
              xmlns:views="using:Beutl.Extensions.YtDlp.Views"
@@ -26,24 +28,24 @@
                                    ToolTip.Tip="{Binding FilePath}" />
                     </StackPanel>
                     <Button Grid.Column="1"
-                            AutomationProperties.Name="タイムラインへ追加"
+                            AutomationProperties.Name="{x:Static res:Strings.AddToTimeline}"
                             Classes="iconButton"
                             Click="AddHistoryItemToTimeline"
-                            ToolTip.Tip="現在の時刻にタイムラインへ追加">
+                            ToolTip.Tip="{x:Static res:Strings.AddAtPlayhead}">
                         <ui:FASymbolIcon FontSize="16" Symbol="Add" />
                     </Button>
                     <Button Grid.Column="2"
-                            AutomationProperties.Name="保存先フォルダーを開く"
+                            AutomationProperties.Name="{x:Static res:Strings.OpenOutputFolder}"
                             Classes="iconButton"
                             Click="OpenHistoryItemFolder"
-                            ToolTip.Tip="保存先フォルダーを開く">
+                            ToolTip.Tip="{x:Static res:Strings.OpenOutputFolder}">
                         <ui:FASymbolIcon FontSize="16" Symbol="OpenFolder" />
                     </Button>
                     <Button Grid.Column="3"
-                            AutomationProperties.Name="履歴から削除"
+                            AutomationProperties.Name="{x:Static res:Strings.RemoveFromHistory}"
                             Classes="iconButton"
                             Click="RemoveHistoryItem"
-                            ToolTip.Tip="履歴から削除（ファイルは残ります）">
+                            ToolTip.Tip="{x:Static res:Strings.RemoveFromHistoryHint}">
                         <ui:FASymbolIcon FontSize="16" Symbol="Delete" />
                     </Button>
                 </Grid>
@@ -130,16 +132,16 @@
                 <TabStrip x:Name="tabStrip"
                           Classes="toolTabNavigation"
                           SelectedIndex="{Binding SelectedTabIndex.Value, Mode=TwoWay}">
-                    <TabStripItem AutomationProperties.Name="検索" ToolTip.Tip="検索">
+                    <TabStripItem AutomationProperties.Name="{x:Static lang:Strings.Search}" ToolTip.Tip="{x:Static lang:Strings.Search}">
                         <Grid ColumnDefinitions="Auto,*">
                             <ui:FASymbolIcon Symbol="Find" />
-                            <TextBlock Grid.Column="1" Text="検索" />
+                            <TextBlock Grid.Column="1" Text="{x:Static lang:Strings.Search}" />
                         </Grid>
                     </TabStripItem>
-                    <TabStripItem AutomationProperties.Name="履歴" ToolTip.Tip="履歴">
+                    <TabStripItem AutomationProperties.Name="{x:Static lang:Strings.History}" ToolTip.Tip="{x:Static lang:Strings.History}">
                         <Grid ColumnDefinitions="Auto,*">
                             <ui:FASymbolIcon Symbol="Clock" />
-                            <TextBlock Grid.Column="1" Text="履歴" />
+                            <TextBlock Grid.Column="1" Text="{x:Static lang:Strings.History}" />
                         </Grid>
                     </TabStripItem>
                 </TabStrip>
@@ -161,65 +163,67 @@
                            FontSize="11"
                            Foreground="{DynamicResource TextFillColorSecondaryBrush}"
                            IsVisible="{Binding IsCheckingYtDlp.Value}"
-                           Text="yt-dlp を確認中..."
+                           Text="{x:Static res:Strings.CheckingYtDlp}"
                            TextTrimming="CharacterEllipsis" />
                 <Button Grid.Column="2"
-                        AutomationProperties.Name="ダウンロード設定"
+                        AutomationProperties.Name="{x:Static res:Strings.DownloadSettings}"
                         Classes="iconButton"
-                        ToolTip.Tip="ダウンロード設定（形式・保存先など）">
+                        ToolTip.Tip="{x:Static res:Strings.DownloadSettingsHint}">
                     <ui:FASymbolIcon FontSize="16" Symbol="Settings" />
                     <Button.Flyout>
                         <Flyout Placement="BottomEdgeAlignedRight">
                             <StackPanel Width="280" Spacing="8">
-                                <TextBlock Classes="sectionHeader" Text="形式（すべての動画の共通設定）" />
+                                <TextBlock Classes="sectionHeader" Text="{x:Static res:Strings.SharedFormat}" />
                                 <ComboBox HorizontalAlignment="Stretch"
                                           ItemsSource="{Binding Presets}"
                                           SelectedItem="{Binding SelectedPreset.Value, Mode=TwoWay}">
                                     <ComboBox.ItemTemplate>
                                         <DataTemplate x:DataType="viewModels:FormatPresetItem">
-                                            <TextBlock Text="{Binding Name}" />
+                                            <TextBlock Text="{Binding Name}" TextWrapping="Wrap" />
                                         </DataTemplate>
                                     </ComboBox.ItemTemplate>
                                 </ComboBox>
                                 <TextBlock Classes="secondary"
-                                           Text="動画ごとに変えるには、行の形式をクリックします。"
+                                           Text="{x:Static res:Strings.SharedFormatHint}"
                                            TextWrapping="Wrap" />
                                 <StackPanel IsVisible="{Binding IsCustomPreset.Value}" Spacing="4">
-                                    <TextBlock Classes="sectionHeader" Text="カスタム引数" />
+                                    <TextBlock Classes="sectionHeader" Text="{x:Static res:Strings.CustomArguments}" />
                                     <TextBox PlaceholderText="-f &quot;bv*[height&lt;=1080]+ba/b&quot; --merge-output-format mp4" Text="{Binding CustomFormatArguments.Value, Mode=TwoWay}" />
                                 </StackPanel>
-                                <TextBlock Classes="sectionHeader" Text="保存先" />
+                                <TextBlock Classes="sectionHeader" Text="{x:Static res:Strings.OutputFolder}" />
                                 <Grid ColumnDefinitions="*,Auto" ColumnSpacing="4">
                                     <TextBox PlaceholderText="{Binding DefaultOutputDirectory}" Text="{Binding OutputDirectory.Value, Mode=TwoWay}" />
                                     <Button Grid.Column="1"
-                                            AutomationProperties.Name="フォルダーを選択"
+                                            AutomationProperties.Name="{x:Static res:Strings.ChooseFolder}"
                                             Classes="iconButton"
                                             Click="BrowseOutputDirectory"
-                                            ToolTip.Tip="フォルダーを選択">
+                                            ToolTip.Tip="{x:Static res:Strings.ChooseFolder}">
                                         <ui:FASymbolIcon FontSize="16" Symbol="Folder" />
                                     </Button>
                                 </Grid>
-                                <CheckBox Content="ダウンロード後にタイムラインへ追加" IsChecked="{Binding AddToTimelineAfterDownload.Value, Mode=TwoWay}" />
+                                <CheckBox AutomationProperties.Name="{x:Static res:Strings.AddAfterDownload}" IsChecked="{Binding AddToTimelineAfterDownload.Value, Mode=TwoWay}">
+                                    <TextBlock Text="{x:Static res:Strings.AddAfterDownload}" TextWrapping="Wrap" />
+                                </CheckBox>
                             </StackPanel>
                         </Flyout>
                     </Button.Flyout>
                 </Button>
                 <Button x:Name="moreButton"
                         Grid.Column="3"
-                        AutomationProperties.Name="その他の操作"
+                        AutomationProperties.Name="{x:Static res:Strings.MoreActions}"
                         Classes="iconButton"
-                        ToolTip.Tip="その他の操作">
+                        ToolTip.Tip="{x:Static res:Strings.MoreActions}">
                     <ui:FASymbolIcon FontSize="16" Symbol="MoreVertical" />
                     <Button.Flyout>
                         <ui:FAMenuFlyout Placement="BottomEdgeAlignedRight">
                             <ui:FAMenuFlyoutItem Click="UpdateYtDlp"
                                                  IconSource="Sync"
                                                  IsEnabled="{Binding IsYtDlpAvailable.Value}"
-                                                 Text="yt-dlp を更新" />
+                                                 Text="{x:Static res:Strings.UpdateYtDlp}" />
                             <ui:FAMenuFlyoutItem Click="ShowLog"
                                                  IconSource="Document"
                                                  IsEnabled="{Binding HasLog.Value}"
-                                                 Text="ログを表示" />
+                                                 Text="{x:Static res:Strings.ShowLog}" />
                         </ui:FAMenuFlyout>
                     </Button.Flyout>
                     <FlyoutBase.AttachedFlyout>
@@ -238,29 +242,29 @@
             </Grid>
         </Border>
 
-        <ui:FAInfoBar Title="yt-dlp が見つかりません"
+        <ui:FAInfoBar Title="{x:Static res:Strings.YtDlpNotFound}"
                       Grid.Row="1"
                       Margin="8,8,8,0"
                       IsClosable="False"
                       IsOpen="{Binding IsYtDlpMissing.Value}"
                       IsVisible="{Binding IsYtDlpMissing.Value}"
-                      Message="インストールするか、設定で実行ファイルのパスを指定してください。"
+                      Message="{x:Static res:Strings.InstallOrSetPath}"
                       Severity="Warning">
             <ui:FAInfoBar.ActionButton>
-                <Button Click="InstallYtDlp" Content="インストール" />
+                <Button Click="InstallYtDlp" Content="{x:Static lang:ExtensionsStrings.Install}" />
             </ui:FAInfoBar.ActionButton>
         </ui:FAInfoBar>
 
-        <ui:FAInfoBar Title="yt-dlp を更新すると起動が速くなります"
+        <ui:FAInfoBar Title="{x:Static res:Strings.FasterStartup}"
                       Grid.Row="2"
                       Margin="8,8,8,0"
                       IsClosable="True"
                       IsOpen="{Binding IsSlowBuild.Value}"
                       IsVisible="{Binding IsSlowBuild.Value}"
-                      Message="現在の yt-dlp は起動のたびに自身を展開する形式です。展開済みの形式に更新すると検索や形式の取得が数秒速くなります。"
+                      Message="{x:Static res:Strings.FasterStartupHint}"
                       Severity="Informational">
             <ui:FAInfoBar.ActionButton>
-                <Button Click="UpdateYtDlp" Content="更新" />
+                <Button Click="UpdateYtDlp" Content="{x:Static lang:Strings.Update}" />
             </ui:FAInfoBar.ActionButton>
         </ui:FAInfoBar>
 
@@ -276,7 +280,7 @@
                               IsEnabled="{Binding !IsUrlInput.Value}"
                               ItemsSource="{Binding SearchProviders}"
                               SelectedItem="{Binding SelectedSearchProvider.Value, Mode=TwoWay}"
-                              ToolTip.Tip="検索するサイト">
+                              ToolTip.Tip="{x:Static res:Strings.SearchSite}">
                         <ComboBox.ItemTemplate>
                             <DataTemplate x:DataType="viewModels:SearchProviderItem">
                                 <TextBlock Text="{Binding Name}" />
@@ -286,7 +290,7 @@
                     <TextBox x:Name="searchBox"
                              Grid.Column="1"
                              Classes="clearButton"
-                             PlaceholderText="キーワードまたは URL"
+                             PlaceholderText="{x:Static res:Strings.SearchPlaceholder}"
                              Text="{Binding SearchQuery.Value, Mode=TwoWay}">
                         <TextBox.InnerLeftContent>
                             <Panel Margin="8,0,4,0" VerticalAlignment="Center">
@@ -332,15 +336,18 @@
                                                                    TextWrapping="Wrap"
                                                                    ToolTip.Tip="{Binding Title}" />
                                                         <TextBlock Classes="secondary"
+                                                                   MaxLines="2"
                                                                    Text="{Binding Subtitle}"
-                                                                   TextTrimming="CharacterEllipsis" />
+                                                                   TextTrimming="CharacterEllipsis"
+                                                                   TextWrapping="Wrap"
+                                                                   ToolTip.Tip="{Binding Subtitle}" />
                                                     </StackPanel>
                                                 </Grid>
 
                                                 <Grid ColumnDefinitions="*,Auto,Auto,Auto" ColumnSpacing="4">
                                                     <!--  Shows the shared preset, or this row's override in the accent colour  -->
                                                     <DropDownButton HorizontalAlignment="Left"
-                                                                    AutomationProperties.Name="この動画の形式"
+                                                                    AutomationProperties.Name="{x:Static res:Strings.VideoFormat}"
                                                                     Classes="formatPicker"
                                                                     Classes.override="{Binding HasSelectedFormat.Value}"
                                                                     IsEnabled="{Binding !Owner.IsBusy.Value}"
@@ -358,7 +365,7 @@
                                                                                            IsIndeterminate="True" />
                                                                         <TextBlock VerticalAlignment="Center"
                                                                                    Classes="secondary"
-                                                                                   Text="フォーマットを取得中..." />
+                                                                                   Text="{x:Static res:Strings.LoadingFormats}" />
                                                                     </StackPanel>
                                                                     <TextBlock Classes="secondary"
                                                                                IsVisible="{Binding HasFormatsMessage.Value}"
@@ -367,7 +374,7 @@
                                                                     <ComboBox HorizontalAlignment="Stretch"
                                                                               IsVisible="{Binding HasFormats.Value}"
                                                                               ItemsSource="{Binding Formats.Value}"
-                                                                              PlaceholderText="プリセットを使用"
+                                                                              PlaceholderText="{x:Static res:Strings.UsePreset}"
                                                                               SelectedItem="{Binding SelectedFormat.Value, Mode=TwoWay}">
                                                                         <ComboBox.ItemTemplate>
                                                                             <DataTemplate x:DataType="models:YtDlpFormat">
@@ -381,42 +388,42 @@
                                                                         </ComboBox.ItemTemplate>
                                                                     </ComboBox>
                                                                     <Button Command="{Binding ClearFormat}"
-                                                                            Content="プリセットに戻す"
+                                                                            Content="{x:Static res:Strings.ResetToPreset}"
                                                                             IsEnabled="{Binding HasSelectedFormat.Value}" />
                                                                 </StackPanel>
                                                             </Flyout>
                                                         </DropDownButton.Flyout>
                                                     </DropDownButton>
                                                     <Button Grid.Column="1"
-                                                            AutomationProperties.Name="動画ページを開く"
+                                                            AutomationProperties.Name="{x:Static res:Strings.OpenVideoPage}"
                                                             Classes="iconButton"
                                                             Click="OpenVideoPage"
-                                                            ToolTip.Tip="動画ページをブラウザーで開く">
+                                                            ToolTip.Tip="{x:Static res:Strings.OpenVideoInBrowser}">
                                                         <ui:FASymbolIcon FontSize="16" Symbol="Open" />
                                                     </Button>
                                                     <Button Grid.Column="2"
-                                                            AutomationProperties.Name="素材フォルダーにダウンロード"
+                                                            AutomationProperties.Name="{x:Static res:Strings.DownloadToMaterials}"
                                                             Classes="iconButton"
                                                             Command="{Binding DownloadToMaterials}"
                                                             IsEnabled="{Binding !Owner.IsBusy.Value}"
-                                                            ToolTip.Tip="素材フォルダーにダウンロード（~/.beutl/materials/yt-dlp）">
+                                                            ToolTip.Tip="{x:Static res:Strings.DownloadToMaterialsHint}">
                                                         <ui:FASymbolIcon FontSize="16" Symbol="Library" />
                                                     </Button>
                                                     <!--  Download turns into Cancel while this row is downloading.  -->
                                                     <Panel Grid.Column="3">
-                                                        <Button AutomationProperties.Name="保存先にダウンロード"
+                                                        <Button AutomationProperties.Name="{x:Static res:Strings.DownloadToOutput}"
                                                                 Classes="iconButton"
                                                                 Command="{Binding Download}"
                                                                 IsEnabled="{Binding !Owner.IsBusy.Value}"
                                                                 IsVisible="{Binding !IsActive.Value}"
-                                                                ToolTip.Tip="保存先にダウンロード">
+                                                                ToolTip.Tip="{x:Static res:Strings.DownloadToOutput}">
                                                             <ui:FASymbolIcon FontSize="16" Symbol="Download" />
                                                         </Button>
-                                                        <Button AutomationProperties.Name="キャンセル"
+                                                        <Button AutomationProperties.Name="{x:Static lang:Strings.Cancel}"
                                                                 Classes="iconButton"
                                                                 Command="{Binding Cancel}"
                                                                 IsVisible="{Binding IsActive.Value}"
-                                                                ToolTip.Tip="キャンセル">
+                                                                ToolTip.Tip="{x:Static lang:Strings.Cancel}">
                                                             <ui:FASymbolIcon FontSize="16" Symbol="Dismiss" />
                                                         </Button>
                                                     </Panel>
@@ -479,7 +486,7 @@
                         <TextBlock VerticalAlignment="Center"
                                    Foreground="{DynamicResource TextFillColorSecondaryBrush}"
                                    Text="{Binding BusyMessage.Value}" />
-                        <Button Command="{Binding Cancel}" Content="キャンセル" />
+                        <Button Command="{Binding Cancel}" Content="{x:Static lang:Strings.Cancel}" />
                     </StackPanel>
                 </Panel>
             </Grid>
@@ -493,11 +500,11 @@
                                 <ui:FASymbolIcon Symbol="Clock" />
                             </Border>
                             <TextBlock FontSize="16"
-                                       Text="まだダウンロードはありません"
+                                       Text="{x:Static res:Strings.NoDownloads}"
                                        TextAlignment="Center"
                                        TextWrapping="Wrap" />
                             <TextBlock Classes="secondary"
-                                       Text="ダウンロードした動画がここに表示されます。"
+                                       Text="{x:Static res:Strings.NoDownloadsHint}"
                                        TextAlignment="Center"
                                        TextWrapping="Wrap" />
                         </StackPanel>
@@ -506,7 +513,7 @@
                 <ScrollViewer HorizontalScrollBarVisibility="Disabled" IsVisible="{Binding HasHistory.Value}">
                     <StackPanel Margin="8" Spacing="12">
                         <StackPanel IsVisible="{Binding HasMaterialsHistory.Value}" Spacing="6">
-                            <TextBlock Classes="sectionHeader" Text="素材フォルダー" />
+                            <TextBlock Classes="sectionHeader" Text="{x:Static res:Strings.MaterialsFolder}" />
                             <Border Classes="options-group">
                                 <ItemsControl ItemTemplate="{StaticResource HistoryItemTemplate}" ItemsSource="{Binding MaterialsHistory}">
                                     <ItemsControl.ItemsPanel>
