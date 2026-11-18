@@ -1,15 +1,15 @@
-<Project Sdk="Beutl.Extensibility.Sdk/2.0.0-preview.13">
+<Project Sdk="Beutl.Extensibility.Sdk/2.0.0-preview.14">
 
     <PropertyGroup>
         <PackageId>Beutl.Extensions.YtDlp</PackageId>
         <Title>yt-dlp Downloader</Title>
         <Description>yt-dlp で動画・音声を検索・ダウンロードしてタイムラインに追加します</Description>
         <!-- Beutl shows the release notes as the long description of an installed package. -->
-        <PackageReleaseNotes>YouTube / SoundCloud / ニコニコ動画 / Bilibili の検索、URL からの取得、形式を選んだダウンロード、タイムラインへの自動追加、ダウンロード履歴、yt-dlp の自動インストールと更新に対応しています。1.0.6 では、ニコニコ動画と Bilibili の検索を追加し、Beutl 2.0.0-preview.13 に対応しました。UI は Beutl の表示言語に合わせて、日本語、英語、簡体字中国語、韓国語、スペイン語で表示されます。</PackageReleaseNotes>
+        <PackageReleaseNotes>YouTube / SoundCloud / ニコニコ動画 / Bilibili の検索、URL や Beutl のブラウザーからの取得、形式を選んだダウンロード、タイムラインへの自動追加、ダウンロード履歴、yt-dlp の自動インストールと更新に対応しています。1.0.7 では、Beutl のブラウザーメニューから視聴ページの動画をダウンロードできるようにし、UI を多言語化して、Beutl 2.0.0-preview.14 に対応しました。UI は Beutl の表示言語に合わせて、日本語、英語、簡体字中国語、韓国語、スペイン語で表示されます。</PackageReleaseNotes>
         <!-- Semicolon-separated: NuGet writes them space-separated, which is how Beutl splits tags. -->
         <PackageTags>video;audio;download;youtube;soundcloud;niconico;bilibili;yt-dlp</PackageTags>
-        <Version>1.0.6</Version>
-        <AssemblyVersion>1.0.6.0</AssemblyVersion>
+        <Version>1.0.7</Version>
+        <AssemblyVersion>1.0.7.0</AssemblyVersion>
         <NeutralLanguage>en</NeutralLanguage>
         <Authors>Yuto Terada</Authors>
         <Copyright>Copyright (c) 2026 Yuto Terada</Copyright>
@@ -18,7 +18,6 @@
         <RepositoryUrl>https://github.com/b-editor/Beutl.Extensions.YtDlp</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <BeutlAutoReferenceNodeGraph>false</BeutlAutoReferenceNodeGraph>
-        <BeutlPackagesVersion>2.0.0-preview.13.browser-download.1</BeutlPackagesVersion>
         <!-- Beutl 2.0 is still in preview, so a stable release necessarily depends on preview packages. -->
         <NoWarn>$(NoWarn);NU5104</NoWarn>
     </PropertyGroup>

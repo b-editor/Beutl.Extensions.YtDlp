@@ -34,6 +34,7 @@ public sealed class YtDlpTabViewModel : IToolContext
     private readonly IEditorContext _editorContext;
     private readonly Scene _scene;
     private readonly IEditorClock _clock;
+    private readonly INotificationService _notifications;
     private readonly YtDlpEnvironment _environment;
     private readonly YtDlpSettings _settings;
     private readonly CompositeDisposable _disposables = [];
@@ -52,6 +53,7 @@ public sealed class YtDlpTabViewModel : IToolContext
         _settings = environment.Settings;
         _scene = editorContext.GetRequiredService<Scene>();
         _clock = editorContext.GetRequiredService<IEditorClock>();
+        _notifications = editorContext.GetRequiredService<INotificationService>();
 
         Presets = Enum.GetValues<FormatPreset>().Select(FormatPresetItem.Create).ToArray();
         SelectedPreset = new ReactiveProperty<FormatPresetItem>(FindPreset(_settings.DefaultPreset.Value))
@@ -355,7 +357,7 @@ public sealed class YtDlpTabViewModel : IToolContext
                 }
             }
 
-            NotificationService.ShowSuccess("yt-dlp", savedMessage);
+            _notifications.ShowSuccess("yt-dlp", savedMessage);
         }
         catch (OperationCanceledException)
         {
@@ -701,14 +703,14 @@ public sealed class YtDlpTabViewModel : IToolContext
         LogText.Value = "";
     }
 
-    private static void ShowWarning(string message)
+    private void ShowWarning(string message)
     {
-        NotificationService.ShowWarning("yt-dlp", message);
+        _notifications.ShowWarning("yt-dlp", message);
     }
 
-    private static void ShowError(string title, string message)
+    private void ShowError(string title, string message)
     {
-        NotificationService.ShowError(title, message);
+        _notifications.ShowError(title, message);
     }
 
     public void Dispose()

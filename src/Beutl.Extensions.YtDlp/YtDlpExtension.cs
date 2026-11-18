@@ -44,7 +44,7 @@ public sealed class YtDlpExtension : BrowserDownloadExtension
         if (!Environment.HasChecked.Value) await Environment.RefreshAsync(cancellationToken);
         if (Environment.CreateRunner() is not { } runner)
         {
-            ShowInstallNotification();
+            ShowInstallNotification(editorContext.GetRequiredService<INotificationService>());
             return true;
         }
 
@@ -88,9 +88,10 @@ public sealed class YtDlpExtension : BrowserDownloadExtension
         }
     }
 
-    public override void Load()
+    public override void Load(IExtensionContext context)
     {
-        base.Load();
+        base.Load(context);
+        INotificationService notifications = context.Services.GetRequiredService<INotificationService>();
         Settings.PropertyChanged += OnSettingsPropertyChanged;
 
         _ = Environment.RefreshAsync().ContinueWith(t =>
@@ -103,20 +104,20 @@ public sealed class YtDlpExtension : BrowserDownloadExtension
 
             if (!Environment.IsAvailable.Value)
             {
-                Dispatcher.UIThread.Post(ShowInstallNotification);
+                Dispatcher.UIThread.Post(() => ShowInstallNotification(notifications));
             }
         }, CancellationToken.None, TaskContinuationOptions.None, TaskScheduler.Default);
     }
 
-    private static void ShowInstallNotification()
+    private static void ShowInstallNotification(INotificationService notifications)
     {
-        NotificationService.ShowWarning(
+        notifications.ShowWarning(
             title: "yt-dlp",
             message: Strings.YtDlpMissingMessage,
             actions: [new NotificationAction(Language.ExtensionsStrings.Install, () => _ = ShowInstallDialogAsync())]);
     }
 
-    public override void Unload()
+    public override void Unload(IExtensionContext context)
     {
         Settings.PropertyChanged -= OnSettingsPropertyChanged;
         if (Current == this)
@@ -124,7 +125,7 @@ public sealed class YtDlpExtension : BrowserDownloadExtension
             Current = null;
         }
 
-        base.Unload();
+        base.Unload(context);
     }
 
     private void OnSettingsPropertyChanged(object? sender, PropertyChangedEventArgs e)

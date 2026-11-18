@@ -5,6 +5,7 @@ using Beutl.Extensibility;
 using Beutl.Extensions.YtDlp.Models;
 using Beutl.Extensions.YtDlp.ViewModels;
 using Beutl.ProjectSystem;
+using Beutl.Services;
 using Reactive.Bindings;
 
 namespace Beutl.Extensions.YtDlp.Tests;
@@ -40,7 +41,7 @@ public class TimelineImportTests
     public void TearDown()
     {
         _viewModel.Dispose();
-        _extension.Unload();
+        _extension.Unload(new ExtensionContext(_editor));
         Directory.Delete(_root, recursive: true);
     }
 
@@ -307,6 +308,8 @@ public class TimelineImportTests
 
     private sealed class TestEditorContext(Scene scene, IEditorClock clock, IElementAdder adder) : IEditorContext
     {
+        private readonly NotificationService _notifications = new();
+
         public IToolContext? Tab { get; set; }
 
         public CoreObject Object => scene;
@@ -318,6 +321,7 @@ public class TimelineImportTests
         public object? GetService(Type serviceType) => serviceType == typeof(Scene) ? scene
             : serviceType == typeof(IEditorClock) ? clock
             : serviceType == typeof(IElementAdder) ? adder
+            : serviceType == typeof(INotificationService) ? _notifications
             : null;
 
         public T? FindToolTab<T>(Func<T, bool> condition) where T : IToolContext => default;
