@@ -2,10 +2,10 @@ using System.Text.Json.Nodes;
 using Beutl.Editor.Models;
 using Beutl.Editor.Services;
 using Beutl.Extensibility;
-using Beutl.Extensions.YtDlp.Services;
-using Beutl.Extensions.YtDlp.Settings;
+using Beutl.Extensions.YtDlp.Models;
 using Beutl.Extensions.YtDlp.ViewModels;
 using Beutl.ProjectSystem;
+using Beutl.Services;
 using Reactive.Bindings;
 
 namespace Beutl.Extensions.YtDlp.Tests;
@@ -17,6 +17,8 @@ public class TimelineImportTests
     private DeferredElementAdder _adder = null!;
     private TestEditorClock _clock = null!;
     private YtDlpTabViewModel _viewModel = null!;
+    private TestEditorContext _editor = null!;
+    private YtDlpExtension _extension = null!;
 
     [SetUp]
     public void SetUp()
@@ -27,17 +29,164 @@ public class TimelineImportTests
         File.WriteAllBytes(_filePath, []);
         _adder = new DeferredElementAdder();
         _clock = new TestEditorClock();
-        var context = new TestEditorContext(
+        _editor = new TestEditorContext(
             new Scene { Uri = new Uri(Path.Combine(_root, "scene.beutl")) },
             _clock, _adder);
-        _viewModel = new YtDlpTabViewModel(new YtDlpTabExtension(), context, new YtDlpEnvironment(new YtDlpSettings()));
+        _extension = new YtDlpExtension();
+        _viewModel = new YtDlpTabViewModel(new YtDlpTabExtension(), _editor, _extension.Environment);
+        _editor.Tab = _viewModel;
     }
 
     [TearDown]
     public void TearDown()
     {
         _viewModel.Dispose();
+        _extension.Unload(new ExtensionContext(_editor));
         Directory.Delete(_root, recursive: true);
+    }
+
+    [Test]
+    public async Task BrowserMenuWaitsForConfirmationAndUsesOptionsForThisDownload()
+    {
+        UseYtDlpScript("""
+            for arg do
+                if [ "$previous" = '-P' ]; then directory="$arg"; fi
+                if [ "$previous" = '-f' ]; then format="$arg"; fi
+                previous="$arg"
+            done
+            printf '%s\n' "$arg" >> "$(dirname "$0")/urls"
+            if [ "$1" = '--dump-single-json' ]; then
+                printf '%s\n' '{"title":"Test video","duration":12.5,"webpage_url":"https://example.org/canonical","formats":[{"format_id":"140","vcodec":"none","acodec":"mp4a","ext":"m4a"}]}'
+            else
+                printf '%s\n' "$format" > "$(dirname "$0")/format"
+                printf 'media' > "$directory/clip.mp4"
+                printf '[beutl:file]%s/clip.mp4\n' "$directory"
+            fi
+            """);
+        string directory = Path.Combine(_root, "chosen");
+        _viewModel.OutputDirectory.Value = Path.Combine(_root, "default");
+        var prompted = new TaskCompletionSource<DownloadOptions>(TaskCreationOptions.RunContinuationsAsynchronously);
+        var confirmed = new TaskCompletionSource<DownloadOptions?>(TaskCreationOptions.RunContinuationsAsynchronously);
+        _viewModel.ChoosePageDownloadOptions = (video, defaults, token) =>
+        {
+            Assert.That(video.Title, Is.EqualTo("Test video"));
+            Assert.That(defaults.OutputDirectory, Is.EqualTo(_viewModel.OutputDirectory.Value));
+            Assert.That(defaults.AddToTimeline, Is.True);
+            prompted.SetResult(defaults with { Format = video.Formats.Value.Single() });
+            return confirmed.Task.WaitAsync(token);
+        };
+        var page = new Uri("https://www.youtube.com/watch?v=test&t=30");
+
+        var pending = _extension.TryDownloadPageAsync(_editor, page, null, CancellationToken.None);
+        DownloadOptions options = await prompted.Task.WaitAsync(TimeSpan.FromSeconds(5));
+        Assert.That(File.ReadAllLines(Path.Combine(_root, "urls")), Is.EqualTo(new[] { page.AbsoluteUri }));
+        Assert.That(_viewModel.History, Is.Empty);
+        confirmed.SetResult(options with { OutputDirectory = directory, AddToTimeline = false });
+
+        Assert.That(await pending, Is.True);
+        Assert.That(File.ReadAllLines(Path.Combine(_root, "urls")), Is.EqualTo(new[] { page.AbsoluteUri, page.AbsoluteUri }));
+        DownloadHistoryItem item = _viewModel.History.Single();
+        Assert.Multiple(() =>
+        {
+            Assert.That(item.Title, Is.EqualTo("Test video"));
+            Assert.That(item.Duration, Is.EqualTo(TimeSpan.FromSeconds(12.5)));
+            Assert.That(item.FilePath, Is.EqualTo(Path.Combine(directory, "clip.mp4")));
+            Assert.That(File.ReadAllText(item.FilePath), Is.EqualTo("media"));
+            Assert.That(item.Url, Is.EqualTo(page.AbsoluteUri));
+            Assert.That(File.ReadAllText(Path.Combine(_root, "format")).Trim(), Is.EqualTo("140"));
+            Assert.That(_viewModel.OutputDirectory.Value, Is.EqualTo(Path.Combine(_root, "default")));
+            Assert.That(_viewModel.AddToTimelineAfterDownload.Value, Is.True);
+            Assert.That(_adder.Description, Is.Null);
+        });
+    }
+
+    [TestCase(false)]
+    [TestCase(true)]
+    public async Task CancelingBrowserOptionsFinishesWithoutDownloading(bool closeBrowser)
+    {
+        UseYtDlpScript("""
+            if [ "$1" = '--dump-single-json' ]; then
+                printf '%s\n' '{"title":"Test video"}'
+            else
+                touch "$0.download"
+            fi
+            """);
+        using var browser = new CancellationTokenSource();
+        _viewModel.ChoosePageDownloadOptions = (_, _, token) =>
+        {
+            if (closeBrowser)
+            {
+                browser.Cancel();
+                token.ThrowIfCancellationRequested();
+            }
+            return Task.FromResult<DownloadOptions?>(null);
+        };
+
+        bool handled = await _extension.TryDownloadPageAsync(_editor, new Uri("https://example.org/video"), null, browser.Token);
+
+        Assert.That(handled, Is.True);
+        Assert.That(File.Exists(Path.Combine(_root, "yt-dlp.download")), Is.False);
+        Assert.That(_viewModel.History, Is.Empty);
+        Assert.That(_viewModel.IsBusy.Value, Is.False);
+    }
+
+    [Test]
+    public async Task DownloadFromToolTabStartsDirectly()
+    {
+        UseYtDlpScript("""
+            for arg do
+                if [ "$previous" = '-P' ]; then directory="$arg"; fi
+                previous="$arg"
+            done
+            touch "$directory/tab.mp4"
+            printf '[beutl:file]%s/tab.mp4\n' "$directory"
+            """);
+        _viewModel.OutputDirectory.Value = _root;
+        _viewModel.AddToTimelineAfterDownload.Value = false;
+        _viewModel.ChoosePageDownloadOptions = (_, _, _) => throw new AssertionException("Unexpected browser dialog");
+        using var item = new VideoItem(new YtDlpSearchResult { Url = "https://example.org/video" }, _viewModel);
+
+        await item.Download();
+
+        Assert.That(_viewModel.History.Single().FilePath, Is.EqualTo(Path.Combine(_root, "tab.mp4")));
+    }
+
+    [Test]
+    public async Task UnsupportedBrowserPageLetsBeutlHandleTheDownload()
+    {
+        UseYtDlpScript("""
+            printf '%s\n' 'ERROR: Unsupported URL: https://example.org/page' >&2
+            exit 1
+            """);
+
+        bool handled = await _extension.TryDownloadPageAsync(_editor, new Uri("https://example.org/page"), null, CancellationToken.None);
+
+        Assert.That(handled, Is.False);
+        Assert.That(_viewModel.SearchResults.Value, Is.Empty);
+    }
+
+    [Test]
+    public void PlaylistPageDoesNotStartABulkDownload()
+    {
+        UseYtDlpScript("""
+            printf '%s\n' '{"_type":"playlist","entries":[]}'
+            """);
+
+        Assert.ThrowsAsync<InvalidOperationException>(async () =>
+            await _extension.TryDownloadPageAsync(_editor, new Uri("https://example.org/playlist"), null, CancellationToken.None));
+        Assert.That(_viewModel.SearchResults.Value, Is.Empty);
+    }
+
+    private void UseYtDlpScript(string commands)
+    {
+        string executable = Path.Combine(_root, "yt-dlp");
+        File.WriteAllText(executable, "#!/bin/sh\n" + commands + "\n");
+        if (OperatingSystem.IsWindows())
+            Assert.Ignore("The fixture uses a POSIX executable.");
+        else
+            File.SetUnixFileMode(executable, UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
+        _extension.Environment.ExecutablePath.Value = executable;
+        _extension.Environment.HasChecked.Value = true;
     }
 
     [TestCase(12, 12)]
@@ -159,6 +308,10 @@ public class TimelineImportTests
 
     private sealed class TestEditorContext(Scene scene, IEditorClock clock, IElementAdder adder) : IEditorContext
     {
+        private readonly NotificationService _notifications = new();
+
+        public IToolContext? Tab { get; set; }
+
         public CoreObject Object => scene;
 
         public EditorExtension Extension => throw new NotSupportedException();
@@ -168,13 +321,14 @@ public class TimelineImportTests
         public object? GetService(Type serviceType) => serviceType == typeof(Scene) ? scene
             : serviceType == typeof(IEditorClock) ? clock
             : serviceType == typeof(IElementAdder) ? adder
+            : serviceType == typeof(INotificationService) ? _notifications
             : null;
 
         public T? FindToolTab<T>(Func<T, bool> condition) where T : IToolContext => default;
 
-        public T? FindToolTab<T>() where T : IToolContext => default;
+        public T? FindToolTab<T>() where T : IToolContext => Tab is T tab ? tab : default;
 
-        public bool OpenToolTab(IToolContext item) => false;
+        public bool OpenToolTab(IToolContext item) => ReferenceEquals(Tab, item);
 
         public void CloseToolTab(IToolContext item) { }
     }

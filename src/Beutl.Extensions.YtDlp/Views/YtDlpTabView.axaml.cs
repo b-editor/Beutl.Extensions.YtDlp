@@ -7,7 +7,6 @@ using Avalonia.Interactivity;
 using Avalonia.Platform.Storage;
 using Avalonia.Threading;
 using Avalonia.VisualTree;
-using Beutl.Extensions.YtDlp.Resources;
 using Beutl.Extensions.YtDlp.ViewModels;
 
 namespace Beutl.Extensions.YtDlp.Views;
@@ -102,22 +101,7 @@ public partial class YtDlpTabView : UserControl
     private async void BrowseOutputDirectory(object? sender, RoutedEventArgs e)
     {
         if (ViewModel is not { } viewModel) return;
-        if (TopLevel.GetTopLevel(this) is not { } topLevel) return;
-
-        var options = new FolderPickerOpenOptions
-        {
-            Title = Strings.ChooseOutputFolder,
-            AllowMultiple = false,
-        };
-
-        string current = viewModel.ResolveOutputDirectory();
-        if (Directory.Exists(current))
-        {
-            options.SuggestedStartLocation = await topLevel.StorageProvider.TryGetFolderFromPathAsync(current);
-        }
-
-        IReadOnlyList<IStorageFolder> folders = await topLevel.StorageProvider.OpenFolderPickerAsync(options);
-        if (folders.Count > 0 && folders[0].TryGetLocalPath() is { } path)
+        if (await OutputFolderPicker.ChooseAsync(this, viewModel.ResolveOutputDirectory()) is { } path)
         {
             viewModel.OutputDirectory.Value = path;
         }

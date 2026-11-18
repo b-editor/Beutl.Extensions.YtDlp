@@ -208,6 +208,9 @@
   <data name="EnterQuery" xml:space="preserve">
     <value>Introduce una palabra clave o una URL.</value>
   </data>
+  <data name="DownloaderBusy" xml:space="preserve">
+    <value>Espera a que termine la operación actual y vuelve a intentar la descarga.</value>
+  </data>
   <data name="PlaylistUnsupported" xml:space="preserve">
     <value>No se admiten enlaces a listas de reproducción. Introduce la URL de un solo vídeo.</value>
   </data>

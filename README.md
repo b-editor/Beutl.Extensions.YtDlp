@@ -8,6 +8,7 @@ UI は Beutl の表示言語に合わせて、日本語、英語、簡体字中�
 
 ## 機能
 
+- **Beutl のブラウザーからダウンロード**。YouTube などの視聴ページから、動画ごとに形式・画質と保存先を選んでダウンロードできます。
 - **ツールタブ「yt-dlp」**（「検索」「履歴」の 2 画面）
   - 検索欄に**キーワード**を入れると YouTube / SoundCloud / ニコニコ動画 / Bilibili を検索し、サムネイル・タイトル・長さ・再生回数など、取得できた情報を一覧に表示します。件数は設定で変更できます（既定 20 件）。ニコニコ動画は公式のスナップショット検索 API を使用するため、最新の投稿が検索結果に反映されるまで時間がかかる場合があります。Bilibili は動画ごとに情報を取得するため、ほかのサイトより検索に時間がかかります。
   - 検索欄で **Enter** を押すと検索します。**URL** を入れると検索欄のアイコンが 🔍 から 🔗 に変わり、その動画を同じ行形式で 1 件表示します（`www.youtube.com/...` のようなスキーム無しの入力も可）。URL 入力は検索先の選択に関係なく、[yt-dlp の対応サイト](https://github.com/yt-dlp/yt-dlp/blob/master/supportedsites.md)の動画に利用できます。
@@ -23,7 +24,7 @@ UI は Beutl の表示言語に合わせて、日本語、英語、簡体字中�
 
 ## 動作要件
 
-- Beutl 2.0.0-preview.13 以降
+- Beutl 2.0.0-preview.14 以降
 - FFmpeg（映像と音声の結合と、音声の m4a への変換に使います。YouTube の動画は多くが映像と音声に分かれて提供されるため、実質的に必須です。Beutl がインストールしたもの（Windows・Linux は `~/.beutl/ffmpeg`、macOS は Homebrew の `ffmpeg@8`）と PATH 上のものから、実際に起動できるものを自動検出します）
 - yt-dlp は拡張機能からインストールできます。既に PATH 上にある場合はそれを使います。
 
@@ -36,6 +37,10 @@ UI は Beutl の表示言語に合わせて、日本語、英語、簡体字中�
 
 ## 使い方
 
+Beutl のブラウザーで視聴ページを開き、ブラウザーメニューの **「ファイルをダウンロード」** を選びます。動画情報の取得後にダイアログが開きます。画質プリセットや動画が提供する形式、保存先（設定済みのフォルダー・素材フォルダー・任意のフォルダー）、タイムラインへの追加を選び、**「ダウンロード」** で開始します。選択は今回のダウンロードにだけ適用され、進捗は yt-dlp タブに表示されます。
+
+キーワードや URL を直接入力する場合は、yt-dlp タブから検索できます。
+
 1. Beutl でシーンを開き、ツールタブの追加メニューから **yt-dlp** を開きます。
 2. yt-dlp が見つからない場合はタブ内の **インストール** を押します（`~/.beutl/yt-dlp/` に保存されます）。
 3. 検索欄にキーワードまたは URL を入力して Enter を押します。
@@ -47,9 +52,10 @@ UI は Beutl の表示言語に合わせて、日本語、英語、簡体字中�
 
 ### Beutl パッケージについて
 
-`Beutl.Extensibility.Sdk` の `2.0.0-preview.13` を使用します。
+`Beutl.Extensibility.Sdk` の `2.0.0-preview.14` を使用します。
 SDK のバージョンは `.csproj` の `Project` 要素に直接指定しており、必要なパッケージは
 `nuget.config` に登録された NuGet フィードから復元されます。
+ブラウザーメニューの API（`BrowserDownloadExtension.TryDownloadPageAsync`）は 2.0.0-preview.14 で追加されたため、これより前の SDK ではビルドできません。
 
 ### ビルド・テスト
 
@@ -67,6 +73,8 @@ dotnet test Beutl.Extensions.YtDlp.slnx
 dotnet build src/Beutl.Extensions.YtDlp -c Debug -p:DebugApplication=true
 ```
 
+ブラウザーメニューからのダウンロードも、公開版の Beutl 2.0.0-preview.14 以降でそのまま試せます。
+
 ### 公開手順
 
 1. `src/Beutl.Extensions.YtDlp/Beutl.Extensions.YtDlp.csproj` の `Version` と `AssemblyVersion`、`PackageReleaseNotes` を更新し、[CHANGELOG.md](CHANGELOG.md) に変更点を追記します。
@@ -77,7 +85,7 @@ dotnet build src/Beutl.Extensions.YtDlp -c Debug -p:DebugApplication=true
    dotnet pack src/Beutl.Extensions.YtDlp -c Release
    ```
 
-3. [Beutl のデベロッパーページ](https://beutl.beditor.net/ja/developer)でリリースを作成し、`.nupkg` をアップロードします。対応バージョン（targetVersion）には SDK と同じ `2.0.0-preview.13` を入れます（NuGet のバージョン範囲として「これ以上」の意味になります）。
+3. [Beutl のデベロッパーページ](https://beutl.beditor.net/ja/developer)でリリースを作成し、`.nupkg` をアップロードします。対応バージョン（targetVersion）には SDK と同じ `2.0.0-preview.14` を入れます（NuGet のバージョン範囲として「これ以上」の意味になります）。
 4. ストアの掲載情報は [docs/store-listing.md](docs/store-listing.md)、アイコンは [assets/icon.png](assets/icon.png) を使います。
 
 ## License
