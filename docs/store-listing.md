@@ -44,7 +44,7 @@ yt-dlp で動画・音声を検索・ダウンロードしてタイムライン�
 
 ## 動作要件
 
-- Beutl 2.0.0-preview.14 以降
+- Beutl 2.0.0-preview.15 以降
 - FFmpeg（映像と音声の結合に使います。YouTube の動画をダウンロードするには必須です。Beutl がインストールしたものを自動で検出します）
 
 ## 利用上の注意
@@ -58,23 +58,23 @@ yt-dlp で動画・音声を検索・ダウンロードしてタイムライン�
 Downloads videos and audio with yt-dlp and adds them to the Beutl timeline. The UI follows Beutl’s display language and supports English, Japanese, Simplified Chinese, Korean, and Spanish.
 ```
 
-## リリース 1.0.7
+## リリース 1.0.8
 
 | 項目 | 値 |
 | --- | --- |
-| バージョン | 1.0.7 |
-| 対応バージョン（targetVersion） | `2.0.0-preview.14` |
-| ファイル | `src/Beutl.Extensions.YtDlp/bin/Release/Beutl.Extensions.YtDlp.1.0.7.nupkg` |
+| バージョン | 1.0.8 |
+| 対応バージョン（targetVersion） | `2.0.0-preview.15` |
+| ファイル | `src/Beutl.Extensions.YtDlp/bin/Release/Beutl.Extensions.YtDlp.1.0.8.nupkg` |
 
-対応バージョンは NuGet のバージョン範囲として解釈され、`2.0.0-preview.14` は「2.0.0-preview.14 以上」を意味します。リリースを作成した直後は `1.0.0-preview.10` が入っているので、必ず書き換えてください。
+対応バージョンは NuGet のバージョン範囲として解釈され、`2.0.0-preview.15` は「2.0.0-preview.15 以上」を意味します。リリースを作成した直後は `1.0.0-preview.10` が入っているので、必ず書き換えてください。
 
 ### リリースの説明
 
 ```text
-Beutl のブラウザーメニューの「ファイルをダウンロード」から、視聴ページの動画をダウンロードできるようになりました。UI が Beutl の表示言語に従い、日本語、英語、簡体字中国語、韓国語、スペイン語で表示されます。Beutl 2.0.0-preview.14 に対応しました。
+Beutl 2.0.0-preview.15 に対応しました。機能の変更はありません。
 ```
 
-まだ公開していない場合は、古いリリースは作らずに 1.0.7 から公開してかまいません。そのときのリリースの説明は次のとおりです。
+まだ公開していない場合は、古いリリースは作らずに 1.0.8 から公開してかまいません。そのときのリリースの説明は次のとおりです。
 
 ```text
 最初のリリースです。YouTube / SoundCloud / ニコニコ動画 / Bilibili の検索、URL や Beutl のブラウザーからの取得、形式を選んだダウンロード、タイムラインへの自動追加、ダウンロード履歴、yt-dlp の自動インストールと更新に対応しています。
