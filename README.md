@@ -24,7 +24,7 @@ UI は Beutl の表示言語に合わせて、日本語、英語、簡体字中�
 
 ## 動作要件
 
-- Beutl 2.0.0-preview.15 以降
+- Beutl 2.0.0-preview.16 以降
 - FFmpeg（映像と音声の結合と、音声の m4a への変換に使います。YouTube の動画は多くが映像と音声に分かれて提供されるため、実質的に必須です。Beutl がインストールしたもの（Windows・Linux は `~/.beutl/ffmpeg`、macOS は Homebrew の `ffmpeg@8`）と PATH 上のものから、実際に起動できるものを自動検出します）
 - yt-dlp は拡張機能からインストールできます。既に PATH 上にある場合はそれを使います。
 
@@ -52,7 +52,7 @@ Beutl のブラウザーで視聴ページを開き、ブラウザーメニュ�
 
 ### Beutl パッケージについて
 
-`Beutl.Extensibility.Sdk` の `2.0.0-preview.15` を使用します。
+`Beutl.Extensibility.Sdk` の `2.0.0-preview.16` を使用します。
 SDK のバージョンは `.csproj` の `Project` 要素に直接指定しており、必要なパッケージは
 `nuget.config` に登録された NuGet フィードから復元されます。
 ブラウザーメニューの API（`BrowserDownloadExtension.TryDownloadPageAsync`）は 2.0.0-preview.14 で追加されたため、これより前の SDK ではビルドできません。
@@ -73,7 +73,7 @@ dotnet test Beutl.Extensions.YtDlp.slnx
 dotnet build src/Beutl.Extensions.YtDlp -c Debug -p:DebugApplication=true
 ```
 
-ブラウザーメニューからのダウンロードも、公開版の Beutl 2.0.0-preview.15 以降でそのまま試せます。
+ブラウザーメニューからのダウンロードも、公開版の Beutl 2.0.0-preview.16 以降でそのまま試せます。
 
 ### 公開手順
 
@@ -85,7 +85,7 @@ dotnet build src/Beutl.Extensions.YtDlp -c Debug -p:DebugApplication=true
    dotnet pack src/Beutl.Extensions.YtDlp -c Release
    ```
 
-3. [Beutl のデベロッパーページ](https://beutl.beditor.net/ja/developer)でリリースを作成し、`.nupkg` をアップロードします。対応バージョン（targetVersion）には SDK と同じ `2.0.0-preview.15` を入れます（NuGet のバージョン範囲として「これ以上」の意味になります）。
+3. [Beutl のデベロッパーページ](https://beutl.beditor.net/ja/developer)でリリースを作成し、`.nupkg` をアップロードします。対応バージョン（targetVersion）には SDK と同じ `2.0.0-preview.16` を入れます（NuGet のバージョン範囲として「これ以上」の意味になります）。
 4. ストアの掲載情報は [docs/store-listing.md](docs/store-listing.md)、アイコンは [assets/icon.png](assets/icon.png) を使います。
 
 ## License
